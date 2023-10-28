@@ -1,8 +1,8 @@
-import React from 'react'
+
 
 export const Nav = () => {
   return (
-    <div class = "flex space-x-48">
+    <div className = "flex space-x-48">
         <h1>VM</h1>
         <h4>Categories</h4>
         <input type='text' placeholder='search' className='w-96'></input>

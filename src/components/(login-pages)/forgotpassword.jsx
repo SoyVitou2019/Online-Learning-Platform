@@ -7,8 +7,8 @@ export const Forgotpassword = () => {
             <label htmlFor="email"></label>
             <input className="border-button mt-4 pl-[5px] mr-10 ml-10 outline-none"  type="email" id="email" placeholder="Youremailaddress@gmail.com"/>
             <p className="flex mr-6 ml-6 mt-6 mb-2 text-justify">If you have forgotten your password, please
-                 enter your account's email address below and
-                  click the "Reset My Password" button. You will
+                 enter your account&apos; email address below and
+                  click the &quot;Reset My Password&quot; button. You will
                    receive an email that contains a link that 
                    contains a link to set a new password.</p>
             <div className="flex mt-1 mb-3 justify-center">

@@ -4,15 +4,15 @@ export const Registration = () => {
     return (
         <form className = "login-style">
             <p className="border-button text-center p-5">Sign Up</p>
-            <label for="fname"></label>
+            <label htmlFor="fname"></label>
             <input className="border-button mt-9 pl-[5px] mr-10 ml-10 outline-none" type="text" id="fname" placeholder="First Name"/>
-            <label for="lname"></label>
+            <label htmlFor="lname"></label>
             <input className="border-button mt-4 pl-[5px] mr-10 ml-10 outline-none" type="text" id="lname" placeholder="Last Name"/>
-            <label for="email"></label>
+            <label htmlFor="email"></label>
             <input className="border-button mt-4 pl-[5px] mr-10 ml-10 outline-none"  type="email" id="email" placeholder="Youremailaddress@gmail.com"/>
-            <label for="pwd"></label>
+            <label htmlFor="pwd"></label>
             <input className="border-button mt-4 pl-[5px] mr-10 ml-10 outline-none" type="password" id="pwd" placeholder="Password"/>
-            <label for="confirmpwd"></label>
+            <label htmlFor="confirmpwd"></label>
             <input className="border-button mt-4 pl-[5px] mr-10 ml-10 outline-none" type="password" id="confirmpwd" placeholder="Confirm Password"/>
             <div className="flex mt-6 justify-center">
                 <p>Already login?</p>
