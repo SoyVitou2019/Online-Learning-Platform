@@ -1,9 +1,9 @@
-//import { LandingPage } from "./components/HomePage/LandingPage";
-import { NavBar } from "./components/HomePage/NavBar";
-// import './App.css'
+
+import { LandingPage } from "./components/HomePage/landingpage";
 
 function App() {
-  return <NavBar />;
+  return <LandingPage />;
 }
+
 
 export default App;
