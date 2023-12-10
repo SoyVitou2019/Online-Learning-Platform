@@ -1,11 +1,8 @@
-
-import { Homepage } from "./components/Homepage/landingpage";
+import { LandingPage } from "./components/Homepage/LandingPage";
 // import './App.css'
 
 function App() {
-  return (
-    <Homepage />
-  );
+  return <LandingPage />;
 }
 
 export default App;
