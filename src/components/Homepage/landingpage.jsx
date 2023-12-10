@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { Login } from '../(login-pages)/Login';
-import { Registration } from '../(login-pages)/Registration';
-import { Forgotpassword } from '../(login-pages)/ForgotPassword';
-import { Changepassword } from '../(login-pages)/ChangePassword';
+import { Login } from '../LoginPage/Login';
+import { Registration } from '../LoginPage/Registration';
+import { Forgotpassword } from '../LoginPage/ForgotPassword';
+import { Changepassword } from '../LoginPage/ChangePassword';
 
 
 
