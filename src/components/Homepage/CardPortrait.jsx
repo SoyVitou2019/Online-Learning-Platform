@@ -1,4 +1,5 @@
-export const CardPortrait = () => {
+// eslint-disable-next-line react/prop-types
+export const CardPortrait = ({ showDetail }) => {
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <a href="#">
@@ -18,20 +19,22 @@ export const CardPortrait = () => {
           The modern Python course for everyone! Master Python with projects
           b...
         </p>
-        <div className="flex justify-between">
-          <a
-            href="#"
-            className=" px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Jonas Scotlan
-          </a>
-          <a
-            href="#"
-            className="ml-auto px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Programming
-          </a>
-        </div>
+        {showDetail && (
+          <div className="flex justify-between">
+            <a
+              href="#"
+              className=" px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Jonas Scotlan
+            </a>
+            <a
+              href="#"
+              className="ml-auto px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Programming
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

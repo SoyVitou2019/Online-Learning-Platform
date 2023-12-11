@@ -3,7 +3,7 @@
 import { CardPortrait } from "./components/HomePage/CardPortrait";
 
 function App() {
-  return <CardPortrait />;
+  return <CardPortrait className="mx-auto" />;
 }
 
 export default App;
