@@ -1,8 +1,10 @@
-import { LandingPage } from "./components/HomePage/landingpage";
-// import './App.css'
+import { Test } from "./test";
+
 
 function App() {
-  return <LandingPage />;
+  return (
+    <Test />
+  )
 }
 
 export default App;
