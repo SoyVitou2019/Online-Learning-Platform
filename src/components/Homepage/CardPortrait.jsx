@@ -1,7 +1,7 @@
 // eslint-disable-next-line react/prop-types
 export const CardPortrait = ({ showDetail }) => {
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-80   bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <a href="#">
         <img
           className="rounded-t-lg aspect-video"
@@ -12,7 +12,7 @@ export const CardPortrait = ({ showDetail }) => {
       <div className="p-5">
         <a href="#">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            The Complete Python Course 2023: From Zero to Expert!
+            The Complete Python Course 2023
           </h5>
         </a>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
