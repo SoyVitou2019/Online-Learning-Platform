@@ -35,10 +35,10 @@ export const NavBar = () => {
       <div className="flex items-center">
         <ul className="flex items-center space-x-6">
           <a href="/" className="font-semibold text-gray-700">
-            Home
+            Contact us
           </a>
           <a href="/" className="font-semibold text-gray-700">
-            Articles
+            Donate
           </a>
         </ul>
       </div>
