@@ -6,7 +6,9 @@ import { LandingPage } from "./components/Pages/LandingPage";
 //import { CardLandscape } from "./components/Homepage/CardLandscape";
 
 function App() {
-  return <LandingPage />;
+  return (
+    <Test />
+  )
 }
 
 export default App;
