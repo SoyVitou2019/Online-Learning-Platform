@@ -5,7 +5,7 @@ export const SupportedBy = () => {
         Supported By
       </h1>
 
-      <div className=" flex flex-wrap justify-center space-x-20 pb-10">
+      <div className=" flex flex-wrap justify-center space-x-20 pb-16">
         <img src="https://fakeimg.pl/100x100" alt="" />
         <img src="https://fakeimg.pl/100x100" alt="" />
         <img src="https://fakeimg.pl/100x100" alt="" />
