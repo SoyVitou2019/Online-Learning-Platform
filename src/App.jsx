@@ -1,8 +1,10 @@
 
-import { LandingPage } from "./components/HomePage/landingpage";
+import { Test } from "./test";
 
 function App() {
-  return <LandingPage />;
+  return (
+    <Test />
+  )
 }
 
 
