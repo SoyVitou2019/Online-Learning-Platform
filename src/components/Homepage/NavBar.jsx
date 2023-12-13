@@ -2,8 +2,12 @@ export const NavBar = () => {
   return (
     <nav className="flex justify-between px-20 py-5 items-center">
       <ul className="flex items-center space-x-6">
-        <h1 className="text-xl text-gray-800 font-bold">VM</h1>
-        <h1 className="text-xl text-gray-800">Categories</h1>
+        <a href="/" className="text-xl text-gray-800 font-bold">
+          VM
+        </a>
+        <a href="/" className="text-xl text-gray-800">
+          Categories
+        </a>
       </ul>
       <ul className="flex items-center space-x-6">
         <svg
@@ -30,8 +34,12 @@ export const NavBar = () => {
       </ul>
       <div className="flex items-center">
         <ul className="flex items-center space-x-6">
-          <li className="font-semibold text-gray-700">Home</li>
-          <li className="font-semibold text-gray-700">Articles</li>
+          <a href="/" className="font-semibold text-gray-700">
+            Contact us
+          </a>
+          <a href="/" className="font-semibold text-gray-700">
+            Donate
+          </a>
         </ul>
       </div>
     </nav>
