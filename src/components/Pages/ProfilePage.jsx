@@ -30,15 +30,25 @@ export const ProfilePage = () => {
         </div>
       </div>
       <div className="pl-5 flex justify-start border-t border-b border-gray-300">
-        <a href="#" className=" p-4 py-2 text-sm font-medium text-center">
+        <a href="#" className=" p-4 py-2 text-md font-medium text-center">
           About
         </a>
-        <a href="#" className=" p-4  py-2 text-sm font-medium ">
+        <a href="#" className=" p-4  py-2 text-md font-medium ">
           Learning
         </a>
-        <a href="#" className=" p-4  py-2 text-sm font-medium ">
+        <a href="#" className=" p-4  py-2 text-md font-medium ">
           Contact
         </a>
+      </div>
+
+      <div className="bg-gray-400 pl-9">
+        <p>Joined 19th July 2023</p>
+        <p>I am Koungmeng. I love Anime and Video games. Thanks</p>
+        <p>Education: </p>
+        <ul>
+          <li>Hello</li>
+          <li>My name</li>
+        </ul>
       </div>
     </>
   );
