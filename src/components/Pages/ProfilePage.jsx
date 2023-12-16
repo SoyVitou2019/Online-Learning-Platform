@@ -8,7 +8,7 @@ export const ProfilePage = () => {
           className="w-full h-64 object-cover"
         />
       </div>
-      <div className="flex items-center justify-between pl-8 text-black -translate-y-6">
+      <div className="flex items-center justify-between pl-8 text-black">
         <div className="flex items-center">
           <img
             src="https://fakeimg.pl/100x100"

@@ -2,12 +2,13 @@
 //import { HeroSection } from "./components/HomePage/HeroSection";
 //import { CardPortrait } from "./components/HomePage/CardPortrait";
 //import { LandingPage } from "./components/Pages/LandingPage";
-//import { ProfilePage } from "./components/Pages/ProfilePage";
-import { UploadPage } from "./components/Pages/UploadPage";
+import { ProfilePage } from "./components/Pages/ProfilePage";
+//import { UploadPage } from "./components/Pages/UploadPage";
 //import { CardLandscape } from "./components/Homepage/CardLandscape";
+//import { FollowPage } from "./components/Pages/FollowPage";
 
 function App() {
-  return <UploadPage />;
+  return <ProfilePage />;
 }
 
 export default App;
