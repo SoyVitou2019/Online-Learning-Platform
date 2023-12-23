@@ -1,7 +1,7 @@
+import { CardPortrait } from "../HomePage/CardPortrait";
 import HomePageFilter from "../HomePage/HomePageFilter";
 import { NavBar } from "../HomePage/NavBar";
 import SideBar from "../HomePage/SideBar";
-import HorizontalLine from "../HomePage/HorizontalLine";
 
 export const HomePage = () => {
   return (
@@ -13,10 +13,21 @@ export const HomePage = () => {
       <div className="flex">
         <SideBar />
 
-        <div className="ml-3 w-full">
+        <div className="mx-5 w-full">
           <HomePageFilter />
-          <h1 className="mt-3 text-2xl font-bold">Popular</h1>
+          <h1 className=" text-2xl font-bold">Popular</h1>
           <hr />
+          <div className="grid grid-cols-4 p-5 gap-4">
+            <CardPortrait />
+            <CardPortrait />
+            <CardPortrait />
+
+            <CardPortrait />
+
+            <CardPortrait />
+
+            <CardPortrait />
+          </div>
         </div>
       </div>
     </>

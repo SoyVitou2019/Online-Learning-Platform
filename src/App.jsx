@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 //import { HomePage } from "./components/Pages/HomePage";
 import { LandingPage } from "./components/Pages/LandingPage";
 import { HomePage } from "./components/Pages/HomePage";
+import { CardPortrait } from "./components/HomePage/CardPortrait";
 // import { CardLandscape } from "./components/Homepage/CardLandscape";
 // import SelectCourse from "./components/Homepage/selectCourse";
 // import PlayCourse from "./components/Homepage/PlayCourse";
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/landingpage" element={<LandingPage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/card" element={<CardPortrait showDetail={false} />} />
         </Routes>
       </main>
     </BrowserRouter>
