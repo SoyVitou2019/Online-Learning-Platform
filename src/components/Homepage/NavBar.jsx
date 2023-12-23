@@ -1,13 +1,14 @@
+import { Link } from "react-router-dom";
 export const NavBar = () => {
   return (
-    <nav className="flex justify-between px-20 py-5 items-center">
+    <nav className="flex justify-between px-20 py-5 items-center bg-orange-50">
       <ul className="flex items-center space-x-6">
-        <a href="/" className="text-xl text-gray-800 font-bold">
+        <Link to="/" className="text-xl text-gray-800 font-bold">
           VM
-        </a>
-        <a href="/" className="text-xl text-gray-800">
+        </Link>
+        <Link to="/" className="text-xl text-gray-800">
           Categories
-        </a>
+        </Link>
       </ul>
       <ul className="flex items-center space-x-6">
         <svg
@@ -34,12 +35,12 @@ export const NavBar = () => {
       </ul>
       <div className="flex items-center">
         <ul className="flex items-center space-x-6">
-          <a href="/" className="font-semibold text-gray-700">
+          <Link to="/" className="font-semibold text-gray-700">
             Contact us
-          </a>
-          <a href="/" className="font-semibold text-gray-700">
+          </Link>
+          <Link to="/" className="font-semibold text-gray-700">
             Donate
-          </a>
+          </Link>
         </ul>
       </div>
     </nav>
