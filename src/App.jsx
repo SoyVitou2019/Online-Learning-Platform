@@ -1,14 +1,19 @@
 //import { NavBar } from "./components/HomePage/NavBar";
 //import { HeroSection } from "./components/HomePage/HeroSection";
 //import { CardPortrait } from "./components/HomePage/CardPortrait";
-//import { LandingPage } from "./components/Pages/LandingPage";
-import { ProfilePage } from "./components/Pages/ProfilePage";
-//import { UploadPage } from "./components/Pages/UploadPage";
+
+// import { LandingPage } from "./components/Pages/LandingPage";
 //import { CardLandscape } from "./components/Homepage/CardLandscape";
-//import { FollowPage } from "./components/Pages/FollowPage";
+// import SelectCourse from "./components/Homepage/selectCourse";
+// import PlayCourse from "./components/Homepage/PlayCourse";
+import AdminPage from "./components/Homepage/AdminPage";
+
+import React from "react";
 
 function App() {
-  return <ProfilePage />;
+  return (
+    <AdminPage />
+  )
 }
 
 export default App;
