@@ -10,14 +10,27 @@ export const HomePage = () => {
         <NavBar />
       </div>
 
-      <div className="flex">
+      <div className="flex justify-stretch">
         <SideBar />
 
         <div className="mx-5 w-full">
           <HomePageFilter />
-          <h1 className=" text-2xl font-bold">Popular</h1>
+          <h1 className=" text-2xl font-bold m-2">Popular</h1>
           <hr />
-          <div className="grid grid-cols-4 p-5 gap-4">
+          <div className="grid grid-cols-3 p-5 gap-4">
+            <CardPortrait />
+            <CardPortrait />
+            <CardPortrait />
+
+            <CardPortrait />
+
+            <CardPortrait />
+
+            <CardPortrait />
+          </div>
+          <h1 className=" text-2xl font-bold m-2">News</h1>
+          <hr />
+          <div className="grid grid-cols-3 p-5 gap-4">
             <CardPortrait />
             <CardPortrait />
             <CardPortrait />
