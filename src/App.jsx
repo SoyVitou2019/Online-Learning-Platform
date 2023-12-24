@@ -8,22 +8,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LandingPage } from "./components/Pages/LandingPage";
 import { HomePage } from "./components/Pages/HomePage";
 import { CardPortrait } from "./components/HomePage/CardPortrait";
+
 // import { CardLandscape } from "./components/Homepage/CardLandscape";
 // import SelectCourse from "./components/Homepage/selectCourse";
 // import PlayCourse from "./components/Homepage/PlayCourse";
 // import AdminPage from "./components/Homepage/AdminPage";
 function App() {
-  return (
-    <BrowserRouter>
-      <main>
-        <Routes>
-          <Route path="/landingpage" element={<LandingPage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/card" element={<CardPortrait showDetail={false} />} />
-        </Routes>
-      </main>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <main>
+                <Routes>
+                    <Route path="/landingpage" element={<LandingPage />} />
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/card" element={<CardPortrait showDetail={false} />} />
+                </Routes>
+            </main>
+        </BrowserRouter>
+    );
 }
 
 export default App;
