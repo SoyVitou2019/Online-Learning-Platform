@@ -9,39 +9,40 @@ let email = [];
 let student_data;
 
 async function fetchData() {
-  // Create a new MongoClient
-  const client = new MongoClient(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
+    // Create a new MongoClient
+    const client = new MongoClient(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
 
-  try {
-    // Connect to the MongoDB cluster
-    await client.connect();
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect();
 
-    // Select the database and collection
-    const database = client.db(DATABASE_NAME);
-    const collection = database.collection(COLLECTION_NAME);
+        // Select the database and collection
+        const database = client.db(DATABASE_NAME);
+        const collection = database.collection(COLLECTION_NAME);
 
-    // Find all documents in the collection
-    const documents = await collection.find().toArray();
+        // Find all documents in the collection
+        const documents = await collection.find().toArray();
 
-    // Extract email addresses and append to the 'email' array
-    documents.forEach(document => {
-      if (document.Email) {
-        email.push(document.Email);
-      }
-    });
-    student_data = documents;
-    // Log the data to the console
-    // console.log('Data from MongoDB:');
-    // console.log(documents);
+        // Extract email addresses and append to the 'email' array
+        documents.forEach(document => {
+            if (document.Email) {
+                email.push(document.Email);
+            }
+        });
 
-    // Log the email addresses
-    // console.log('Email addresses:');
-    console.log(student_data);
+        student_data = documents;
+        // Log the data to the console
+        // console.log('Data from MongoDB:');
+        // console.log(documents);
 
-  } finally {
-    // Close the client
-    await client.close();
-  }
+        // Log the email addresses
+        // console.log('Email addresses:');
+        console.log(student_data);
+
+    } finally {
+        // Close the client
+        await client.close();
+    }
 }
 
 // Call the fetchData function
