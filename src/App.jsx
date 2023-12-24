@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LandingPage } from "./components/Pages/LandingPage";
 import { HomePage } from "./components/Pages/HomePage";
 import { CardPortrait } from "./components/HomePage/CardPortrait";
+import Content from "./components/Pages/content";
+// import AppLayout from "./components/layouts/AppLayout";
 // import { CardLandscape } from "./components/Homepage/CardLandscape";
 // import SelectCourse from "./components/Homepage/selectCourse";
 // import PlayCourse from "./components/Homepage/PlayCourse";
@@ -20,6 +22,7 @@ function App() {
           <Route path="/landingpage" element={<LandingPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/card" element={<CardPortrait showDetail={false} />} />
+          <Route path="/content" element={<Content/>} />
         </Routes>
       </main>
     </BrowserRouter>

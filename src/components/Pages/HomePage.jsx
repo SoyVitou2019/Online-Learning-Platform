@@ -42,6 +42,7 @@ export const HomePage = () => {
             <CardPortrait />
           </div>
         </div>
+        
       </div>
     </>
   );
