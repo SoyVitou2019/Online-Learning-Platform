@@ -1,10 +1,8 @@
 import LayoutHome from "../../../components/LayoutHome";
 import Admin from "../components/Admin";
 const AdminPage = () => {
-  return (
-    <LayoutHome>
-      <Admin />
-    </LayoutHome>
-  );
+    return (
+        <Admin />
+    );
 };
 export default AdminPage;
