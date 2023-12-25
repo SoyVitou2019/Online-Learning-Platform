@@ -7,7 +7,7 @@ export const CardPortrait = ({ showDetail, title, desc, author, category }) => {
       </a>
       <div className="p-5">
         <a href="#">
-          <h5 className="mb-2 line-clamp-2 overflow-ellipsis overflow-ellipsis text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h5 className="mb-2 line-clamp-2 overflow-ellipsis text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {title}
           </h5>
         </a>

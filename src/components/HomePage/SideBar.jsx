@@ -18,28 +18,27 @@ export default function SideBar() {
         aria-label="Sidebar"
       >
         <div className="h-full w-80 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
-          <Link
-            to="/profile"
-            className="flex justify-start items-center ps-2.5 mb-5"
-          >
-            <i
-              className="bi bi-person-square w-14 text-5xl "
-              style={{ color: "white" }}
-            ></i>
-            <div className="flex-col px-3 mr-auto">
+          <div className="flex justify-start items-center ps-2.5 mb-5">
+            <Link to="/profile">
+              <i
+                className="bi bi-person-square w-14 text-5xl "
+                style={{ color: "white" }}
+              ></i>
+            </Link>
+            <Link to="/profile" className="flex-col px-3 mr-auto">
               <div className="text-white text-xs">Student</div>
               <span className="text-xl whitespace-nowrap dark:text-white">
                 Eong Koungmeng
               </span>
               <div className="text-white text-xs">Followers: 15</div>
-            </div>
+            </Link>
             <button type="button" onClick={toggleSidebar}>
               <i
                 className="bi bi-list mr-3 text-2xl align-middle"
                 style={{ color: "white" }}
               ></i>
             </button>
-          </Link>
+          </div>
           <hr></hr>
           <ul className="space-y-2 font-medium">
             <li>
@@ -52,17 +51,17 @@ export default function SideBar() {
               </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/profile"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="bi bi-person-lines-fill text-2xl"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/notifications"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="bi bi-app-indicator text-2xl"></i>
@@ -72,25 +71,26 @@ export default function SideBar() {
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-400 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-300">
                   3
                 </span>
-              </a>
+              </Link>
             </li>
+
             <li>
-              <a
-                href="#"
+              <Link
+                to="/upload"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <i className="bi bi-currency-dollar text-2xl"></i>
-                <span className="flex-1 ms-3 whitespace-nowrap">Donate</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <i className="bi bi-caret-right-square text-2xl"></i>
+                <i className="bi bi-play-fill text-2xl"></i>
                 <span className="flex-1 ms-3 whitespace-nowrap">Teach</span>
-              </a>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/admin"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <i className="bi bi-bar-chart text-2xl"></i>
+                <span className="flex-1 ms-3 whitespace-nowrap">Admin</span>
+              </Link>
             </li>
             <hr></hr>
             <li>
@@ -115,7 +115,7 @@ export default function SideBar() {
         aria-label="Sidebar"
       >
         <div className="h-full w-16 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
-          <a href="#" className="flex items-center ps-2.5 mb-5">
+          <div className="flex items-center ps-2.5 mb-5">
             <button type="button" onClick={toggleSidebar}>
               <i
                 className="bi bi-list text-2xl align-middle"
@@ -135,7 +135,7 @@ export default function SideBar() {
                 style={{ color: "white" }}
               ></i>
             </button>
-          </a>
+          </div>
           <hr></hr>
           <ul className="space-y-2 font-medium">
             <li>

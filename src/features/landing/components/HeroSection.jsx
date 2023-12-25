@@ -1,26 +1,23 @@
-import LoginModal from "../LoginPage/LoginModal";
-import RegisterModal from "../LoginPage/RegisterModal";
+import LoginModal from "../../../components/LoginPage/LoginModal";
+import RegisterModal from "../../../components/LoginPage/RegisterModal";
 import { useState } from "react";
-
-
-
 
 export const HeroSection = () => {
   const [isLoginModalOpen, setLoginModelOpen] = useState(false);
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
   const openModal = () => {
-    setLoginModelOpen(true)
-  }
+    setLoginModelOpen(true);
+  };
   const closeLoginModal = () => {
-    setLoginModelOpen(false)
-  }
+    setLoginModelOpen(false);
+  };
 
-  const openRegisterModal = () =>{
-    setRegisterModalOpen(true)
-  }
+  const openRegisterModal = () => {
+    setRegisterModalOpen(true);
+  };
   const closeRegisterModal = () => {
-    setRegisterModalOpen(false)
-  }
+    setRegisterModalOpen(false);
+  };
 
   return (
     <section className="bg-gray-900">
@@ -43,14 +40,16 @@ export const HeroSection = () => {
             Log in
           </a>
           <a
-          onClick={openRegisterModal}
+            onClick={openRegisterModal}
             href="#"
             className="text-emerald-300 inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center hover:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
           >
             Sign Up
           </a>
-          {isLoginModalOpen && <LoginModal closeLoginModal={closeLoginModal}/>}
-          {isRegisterModalOpen && <RegisterModal closeRegisterModal={closeRegisterModal} />}
+          {isLoginModalOpen && <LoginModal closeLoginModal={closeLoginModal} />}
+          {isRegisterModalOpen && (
+            <RegisterModal closeRegisterModal={closeRegisterModal} />
+          )}
         </div>
       </div>
     </section>
