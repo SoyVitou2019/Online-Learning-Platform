@@ -39,6 +39,14 @@ function HomePageCardList() {
             category={course.category_id}
           />
         ))}
+
+        <CardPortrait
+          showDetail={true}
+          title="Hellasdfasdfasdfasdfasdf"
+          desc="hello my name is koungmeng, my name is koungmenghello my name is koungmeng, my name is koungmenghello my name is koungmeng, my name is koungmeng"
+          author="koungmeng"
+          category={"helllo"}
+        />
       </div>
       <h1 className=" text-2xl font-bold m-2">News</h1>
       <hr />

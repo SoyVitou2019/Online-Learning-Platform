@@ -4,7 +4,7 @@ import SideBar from "./HomePage/SideBar";
 const LayoutHome = ({ children }) => {
   return (
     <>
-      <div className="mb-3">
+      <div>
         <NavBar />
       </div>
 
