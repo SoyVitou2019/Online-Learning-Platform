@@ -1,6 +1,9 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
-// import env
+
+import dotenv from 'dotenv'
+dotenv.config()
+
 const app = express()
 
 app.use(express.json())
