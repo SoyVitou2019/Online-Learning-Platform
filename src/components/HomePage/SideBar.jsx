@@ -12,7 +12,7 @@ export default function SideBar() {
     <div>
       <aside
         id="logo-sidebar"
-        className={`top-0 left-0 z-40 w-full h-full transition-transform ${
+        className={`top-0 left-0 z-40 w-full transition-transform ${
           isSidebarOpen ? "hidden" : "block"
         } `}
         aria-label="Sidebar"
@@ -114,7 +114,7 @@ export default function SideBar() {
         } `}
         aria-label="Sidebar"
       >
-        <div className="h-full w-16 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
+        <div className="h-full w-16 px-3 py-4 bg-gray-50 dark:bg-gray-700">
           <div className="flex items-center ps-2.5 mb-5">
             <button type="button" onClick={toggleSidebar}>
               <i
