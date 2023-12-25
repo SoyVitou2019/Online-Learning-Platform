@@ -6,6 +6,12 @@ import { Spinner } from '@/components/Spinner';
 import { HomeLayout } from '../layouts/HomeLayout';
 import ProfilePage from '../features/profile/route/ProfilePage';
 
+import AdminPage from "../features/admin/route/AdminPage";
+import { HomeRoutes } from "../features/homepage/route";
+import { LandingPage } from "../features/landing/route/LandingPage";
+import { ProfileRoutes } from "../features/profile/route";
+import UploadPage from "../features/teach/route/UploadPage";
+
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -34,13 +40,29 @@ const App = () => {
 
 export const protectedRoutes = [
     {
-        path: '/app',
+        path: '/',
         element: <App />,
         children: [
             // { path: '/discussions/*', element: <DiscussionsRoutes /> },
             // { path: '/users', element: <Users /> },
 
-            { path: '/app/profile', element: <ProfilePage /> },
+            { path: '/profile', element: <ProfilePage /> },
+            {
+                path: "/landing",
+                element: <LandingPage />,
+            },
+            {
+                path: "/profile",
+                element: <ProfileRoutes />,
+            },
+            {
+                path: "/upload",
+                element: <UploadPage />,
+            },
+            {
+                path: "/admin",
+                element: <AdminPage />,
+            },
 
             // { path: '/', element: <Dashboard /> },
             // { path: '*', element: <Navigate to="." /> },
