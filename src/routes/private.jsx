@@ -24,67 +24,63 @@ import UploadPage from "../features/teach/route/UploadPage";
 // const { Users } = lazyImport(() => import('@/features/users'), 'Users');
 
 const App = () => {
-    return (
-        <HomeLayout>
-            <Suspense
-                fallback={
-                    <div className="h-full w-full flex items-center justify-center">
-                        <Spinner size="xl" />
-                    </div>
-                }
-            >
-                <Outlet />
-            </Suspense>
-        </HomeLayout>
-    );
+  return (
+    <HomeLayout>
+      <Suspense
+        fallback={
+          <div className="h-full w-full flex items-center justify-center">
+            <Spinner size="xl" />
+          </div>
+        }
+      >
+        <Outlet />
+      </Suspense>
+    </HomeLayout>
+  );
 };
 
 export const protectedRoutes = [
-    {
-        path: '/',
-        element: <App />,
-        children: [
-            // { path: '/discussions/*', element: <DiscussionsRoutes /> },
-            // { path: '/users', element: <Users /> },
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      // { path: '/discussions/*', element: <DiscussionsRoutes /> },
+      // { path: '/users', element: <Users /> },
 
-            { path: '/profile', element: <ProfilePage /> },
-            {
-                path: "/landing",
-                element: <LandingPage />,
-            },
-            {
-                path: "/profile",
-                element: <ProfileRoutes />,
-            },
-            {
-                path: "/upload",
-                element: <UploadPage />,
-            },
-            {
-                path: "/admin",
-                element: <AdminPage />,
-            },
+      { path: "/profile", element: <ProfilePage /> },
 
+      {
+        path: "/profile",
+        element: <ProfileRoutes />,
+      },
+      {
+        path: "/upload",
+        element: <UploadPage />,
+      },
+      {
+        path: "/admin",
+        element: <AdminPage />,
+      },
 
-            {
-                path: "/home",
-                element: <HomeRoutes />,
-            },
-            {
-                path: "/profile",
-                element: <ProfileRoutes />,
-            },
-            {
-                path: "/upload",
-                element: <UploadPage />,
-            },
-            {
-                path: "/admin",
-                element: <AdminPage />,
-            },
+      {
+        path: "/home",
+        element: <HomeRoutes />,
+      },
+      {
+        path: "/profile",
+        element: <ProfileRoutes />,
+      },
+      {
+        path: "/upload",
+        element: <UploadPage />,
+      },
+      {
+        path: "/admin",
+        element: <AdminPage />,
+      },
 
-            // { path: '/', element: <Dashboard /> },
-            // { path: '*', element: <Navigate to="." /> },
-        ],
-    },
+      // { path: '/', element: <Dashboard /> },
+      // { path: '*', element: <Navigate to="." /> },
+    ],
+  },
 ];
