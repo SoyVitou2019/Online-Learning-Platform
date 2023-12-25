@@ -1,11 +1,23 @@
 import { useRoutes } from "react-router-dom";
 
 import { publicRoutes } from "./public";
+import { protectedRoutes } from "./private";
 
 export const AppRoutes = () => {
-  const routes = publicRoutes;
+    // const auth = useAuth();
 
-  const element = useRoutes([...routes]);
+    // const commonRoutes = [{ path: '/', element: <Landing /> }];
 
-  return <>{element}</>;
+    //const routes = false ? protectedRoutes : publicRoutes;
+    const routes = protectedRoutes;
+    const element = useRoutes([...routes,]);
+    return <h1>{element}</h1>
 };
+
+// export const AppRoutes = () => {
+//     const routes = publicRoutes;
+
+//     const element = useRoutes([...routes]);
+
+//     return <>{element}</>;
+// };
