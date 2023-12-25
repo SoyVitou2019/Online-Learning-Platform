@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 export default function SideBar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -16,7 +18,10 @@ export default function SideBar() {
         aria-label="Sidebar"
       >
         <div className="h-full w-80 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
-          <a href="#" className="flex justify-start items-center ps-2.5 mb-5">
+          <Link
+            to="/profile"
+            className="flex justify-start items-center ps-2.5 mb-5"
+          >
             <i
               className="bi bi-person-square w-14 text-5xl "
               style={{ color: "white" }}
@@ -34,17 +39,17 @@ export default function SideBar() {
                 style={{ color: "white" }}
               ></i>
             </button>
-          </a>
+          </Link>
           <hr></hr>
           <ul className="space-y-2 font-medium">
             <li>
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="bi bi-house-gear-fill text-2xl"></i>
                 <span className="ms-3">Home</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a

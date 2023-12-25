@@ -14,6 +14,16 @@ const LayoutHome = ({ children }) => {
         <div className="mx-5 w-full">{children}</div>
       </div>
     </>
+
+    // <>
+    // <div className="flex justify-stretch">
+    //   <SideBar />
+    //   <div>
+    //     <NavBar />
+    //     <div className="mx-5 w-full">{children}</div>
+    //   </div>
+    // </div>
+    // </>
   );
 };
 export default LayoutHome;
