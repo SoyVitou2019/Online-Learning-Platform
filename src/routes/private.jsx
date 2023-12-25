@@ -47,8 +47,6 @@ export const protectedRoutes = [
       // { path: '/discussions/*', element: <DiscussionsRoutes /> },
       // { path: '/users', element: <Users /> },
 
-      { path: "/profile", element: <ProfilePage /> },
-
       {
         path: "/profile",
         element: <ProfileRoutes />,
@@ -63,20 +61,8 @@ export const protectedRoutes = [
       },
 
       {
-        path: "/home",
+        path: "",
         element: <HomeRoutes />,
-      },
-      {
-        path: "/profile",
-        element: <ProfileRoutes />,
-      },
-      {
-        path: "/upload",
-        element: <UploadPage />,
-      },
-      {
-        path: "/admin",
-        element: <AdminPage />,
       },
 
       // { path: '/', element: <Dashboard /> },
