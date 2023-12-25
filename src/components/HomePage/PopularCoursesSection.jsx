@@ -7,10 +7,35 @@ export const PopularCoursesSection = () => {
       <h1 className="text-center my-8 text-4xl font-bold tracking-tight leading-none dark:text-dark">
         Popular Courses
       </h1>
-      <div className="mt-10 flex flex-wrap justify-center space-x-12">
-        <CardPortrait showDetail={false} />
-        <CardPortrait showDetail={false} />
-        <CardPortrait showDetail={false} />
+      <div className="flex gap-5 justify-center space-x-12 px-12 py-3">
+        <div className="max-w-[400px]">
+          <CardPortrait
+            showDetail={true}
+            title="Python 2023"
+            desc="welcome to my course"
+            author="Koungmeng"
+            category="Math"
+          />
+        </div>
+        <div className="max-w-[400px]">
+          <CardPortrait
+            showDetail={true}
+            title="Python 2023"
+            desc="welcome to my course"
+            author="Koungmeng"
+            category="Math"
+          />
+        </div>
+
+        <div className="max-w-[400px]">
+          <CardPortrait
+            showDetail={true}
+            title="Python 2023"
+            desc="welcome to my course"
+            author="Koungmeng"
+            category="Math"
+          />
+        </div>
       </div>
       <div className="my-8 flex justify-center items-center">
         <Link

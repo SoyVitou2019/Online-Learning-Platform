@@ -1,0 +1,29 @@
+import { NavBar } from "./HomePage/NavBar";
+import SideBar from "./HomePage/SideBar";
+
+const LayoutHome = ({ children }) => {
+  return (
+    <>
+      <div>
+        <NavBar />
+      </div>
+
+      <div className="flex justify-stretch">
+        <SideBar />
+
+        <div className="mx-5 w-full">{children}</div>
+      </div>
+    </>
+
+    // <>
+    // <div className="flex justify-stretch">
+    //   <SideBar />
+    //   <div>
+    //     <NavBar />
+    //     <div className="mx-5 w-full">{children}</div>
+    //   </div>
+    // </div>
+    // </>
+  );
+};
+export default LayoutHome;
