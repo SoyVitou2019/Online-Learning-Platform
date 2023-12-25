@@ -12,7 +12,7 @@ export const HomeLayout = ({
                     <NavBar />
                 </div>
                 <div className="flex flex-1 overflow-hidden ">
-                    <div className="fixed inset-y-0 overflow-x-hidden overflow-y-auto hidden sm:block top-[100px]">
+                    <div className="fixed inset-y-0 overflow-x-hidden overflow-y-auto hidden sm:block top-[100px] z-10">
 
                         <SideBar />
                     </div>
