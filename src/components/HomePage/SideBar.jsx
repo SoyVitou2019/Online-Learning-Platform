@@ -18,28 +18,27 @@ export default function SideBar() {
         aria-label="Sidebar"
       >
         <div className="h-full w-80 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
-          <Link
-            to="/profile"
-            className="flex justify-start items-center ps-2.5 mb-5"
-          >
-            <i
-              className="bi bi-person-square w-14 text-5xl "
-              style={{ color: "white" }}
-            ></i>
-            <div className="flex-col px-3 mr-auto">
+          <div className="flex justify-start items-center ps-2.5 mb-5">
+            <Link to="/profile">
+              <i
+                className="bi bi-person-square w-14 text-5xl "
+                style={{ color: "white" }}
+              ></i>
+            </Link>
+            <Link to="/profile" className="flex-col px-3 mr-auto">
               <div className="text-white text-xs">Student</div>
               <span className="text-xl whitespace-nowrap dark:text-white">
                 Eong Koungmeng
               </span>
               <div className="text-white text-xs">Followers: 15</div>
-            </div>
+            </Link>
             <button type="button" onClick={toggleSidebar}>
               <i
                 className="bi bi-list mr-3 text-2xl align-middle"
                 style={{ color: "white" }}
               ></i>
             </button>
-          </Link>
+          </div>
           <hr></hr>
           <ul className="space-y-2 font-medium">
             <li>
@@ -115,7 +114,7 @@ export default function SideBar() {
         aria-label="Sidebar"
       >
         <div className="h-full w-16 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
-          <a href="#" className="flex items-center ps-2.5 mb-5">
+          <div className="flex items-center ps-2.5 mb-5">
             <button type="button" onClick={toggleSidebar}>
               <i
                 className="bi bi-list text-2xl align-middle"
@@ -135,7 +134,7 @@ export default function SideBar() {
                 style={{ color: "white" }}
               ></i>
             </button>
-          </a>
+          </div>
           <hr></hr>
           <ul className="space-y-2 font-medium">
             <li>
