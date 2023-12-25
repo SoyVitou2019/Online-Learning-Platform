@@ -26,7 +26,3 @@ export const HomeLayout = ({
     );
 };
 
-
-// <div className="overflow-y-scroll shrink-1">
-
-// </div>

@@ -1,15 +1,16 @@
-import { Suspense } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Suspense } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
-import { Spinner } from '@/components/Spinner';
+import { Spinner } from "@/components/Spinner";
 // import { HomeLayout } from '@/components/Layout';
-import { HomeLayout } from '../layouts/HomeLayout';
-import ProfilePage from '../features/profile/route/ProfilePage';
+import { HomeLayout } from "../layouts/HomeLayout";
+import ProfilePage from "../features/profile/route/ProfilePage";
 
 import AdminPage from "../features/admin/route/AdminPage";
 import { HomeRoutes } from "../features/homepage/route";
 import { LandingPage } from "../features/landing/route/LandingPage";
 import { ProfileRoutes } from "../features/profile/route";
+
 import UploadPage from "../features/teach/route/UploadPage";
 
 // import { lazyImport } from '@/utils/lazyImport';
@@ -50,6 +51,24 @@ export const protectedRoutes = [
             {
                 path: "/landing",
                 element: <LandingPage />,
+            },
+            {
+                path: "/profile",
+                element: <ProfileRoutes />,
+            },
+            {
+                path: "/upload",
+                element: <UploadPage />,
+            },
+            {
+                path: "/admin",
+                element: <AdminPage />,
+            },
+
+
+            {
+                path: "/home",
+                element: <HomeRoutes />,
             },
             {
                 path: "/profile",
