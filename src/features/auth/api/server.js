@@ -3,16 +3,23 @@ import jwt from 'jsonwebtoken'
 import { check, validationResult } from 'express-validator'
 import axios from 'axios';
 import bcrypt from 'bcrypt'
+import cors from 'cors'
 
 import dotenv from 'dotenv'
 dotenv.config()
 
 const app = express()
-
+app.use(cors())
 app.use(express.json())
 
-app.get('/users', (req, res) => {
+app.get('/users', async (req, res) => {
+    const response = await axios.get('https://coding-fairy.com/api/mock-api-resources/ols/user');
+    const users = response.data;
     res.json(users)
+})
+
+app.get('/', (req, res) => {
+    res.json("work on port 3000")
 })
 
 app.post('/signup', [
@@ -20,10 +27,8 @@ app.post('/signup', [
     check("password", "Please provide a password greater than 5 characters!").isLength({ min: 4 })
 ], async (req, res) => {
     // Authentication User
-    console.log(req.body)
     const { email, password } = req.body;
     const errors = validationResult(req);
-    console.log(email, password)
     if (!errors.isEmpty()) {
         return res.status(400).json({
             errors: errors.array()
@@ -66,7 +71,7 @@ app.post('/signup', [
             })
 
         // Respond to the client
-        res.json({ webToken });
+        res.json(webToken);
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -81,14 +86,13 @@ app.post('/login', async (req, res) => {
     const users = response.data;
     // Check if any user with the given email exists
     let hashedPass;
-    console.log(users)
-    for (const user in users){
-        if (user.email === email){
-            hashedPass = user.password;
+    for (const idx in users){
+        if (users[idx].email === email){
+            hashedPass = users[idx].password;
             break;
         }
     }
-
+    // console.log(email, users)
     if (!hashedPass) {
         return res.status(400).json({
             errors: [{ msg: 'Invalid Credential' }]
@@ -111,8 +115,10 @@ app.post('/login', async (req, res) => {
         })
 
     // Respond to the client
-    res.json({ webToken });
+    res.json(webToken);
 })
 
 
-app.listen(3000)
+app.listen(3000, () =>{
+    // console.log("work port 3000")
+})

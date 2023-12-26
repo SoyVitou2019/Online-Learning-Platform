@@ -6,18 +6,26 @@ POST http://localhost:3000/signup
 Content-Type: application/json
 
 
+# {
+#     "email": "mey@kom.com",
+#     "password": "2333"
+# }
 {
-    "email": "mey@kom.com",
-    "password": "2333"
+    "email": "vitoupro@kom.com",
+    "password": "23332"
 }
 
 ###
 POST http://localhost:3000/login
 Content-Type: application/json
 
+# {
+#     "email": "mey@kom.com",
+#     "password": "2333"
+# }
 {
-    "email": "mey@kom.com",
-    "password": "2333"
+    "email": "vitoupro@kom.com",
+    "password": "23332"
 }
 
 
@@ -37,7 +45,7 @@ GET  https://coding-fairy.com/api/mock-api-resources/ols/user
 
 
 ###
-DELETE   https://coding-fairy.com/api/mock-api-resources/ols/user/1
+DELETE   https://coding-fairy.com/api/mock-api-resources/ols/user/2
 
 
 
