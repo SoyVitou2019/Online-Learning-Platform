@@ -1,10 +1,13 @@
+import { useState } from "react";
+
 export default function SideBar() {
+  const [openSideBar, setOpenSideBar] = useState(false)
   return (
     <div>
       <button
         type="button"
         className="flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-      >
+      >2
         <span className="sr-only">Open sidebar</span>
         <svg
           className="w-6 h-6"
@@ -23,7 +26,7 @@ export default function SideBar() {
 
       <aside
         id="logo-sidebar"
-        className=" top-0 left-0 z-40 w-full h-full transition-transform -translate-x-full sm:translate-x-0"
+        className=" top-0 left-0 z-40 w-full h-full transition-transform -translate-x-full sm:translate-x-0 fixed overflow-y-auto"
         aria-label="Sidebar"
       >
         <div className="h-full w-80 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
@@ -102,7 +105,7 @@ export default function SideBar() {
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <span className="flex-1 ms-3 whitespace-nowrap">
+                <span className="flex-1 ms-3">
                   Continue learning
                 </span>
               </a>
