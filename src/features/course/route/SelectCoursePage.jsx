@@ -1,4 +1,4 @@
-import SelectCourse from "../components/SelectCourse";
+import { SelectCourse } from "../components/SelectCourse";
 const SelectCoursePage = () => {
   return <SelectCourse />;
 };
