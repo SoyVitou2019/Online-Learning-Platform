@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { HomePage } from "./components/Pages/HomePage";
 // import { CardPortrait } from "./components/HomePage/CardPortrait";
 
+import Content from "./components/Pages/content";
+// import AppLayout from "./components/layouts/AppLayout";
 // import { CardLandscape } from "./components/Homepage/CardLandscape";
 // import SelectCourse from "./components/Homepage/selectCourse";
 // import PlayCourse from "./components/Homepage/PlayCourse";
@@ -19,9 +21,15 @@ import { AppRoutes } from "./routes";
 
 function App() {
   return (
-    <AppProvider>
-      <AppRoutes />
-    </AppProvider>
+    <BrowserRouter>
+      <main>
+        <Routes>
+          <Route path="/landingpage" element={<LandingPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/card" element={<CardPortrait showDetail={false} />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   );
 }
 
