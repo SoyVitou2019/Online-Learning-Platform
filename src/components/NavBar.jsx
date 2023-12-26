@@ -26,7 +26,7 @@ export const NavBar = () => {
           />
         </svg>
         <input
-          className="ml-2 outline-none bg-transparent hover:bg-red-200"
+          className="ml-2 outline-none bg-transparent font-"
           type="text"
           name="search"
           id="search"
