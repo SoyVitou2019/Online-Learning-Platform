@@ -42,7 +42,7 @@ function HomePageCardList() {
 
         <CardPortrait
           showDetail={true}
-          title="Hellasdfasdfasdfasdfasdf"
+          title="Python Course 2023 Beginner"
           desc="hello my name is koungmeng, my name is koungmenghello my name is koungmeng, my name is koungmenghello my name is koungmeng, my name is koungmeng"
           author="koungmeng"
           category={"helllo"}
