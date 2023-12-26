@@ -34,9 +34,10 @@ function HomePageCardList() {
             key={course.id}
             showDetail={true}
             title={course.course_name}
-            desc={course.couse_description}
+            desc={course.course_description}
             author={course.created_by}
             category={course.category_id}
+            course_id={course.id}
           />
         ))}
 

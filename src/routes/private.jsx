@@ -12,6 +12,7 @@ import { ProfileRoutes } from "../features/profile/route";
 import UploadPage from "../features/teach/route/UploadPage";
 import { SelectCourse } from "../features/course/components/SelectCourse";
 import SelectCoursePage from "../features/course/route/SelectCoursePage";
+import { CourseRoutes } from "../features/course/route";
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -51,8 +52,8 @@ export const protectedRoutes = [
         element: <ProfileRoutes />,
       },
       {
-        path: "/course",
-        element: <SelectCoursePage />,
+        path: "/course/*",
+        element: <CourseRoutes />,
       },
       {
         path: "/upload",

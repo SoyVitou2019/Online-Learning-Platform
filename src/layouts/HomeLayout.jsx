@@ -7,7 +7,7 @@ export const HomeLayout = ({ children }) => {
       <div className="flex flex-col h-screen">
         <NavBar />
 
-        <div className="flex items-stretch overflow-hidden">
+        <div className="flex items-stretch overflow-hidden h-full">
           <SideBar />
 
           <div className="px-5 w-full overflow-y-auto">{children}</div>

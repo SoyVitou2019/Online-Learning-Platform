@@ -1,6 +1,6 @@
 import { CardPortrait } from "../../../components/HomePage/CardPortrait";
 
-export const SelectCourse = () => {
+export const SelectCourse = ({ course_name, course_ }) => {
   const graduated = [
     "Graduated from High school",
     "Master of art",
@@ -124,9 +124,13 @@ export const SelectCourse = () => {
             </div>
           </div>
         </div>
-        <div className="mx-10 px-3 py-2 bg-white">
+        <div className="mx-10 px-3 py-2 bg-white w-1/3">
           <p className=" text-2xl font-bold">About Teacher</p>
-          <img className="mt-3" src="https://fakeimg.pl/500x200" alt="mockup" />
+          <img
+            className="mx-auto"
+            src="https://fakeimg.pl/500x200"
+            alt="mockup"
+          />
           <div className="mt-6">
             <a href="#" className="flex items-center ps-2.5 mb-5">
               <i
