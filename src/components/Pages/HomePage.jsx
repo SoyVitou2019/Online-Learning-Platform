@@ -34,15 +34,11 @@ export const HomePage = () => {
             <CardPortrait />
             <CardPortrait />
             <CardPortrait />
-
             <CardPortrait />
-
             <CardPortrait />
-
             <CardPortrait />
           </div>
         </div>
-        
       </div>
     </>
   );
