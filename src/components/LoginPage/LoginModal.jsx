@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ResetnewPassword from "./ResetPassword";
 import axios from 'axios'
 import Cookies from 'universal-cookie';
 

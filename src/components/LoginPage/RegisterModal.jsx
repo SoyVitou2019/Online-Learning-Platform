@@ -1,93 +1,138 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import { Dialog, Transition } from '@headlessui/react'
 import axios from 'axios'
 
-const RegisterModal = ({ closeRegisterModal }) => {
+const RegisterModal = ({ closeRegisterModal, isOpen, setIsOpen }) => {
+  const [users, setUsers] = useState([]);
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [profileUrl, setProfileUrl] = useState('');
+  const [recovery, setRecovery] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [users, setUsers] = useState([]);
-
+  const [createAt, setCreateAt] = useState(new Date());
+  const roleType = "student"
+  //  fetch data user
   useEffect(() => {
     fetch('http://localhost:3000/users')
       .then((res) => res.json())
       .then((data) => {
-        setUsers(data);
+        setUsers(data); 
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
-  };
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const response = await axios.post('http://localhost:3000/login', {
-      email,
-      password,
-    });
-
-    closeRegisterModal();
-  };
+  // Handle form submission
+  const handleSubmit = async () => {
+    // Add your logic for form submission here
+    
+    try {
+        console.log(email, password)
+        const response = await axios.post('http://localhost:3000/signup', {
+          firstName,
+          lastName,
+          profileUrl,
+          recovery,
+          email,
+          password,
+          createAt,
+          roleType
+        });
+        console.log(response.data)
+        const jwt_token = response.data
+        cookies.set('jwt-decode', jwt_token, {path: '/'})
+        const return_jwt_token = document.cookie.split('=')[1]
+        console.log(return_jwt_token)
+        closeLoginModal();
+    } catch (error) {
+        console.error('Login failed:');
+    }
+  }
 
   return (
-    <section className="fixed top-0 left-0 w-full h-full items-center justify-center">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <div className="flex gap-20">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Create and account
-              </h1>
-              <button type="button" onClick={closeRegisterModal} className={`end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white`} data-modal-hide="authentication-modal">
-                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-                <span className="sr-only">Close modal</span>
-              </button>
+    <>
+      {/* dialog */}
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeRegisterModal} >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  {/* add sign up page */}
+
+                  <form>
+                    <div className="grid gap-6 mb-6 md:grid-cols-2">
+                      <div>
+                        <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-black">First name</label>
+                        <input value={firstName} onChange={(e)=> {setFirstName(e.target.value)}} type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Soy" required />
+                      </div>
+                      <div>
+                        <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-black">Last name</label>
+                        <input value={lastName} onChange={(e)=> {setLastName(e.target.value)}} type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Vitou" required />
+                      </div>
+                      <div>
+                        <label htmlFor="profile_url" className="block mb-2 text-sm font-medium text-black">Profile URL ( Link )</label>
+                        <input value={profileUrl} onChange={(e)=> {setProfileUrl(e.target.value)}} type="profile_url" id="profile_url" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="https://personal/vitou.jpg" required />
+                      </div>
+                      <div>
+                        <label htmlFor="recovery" className="block mb-2 text-sm font-medium text-black">What's your favorite pet?</label>
+                        <input value={recovery} onChange={(e)=> {setRecovery(e.target.value)}} id="recovery" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Rabbit" required />
+                      </div>
+                    </div>
+                    <div className="mb-6">
+                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-black">Email address</label>
+                      <input value={email} onChange={(e)=> {setEmail(e.target.value)}} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="soy.vitou@company.com" required />
+                    </div>
+                    <div className="mb-6">
+                      <label htmlFor="password" className="block mb-2 text-sm font-medium text-black">Password</label>
+                      <input value={password} onChange={(e)=> {setPassword(e.target.value)}} type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="•••••••••" required />
+                    </div>
+                    <div className="mb-6">
+                      <label htmlFor="confirm_password" className="block mb-2 text-sm font-medium text-black">Confirm password</label>
+                      <input value={confirmPassword} onChange={(e)=> {setConfirmPassword(e.target.value)}} type="password" id="confirm_password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="•••••••••" required />
+                    </div>
+                    <div className="flex items-start mb-6">
+                      <div className="flex items-center h-5">
+                        <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required />
+                      </div>
+                      <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
+                    </div>
+                    <div className="flex justify-end">
+                      <button onClick={() => { handleSubmit(); setIsOpen(false); console.log(isOpen);}} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                    </div>
+                  </form>
+
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
-            <form className="space-y-4 md:space-y-6" action="#" >
-              <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input type="email" value={email} onChange={handleEmailChange} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
-              </div>
-              <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <input type="password" value={password} onChange={handlePasswordChange} id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
-              </div>
-              <div>
-                <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                <input type="confirm-password" value={confirmPassword} onChange={handleConfirmPasswordChange} id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
-              </div>
-              <div className="flex items-start">
-                <div className="flex items-center h-5">
-                  <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
-                </div>
-                <div className="ml-3 text-sm">
-                  <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
-                </div>
-              </div>
-              <button type="submit" onClick={handleSubmit} className="w-full text-white bg-slate-500 hover:bg-slate-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
-              </p>
-            </form>
           </div>
-        </div>
-      </div>
-    </section>
+        </Dialog>
+      </Transition>
+    </>
   )
 }
 
