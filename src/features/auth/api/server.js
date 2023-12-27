@@ -27,7 +27,7 @@ app.post('/signup', [
     check("password", "Please provide a password greater than 5 characters!").isLength({ min: 4 })
 ], async (req, res) => {
     // Authentication User
-    const { email, password } = req.body;
+    const { first_name, last_name, email, profile, password, password_recovery_identifier, created_at, role_type } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({

@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export const HeroSection = () => {
   const [isLoginModalOpen, setLoginModelOpen] = useState(false);
+  // noted the problem
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
   const openModal = () => {
     setLoginModelOpen(true);
@@ -18,6 +19,7 @@ export const HeroSection = () => {
   const closeRegisterModal = () => {
     setRegisterModalOpen(false);
   };
+
 
   return (
     <section className="bg-gray-900">
@@ -48,7 +50,7 @@ export const HeroSection = () => {
           </a>
           {isLoginModalOpen && <LoginModal closeLoginModal={closeLoginModal} />}
           {isRegisterModalOpen && (
-            <RegisterModal closeRegisterModal={closeRegisterModal} />
+            <RegisterModal closeRegisterModal={closeRegisterModal} isOpen = {isRegisterModalOpen} setIsOpen={setRegisterModalOpen}/>
           )}
         </div>
       </div>

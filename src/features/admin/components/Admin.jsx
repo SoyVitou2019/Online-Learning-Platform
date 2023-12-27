@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
+import getUser from '../api/getUser';
 
 const Admin = () => {
   const [openModal, setOpenModal] = useState(false);
+  let [isOpen, setIsOpen] = useState(false)
+  const users = getUser()
+  function closeRequestModal() {
+    setIsOpen(false)
+  }
+
+  function openRequestModal() {
+    setIsOpen(true)
+  }
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -10,8 +21,68 @@ const Admin = () => {
     setOpenModal(false);
   };
 
+
   return (
-    <section className={`bg-slate-300 ${openModal}`}>
+    <section className={`bg-slate-300 ${openRequestModal}`}>
+      {/* dialog */}
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeRequestModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Do you want to be a teacher for upload video?
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-800 bg-gray-50 rounded-lg" placeholder="Write your thoughts here..."></textarea>
+                  </div>
+
+                  <div className="mt-4 flex justify-end gap-3">
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeRequestModal}
+                    >
+                      Cancle
+                    </button>
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeRequestModal}
+                    >
+                      Submit to be teacher
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
       <div className="h-screen">
         {/* Header */}
         <div className="border-y-2">
@@ -56,7 +127,7 @@ const Admin = () => {
                   />
                 </div>
               </form>
-              <p>Upload</p>
+              <button onClick={() => setIsOpen(true)}>Upload</button>
             </div>
           </div>
         </div>
@@ -110,6 +181,7 @@ const Admin = () => {
                 </th>
               </tr>
             </thead>
+            {/* user requested */}
             <tbody>
               <tr className="bg-white border-b ">
                 <th scope="row" className="px-6 py-4 font-medium text-black">
@@ -146,9 +218,8 @@ const Admin = () => {
         <div className="flex justify-center">
           <div
             id="alert-additional-content-1"
-            className={`${
-              openModal ? "" : "hidden"
-            } w-full bg-green-200 p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg  `}
+            className={`${openModal ? "" : "hidden"
+              } w-full bg-green-200 p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg  `}
             role="alert"
           >
             <div className="flex items-center">
@@ -213,6 +284,7 @@ const Admin = () => {
           </div>
         </div>
       </div>
+
     </section>
   );
 };
