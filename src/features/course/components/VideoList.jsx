@@ -1,4 +1,4 @@
-export const VideoList = () => {
+export const VideoList = ({ title }) => {
   return (
     <div className="flex items-center bg-green-300">
       <img
@@ -7,9 +7,7 @@ export const VideoList = () => {
         alt=""
       />
       <div className="flex flex-col flex-grow">
-        <h5 className="text-black font-bold ml-4">
-          The Complete Python Course 2023
-        </h5>
+        <h5 className="text-black font-bold ml-4">{title}</h5>
       </div>
       <p className="flex justify-end mr-4">15:22</p>
     </div>
