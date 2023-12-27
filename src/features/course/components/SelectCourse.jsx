@@ -1,16 +1,70 @@
 import { CardPortrait } from "../../../components/HomePage/CardPortrait";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
 
-export const SelectCourse = () => {
+export const SelectCourse = ({ course_id }) => {
   const graduated = [
     "Graduated from High school",
     "Master of art",
     "Master of Big Data",
   ];
+
+  const [course, setCourse] = useState({});
+  const [postDetails, setPostDetails] = useState([]);
+
+  useEffect(() => {
+    // Function to fetch data from the API
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get(
+          "https://coding-fairy.com/api/mock-api-resources/ols/course/" +
+            course_id
+        ); // Replace with your actual API endpoint
+        setCourse(response.data); // Assuming the API response is an array of courses
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    // Call the fetch function
+    fetchCourses();
+  }, [course_id]); // Empty dependency array ensures that the effect runs only once (on mount)
+
+  useEffect(() => {
+    // Function to fetch post details for each post_id in the course
+    const fetchPostDetails = async () => {
+      try {
+        // Assuming course.posts is the array of post_ids in your course object
+        const promises = course.posts.map(async (post_id) => {
+          const response = await axios.get(
+            `https://coding-fairy.com/api/mock-api-resources/ols/post/${post_id}`
+          );
+          return response.data;
+        });
+
+        // Wait for all promises to resolve
+        const postDetailsData = await Promise.all(promises);
+
+        // Set the post details in state
+        setPostDetails(postDetailsData);
+      } catch (error) {
+        console.error("Error fetching post details:", error);
+      }
+    };
+
+    // Check if course.posts is available and call fetchPostDetails
+    if (course.posts && course.posts.length > 0) {
+      fetchPostDetails();
+    }
+  }, [course.posts]);
+
+  console.log(postDetails);
   return (
     <section className=" bg-slate-300">
       <div className="flex mt-5 pt-5 pb-10">
         <div className="ml-10">
-          <h1 className=" text-3xl">The C++ Tutorial for Beginner</h1>
+          <h1 className=" text-3xl">{course.course_name}</h1>
           <div>
             <p>
               Master Python by building 100 projects in 100 days. Learn
@@ -124,9 +178,13 @@ export const SelectCourse = () => {
             </div>
           </div>
         </div>
-        <div className="mx-10 px-3 py-2 bg-white">
+        <div className="mx-10 px-3 py-2 bg-white w-1/3">
           <p className=" text-2xl font-bold">About Teacher</p>
-          <img className="mt-3" src="https://fakeimg.pl/500x200" alt="mockup" />
+          <img
+            className="mx-auto"
+            src="https://fakeimg.pl/500x200"
+            alt="mockup"
+          />
           <div className="mt-6">
             <a href="#" className="flex items-center ps-2.5 mb-5">
               <i
