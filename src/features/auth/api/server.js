@@ -27,7 +27,7 @@ app.post('/signup', [
     check("password", "Please provide a password greater than 5 characters!").isLength({ min: 4 })
 ], async (req, res) => {
     // Authentication User
-    const { first_name, last_name, email, profile, password, password_recovery_identifier, created_at, role_type } = req.body;
+    const { firstName, lastName, profileUrl, recovery, email, password, createAt, roleType } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -50,17 +50,24 @@ app.post('/signup', [
             });
         }
         const hashedPassword = await bcrypt.hash(password, 10)
+        const hashedRecovery = await bcrypt.hash(recovery, 10)
         const user = [
             {
-                email: email,
-                password: hashedPassword
+                firstName,
+                lastName,
+                profileUrl,
+                recovery: hashedRecovery,
+                email,
+                password: hashedPassword,
+                createAt,
+                roleType
             }
         ]
         // Continue with signup logic if the user doesn't exist
         const signupResponse = await axios.post('https://coding-fairy.com/api/mock-api-resources/ols/user', user[0])
 
         // Handle the response from the signup endpoint as needed
-        const responseData = signupResponse.data;
+        // const responseData = signupResponse.data;
 
         const webToken = await jwt.sign({
             email
@@ -86,8 +93,8 @@ app.post('/login', async (req, res) => {
     const users = response.data;
     // Check if any user with the given email exists
     let hashedPass;
-    for (const idx in users){
-        if (users[idx].email === email){
+    for (const idx in users) {
+        if (users[idx].email === email) {
             hashedPass = users[idx].password;
             break;
         }
@@ -119,6 +126,6 @@ app.post('/login', async (req, res) => {
 })
 
 
-app.listen(3000, () =>{
+app.listen(3000, () => {
     // console.log("work port 3000")
 })
