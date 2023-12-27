@@ -1,6 +1,10 @@
-export const VideoList = ({ title }) => {
+import { Link } from "react-router-dom";
+export const VideoList = ({ post_id, course_id, title }) => {
   return (
-    <div className="flex items-center bg-green-300">
+    <Link
+      to={"/course/" + course_id + "/index/" + post_id}
+      className="flex items-center bg-green-300"
+    >
       <img
         className="w-40 aspect-video"
         src="https://fakeimg.pl/1600x900"
@@ -10,6 +14,6 @@ export const VideoList = ({ title }) => {
         <h5 className="text-black font-bold ml-4">{title}</h5>
       </div>
       <p className="flex justify-end mr-4">15:22</p>
-    </div>
+    </Link>
   );
 };

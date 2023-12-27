@@ -132,7 +132,12 @@ export const SelectCourse = ({ course_id }) => {
 
                 {/* Item1 */}
                 {postDetails.map((post) => (
-                  <VideoList key={post.id} title={post.title} />
+                  <VideoList
+                    key={post.id}
+                    post_id={post.id}
+                    course_id={course_id}
+                    title={post.title}
+                  />
                 ))}
                 <div className="flex items-center bg-green-300">
                   <img
