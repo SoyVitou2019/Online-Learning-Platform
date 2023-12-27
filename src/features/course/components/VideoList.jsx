@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-export const VideoList = ({ post_id, course_id, title }) => {
+export const VideoList = ({ post_id, course_id, title, index }) => {
   return (
     <Link
-      to={"/course/" + course_id + "/index/" + post_id}
+      to={"/course/" + course_id + "/index/" + index}
       className="flex items-center bg-green-300"
     >
       <img

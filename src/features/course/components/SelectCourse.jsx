@@ -131,11 +131,12 @@ export const SelectCourse = ({ course_id }) => {
                 {/* Landscape content */}
 
                 {/* Item1 */}
-                {postDetails.map((post) => (
+                {postDetails.map((post, index) => (
                   <VideoList
                     key={post.id}
                     post_id={post.id}
                     course_id={course_id}
+                    index={index}
                     title={post.title}
                   />
                 ))}

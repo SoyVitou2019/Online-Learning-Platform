@@ -8,7 +8,7 @@ export const CourseRoutes = () => {
     <Routes>
       {/* <Route path="" element={<SelectCoursePage />} /> */}
       <Route path="/:course_id" element={<SelectCoursePage />} />
-      <Route path="/:course_id/index/:post_id" element={<PlayCourse />} />
+      <Route path="/:course_id/index/:index" element={<PlayCourse />} />
     </Routes>
   );
 };

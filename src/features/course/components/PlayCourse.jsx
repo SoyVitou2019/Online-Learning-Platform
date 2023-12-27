@@ -3,9 +3,11 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 
+import { VideoList } from "./VideoList";
+
 const PlayCourse = () => {
   const { course_id } = useParams();
-  const { post_id } = useParams();
+  const { index } = useParams();
 
   const [course, setCourse] = useState({});
   const [postDetails, setPostDetails] = useState([]);
@@ -68,76 +70,16 @@ const PlayCourse = () => {
             <div className="mx-2 py-2 flex flex-col gap-2">
               <p className=" font-bold text-xl">Course Content</p>
               {/* Item1 */}
-              <div className="flex items-center bg-green-300">
-                <img
-                  className="w-40 aspect-video"
-                  src="https://fakeimg.pl/1600x900"
-                  alt=""
+              {postDetails.map((post, index) => (
+                <VideoList
+                  key={post.id}
+                  post_id={post.id}
+                  course_id={course_id}
+                  index={index}
+                  title={post.title}
                 />
-                <div className="flex flex-col flex-grow">
-                  <h5 className="text-black font-bold ml-4">
-                    The Complete Python Course 2023
-                  </h5>
-                </div>
-                <p className="mr-4 mt-auto mb-2">15:22</p>
-              </div>
+              ))}
               {/* Item2 */}
-              <div className="flex items-center bg-green-300">
-                <img
-                  className="w-40 aspect-video"
-                  src="https://fakeimg.pl/1600x900"
-                  alt=""
-                />
-                <div className="flex flex-col flex-grow">
-                  <h5 className="text-black font-bold ml-4">
-                    The Complete Python Course 2023
-                  </h5>
-                </div>
-                <p className="mr-4 mt-auto mb-2">15:22</p>
-              </div>
-              {/* Item3 */}
-              <div className="flex items-center bg-green-300">
-                <img
-                  className="w-40 aspect-video"
-                  src="https://fakeimg.pl/1600x900"
-                  alt=""
-                />
-                <div className="flex flex-col flex-grow">
-                  <h5 className="text-black font-bold ml-4">
-                    The Complete Python Course 2023
-                  </h5>
-                </div>
-                <p className="mr-4 mt-auto mb-2">15:22</p>
-              </div>
-              {/* Item4 */}
-              <div className="flex items-center bg-green-300">
-                <img
-                  className="w-40 aspect-video"
-                  src="https://fakeimg.pl/1600x900"
-                  alt=""
-                />
-                <div className="flex flex-col flex-grow">
-                  <h5 className="text-black font-bold ml-4">
-                    The Complete Python Course 2023
-                  </h5>
-                </div>
-                <p className="mr-4 mt-auto mb-2">15:22</p>
-              </div>
-              {/* Item5 */}
-              <div className="flex items-center bg-green-300">
-                <img
-                  className="w-40 aspect-video"
-                  src="https://fakeimg.pl/1600x900"
-                  alt=""
-                />
-                <div className="flex flex-col flex-grow">
-                  <h5 className="text-black font-bold ml-4">
-                    The Complete Python Course 2023
-                  </h5>
-                </div>
-                <p className="mr-4 mt-auto mb-2">15:22</p>
-              </div>
-              {/* Item6 */}
               <div className="flex items-center bg-green-300">
                 <img
                   className="w-40 aspect-video"
@@ -165,7 +107,7 @@ const PlayCourse = () => {
               />
               <div className=" mt-4">
                 <p className=" font-bold text-xl">
-                  Python Beginner to Advanced 1
+                  {postDetails.length > 0 ? postDetails[index].title : ""}
                 </p>
                 <p className="mt-2">
                   Master Python by building 100 projects in 100 days. learn data
