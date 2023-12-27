@@ -5,6 +5,10 @@ import getUser from '../api/getUser';
 const Admin = () => {
   const [openModal, setOpenModal] = useState(false);
   let [isOpen, setIsOpen] = useState(false)
+  let [isOpenMessage, setIsOpenMessage] = useState(false)
+  
+  const [identifyRequestModel, setIdentifyRequestModel] = useState(2)
+
   const users = getUser()
   function closeRequestModal() {
     setIsOpen(false)
@@ -12,6 +16,16 @@ const Admin = () => {
 
   function openRequestModal() {
     setIsOpen(true)
+  }
+  
+  function closeRequestMessageModal() {
+    setIsOpenMessage(false)
+  }
+
+  const openRequestMessageModal = () => {
+    setIdentifyRequestModel(2)  
+    console.log(identifyRequestModel)
+    setIsOpenMessage(true)
   }
 
   const handleOpenModal = () => {
@@ -183,107 +197,97 @@ const Admin = () => {
             </thead>
             {/* user requested */}
             <tbody>
-              <tr className="bg-white border-b ">
-                <th scope="row" className="px-6 py-4 font-medium text-black">
-                  1
-                </th>
-                <td className="px-6 py-4">
-                  <i
-                    className="bi bi-person-circle w-20 text-6xl "
-                    style={{ color: "black" }}
-                  ></i>
-                </td>
-                <td className="px-6 py-4">Eong Koungmeng</td>
-                <td className="px-6 py-4">19 Jan 2012</td>
-                <td className="px-6 py-4">Student</td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-7">
-                    <button
-                      onClick={handleOpenModal}
-                      className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
-                    >
-                      View
-                    </button>
-                    <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
-                  </div>
-                </td>
-              </tr>
+              {
+                users.map((item, index) => (
+                  <tr className="bg-white border-b " key={index}>
+                    <th scope="row" className="px-6 py-4 font-medium text-black">
+                      {item.userId}
+                    </th>
+                    <td className="px-6 py-4 w-16">
+                      <img src={item.userProfile} alt="Description of the image" />
+                    </td>
+                    <td className="px-6 py-4">{item.fullName}</td>
+                    <td className="px-6 py-4">{item.createdAt}</td>
+                    <td className="px-6 py-4">{item.roleType}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-7">
+                        <button
+                          id={index}
+                          onClick={openRequestMessageModal}  
+                          className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
+                        >
+                          View
+                        </button>
+                        <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
+                      </div>
+                    </td>
+
+                  </tr>
+                ))
+              }
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* MOdal */}
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <div className="flex justify-center">
-          <div
-            id="alert-additional-content-1"
-            className={`${openModal ? "" : "hidden"
-              } w-full bg-green-200 p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg  `}
-            role="alert"
+      {/* dialog */}
+      <Transition appear show={isOpenMessage} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeRequestMessageModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className="flex items-center">
-              <i className="bi bi-envelope-arrow-down px-4"></i>
-              <span className="sr-only">Info</span>
-              <div className="flex gap-9">
-                <h3 className="text-lg font-medium">Name: Guido van Rossum</h3>
-                <div className="">
-                  <i
-                    className="bi bi-x-square"
-                    style={{ color: "blue" }}
-                    onClick={handleCloseModal}
-                  ></i>
-                </div>
-              </div>
-            </div>
-            <div className="mt-2 mb-4 text-sm">
-              We extend a warm invitation to join our community, VM (Vitou
-              Koungmeng), dedicated to the creation of free educational videos
-              that empower learners around the globe. By becoming a VM teacher,
-              you have the opportunity to play a pivotal role in making
-              high-quality education accessible to everyone. As a member of VM,
-              you &apos ll be part of a collaborative and passionate community
-              of like-minded educators, sharing your expertise to positively
-              impact individuals who may lack traditional learning resources.
-              Imagine the global reach and influence your teachings can have,
-              transcending geographical boundaries and contributing to a more
-              knowledgeable and interconnected world. At VM, we value your
-              unique contributions, offering the flexibility to create content
-              aligned with your expertise while providing recognition and
-              appreciation for your commitment to education. Join us in this
-              transformative journey, where your passion for teaching becomes a
-              beacon of light for those seeking knowledge. Respond to this
-              invitation, and let &apos s together make education a universally
-              accessible force for positive change. Sincerely.
-              <br />
-              <br />
-              [Guido van Rossum] <br />
-              [VM Community]
-            </div>
-            <div className="flex">
-              <button
-                onClick={handleCloseModal}
-                type="button"
-                className="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <i
-                  className="bi bi-check-all px-2"
-                  style={{ color: "white" }}
-                ></i>
-                Accept
-              </button>
-              <button
-                onClick={handleCloseModal}
-                type="button"
-                className="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                <i className="bi bi-ban px-2" style={{ color: "red" }}></i>
-                Decline
-              </button>
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Requested from
+                  </Dialog.Title>
+                  
+                  <p className='text-black'>Hello world</p>
+                  <div className="mt-4 flex justify-end gap-3">
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeRequestMessageModal}
+                    >
+                      Cancle
+                    </button>
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeRequestMessageModal}
+                    >
+                      Submit to be teacher
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
           </div>
-        </div>
-      </div>
+        </Dialog>
+      </Transition>
+
 
     </section>
   );
