@@ -6,7 +6,7 @@ export const CourseRoutes = () => {
   return (
     <Routes>
       {/* <Route path="" element={<SelectCoursePage />} /> */}
-      <Route path="/:userId" element={<SelectCoursePage />} />
+      <Route path="/:course_id" element={<SelectCoursePage />} />
     </Routes>
   );
 };

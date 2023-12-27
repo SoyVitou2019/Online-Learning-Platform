@@ -1,7 +1,7 @@
-// import { SelectCourse } from "../components/SelectCourse";
+import { SelectCourse } from "../components/SelectCourse";
 import { useParams } from "react-router-dom";
 const SelectCoursePage = () => {
-  let { userId } = useParams();
-  return <h1>{userId}</h1>;
+  let { course_id } = useParams();
+  return <SelectCourse course_id={course_id} />;
 };
 export default SelectCoursePage;
