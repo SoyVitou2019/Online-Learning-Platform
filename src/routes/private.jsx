@@ -48,7 +48,7 @@ export const protectedRoutes = [
       // { path: '/users', element: <Users /> },
 
       {
-        path: "/profile",
+        path: "/profile/*",
         element: <ProfileRoutes />,
       },
       {

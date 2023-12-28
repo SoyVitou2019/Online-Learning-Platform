@@ -2,6 +2,7 @@ import { CardPortrait } from "../../../components/HomePage/CardPortrait";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { VideoList } from "./VideoList";
 
 export const SelectCourse = ({ course_id }) => {
   const graduated = [
@@ -59,7 +60,6 @@ export const SelectCourse = ({ course_id }) => {
     }
   }, [course.posts]);
 
-  console.log(postDetails);
   return (
     <section className=" bg-slate-300">
       <div className="flex mt-5 pt-5 pb-10">
@@ -131,6 +131,15 @@ export const SelectCourse = ({ course_id }) => {
                 {/* Landscape content */}
 
                 {/* Item1 */}
+                {postDetails.map((post, index) => (
+                  <VideoList
+                    key={post.id}
+                    post_id={post.id}
+                    course_id={course_id}
+                    index={index}
+                    title={post.title}
+                  />
+                ))}
                 <div className="flex items-center bg-green-300">
                   <img
                     className="w-40 aspect-video"
