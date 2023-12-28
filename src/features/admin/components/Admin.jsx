@@ -1,15 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import getUser from '../api/getUser';
+import getAllUser from '../api/getAllUser';
 
 const Admin = () => {
-  const [openModal, setOpenModal] = useState(false);
-  let [isOpen, setIsOpen] = useState(false)
-  let [isOpenMessage, setIsOpenMessage] = useState(false)
-  
-  const [identifyRequestModel, setIdentifyRequestModel] = useState(2)
-
+  const [isOpen, setIsOpen] = useState(false)
+  const [isOpenMessage, setIsOpenMessage] = useState(false)
+  const [identifyRequestModel, setIdentifyRequestModel] = useState()
+  const [roleDisplay, setRoleDisplay] = useState("users")
   const users = getUser()
+  const allusers = getAllUser()
+
   function closeRequestModal() {
     setIsOpen(false)
   }
@@ -17,23 +18,16 @@ const Admin = () => {
   function openRequestModal() {
     setIsOpen(true)
   }
-  
+
   function closeRequestMessageModal() {
     setIsOpenMessage(false)
   }
 
-  const openRequestMessageModal = () => {
-    setIdentifyRequestModel(2)  
-    console.log(identifyRequestModel)
+  const openRequestMessageModal = (id) => {
+    setIdentifyRequestModel(id)
     setIsOpenMessage(true)
   }
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
 
 
   return (
@@ -102,9 +96,24 @@ const Admin = () => {
         <div className="border-y-2">
           <div className="flex px-12 items-center py-2 ">
             <div className=" flex gap-14 pl-16 ">
-              <p>Users</p>
-              <p>Courses</p>
-              <p>Inbox</p>
+              <button
+                onClick={() => { setRoleDisplay("users") }}
+                className={roleDisplay === "users" ? 'bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg': 'px-4 py-2'}
+              >
+                All Users
+              </button>
+              <button
+                onClick={() => { setRoleDisplay("courses") }}
+                className={roleDisplay === "courses" ? 'bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg': 'px-4 py-2'}
+              >
+                Courses
+              </button>
+              <button
+                onClick={() => { setRoleDisplay("inboxs") }}
+                className={roleDisplay === "inboxs" ? 'bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg': 'px-4 py-2'}
+              >
+                Inbox
+              </button>
             </div>
             <div className=" flex gap-24 justify-end items-center flex-grow">
               <form className=" w-96">
@@ -145,31 +154,31 @@ const Admin = () => {
             </div>
           </div>
         </div>
-        {/* filter */}
+        {/* 
         <div className="border-y-2">
           <div className="flex gap-14 items-center py-2 px-36">
-            {/* button1 */}
+            
             <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
               <i className="bi bi-people"></i>
               <button className=""> User: All</button>
             </div>
-            {/* button2 */}
+            
             <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
               <i className="bi bi-chat-left-dots"></i>
               <button className=""> Requested</button>
             </div>
-            {/* button3 */}
+            
             <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
               <i className="bi bi-calendar2-check"></i>
               <button className=""> Sort by: Date</button>
             </div>
-            {/* button4 */}
+           
             <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
               <i className="bi bi-sort-down-alt"></i>
               <button className=""> Filter</button>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="relative overflow-x-auto">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -195,15 +204,39 @@ const Admin = () => {
                 </th>
               </tr>
             </thead>
+            {/* all users */}
+            <tbody className={roleDisplay === "users" ? '' : 'hidden'} >
+              {
+                allusers.map((item, index) => (
+                  <tr className="bg-white border-b " key={index}>
+                    <th scope="row" className="px-6 py-4 font-medium text-black">
+                      {item.userId}
+                    </th>
+                    <td className="px-3 py-4 w-16">
+                      <img src={item.userProfile} alt="Description of the image" />
+                    </td>
+                    <td className="px-6 py-4">{item.fullName}</td>
+                    <td className="px-6 py-4">{item.createdAt}</td>
+                    <td className="px-6 py-4">{item.roleType}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-7">
+                        <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
+                      </div>
+                    </td>
+
+                  </tr>
+                ))
+              }
+            </tbody>
             {/* user requested */}
-            <tbody>
+            <tbody className={roleDisplay === "inboxs" ? '' : 'hidden'} >
               {
                 users.map((item, index) => (
                   <tr className="bg-white border-b " key={index}>
                     <th scope="row" className="px-6 py-4 font-medium text-black">
                       {item.userId}
                     </th>
-                    <td className="px-6 py-4 w-16">
+                    <td className="px-3 py-4 w-16">
                       <img src={item.userProfile} alt="Description of the image" />
                     </td>
                     <td className="px-6 py-4">{item.fullName}</td>
@@ -213,12 +246,11 @@ const Admin = () => {
                       <div className="flex gap-7">
                         <button
                           id={item.userId}
-                          onClick={openRequestMessageModal}  
+                          onClick={() => openRequestMessageModal(item.userId)}
                           className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
                         >
                           View
                         </button>
-                        <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
                       </div>
                     </td>
 
@@ -226,6 +258,8 @@ const Admin = () => {
                 ))
               }
             </tbody>
+
+
           </table>
         </div>
       </div>
@@ -261,24 +295,29 @@ const Admin = () => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Requested from
+                    Requested from {users.map((item, index) => {
+                      return item.userId === identifyRequestModel ? item.fullName : null;
+                    })}
                   </Dialog.Title>
-                  
-                  <p className='text-black'>Hello world</p>
+                  <p className='text-black'>
+                    {users.map((item, index) => {
+                      return item.userId === identifyRequestModel ? item.message : null;
+                    })}
+                  </p>
                   <div className="mt-4 flex justify-end gap-3">
                     <button
                       type="button"
                       className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeRequestMessageModal}
                     >
-                      Cancle
+                      Reject
                     </button>
                     <button
                       type="button"
                       className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeRequestMessageModal}
                     >
-                      Submit to be teacher
+                      Accept
                     </button>
                   </div>
                 </Dialog.Panel>
