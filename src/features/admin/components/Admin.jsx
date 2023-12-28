@@ -212,7 +212,7 @@ const Admin = () => {
                     <td className="px-6 py-4">
                       <div className="flex gap-7">
                         <button
-                          id={index}
+                          id={item.userId}
                           onClick={openRequestMessageModal}  
                           className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
                         >
