@@ -33,10 +33,14 @@ const Admin = () => {
     await axios.delete(`https://coding-fairy.com/api/mock-api-resources/ols/user_request/${idDelete}`)
     setIsOpenDeleteUser(false)
   }
-  const closeDeleteUserModalWithoutDelete = async (idDelete) => {
+  const closeDeleteUserModalWithoutDelete = () => {
       setIsOpenDeleteUser(false)
   }
 
+  const closeAndRejectRequest = async (idDelete) =>{
+    await axios.delete(`https://coding-fairy.com/api/mock-api-resources/ols/user_request/${idDelete}`)
+    setIsOpenMessage(false)
+  }
 function closeRequestMessageModal() {
   setIsOpenMessage(false)
 }
@@ -172,31 +176,6 @@ return (
           </div>
         </div>
       </div>
-      {/* 
-        <div className="border-y-2">
-          <div className="flex gap-14 items-center py-2 px-36">
-            
-            <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
-              <i className="bi bi-people"></i>
-              <button className=""> User: All</button>
-            </div>
-            
-            <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
-              <i className="bi bi-chat-left-dots"></i>
-              <button className=""> Requested</button>
-            </div>
-            
-            <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
-              <i className="bi bi-calendar2-check"></i>
-              <button className=""> Sort by: Date</button>
-            </div>
-           
-            <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
-              <i className="bi bi-sort-down-alt"></i>
-              <button className=""> Filter</button>
-            </div>
-          </div>
-        </div> */}
 
       <div className="relative overflow-x-auto">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -325,7 +304,7 @@ return (
                   <button
                     type="button"
                     className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={closeRequestMessageModal}
+                    onClick={()=>{closeRequestMessageModal; closeAndRejectRequest(identifyRequestModel)}}
                   >
                     Reject
                   </button>
