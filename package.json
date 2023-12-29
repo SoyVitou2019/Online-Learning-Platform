@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "start vite --port 3333 && start json-server --watch server/db.json --port 3334",
+    "dev": "start vite --port 3333 && start json-server --watch server/meng_db.json --port 3334",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -14,6 +14,7 @@
     "@emailjs/browser": "^3.11.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.1.1",
+    "@supabase/supabase-js": "^2.39.1",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "bootstrap-icons": "^1.11.2",
