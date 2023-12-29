@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState, useEffect } from 'react'
-import getUser from '../api/getUser';
-import getAllUser from '../api/getAllUser';
+import fetchUser from '../api/getUser';
+import fetchAllUser from '../api/getAllUser';
 import axios from "axios";
 
 const Admin = () => {
@@ -11,10 +11,18 @@ const Admin = () => {
   const [identifyRequestModel, setIdentifyRequestModel] = useState()
   const [clickDelete, setClickDelete] = useState()
   const [roleDisplay, setRoleDisplay] = useState("users")
-  const [refresh_var, setRefresh_var] = useState(false)
-  const users = getUser();
-  const allusers = getAllUser();
+  const [users, setStateOfUser] = useState([])
+  const [allusers, setStateOfAllUser] = useState([])
+  
+  useEffect(()=>{
+    fetchUser();
+    
+  },[users])
 
+  useEffect(()=>{
+    fetchAllUser();
+  },[allusers])
+  
   function openRequestModal() {
     setIsOpen(true)
   }
@@ -30,14 +38,16 @@ const Admin = () => {
   }
 
   const closeDeleteUserModal = async (idDelete) => {
+    await axios.delete(`https://coding-fairy.com/api/mock-api-resources/ols/user/${idDelete}`)
+    setStateOfUser(fetchUser())
+    setStateOfAllUser(fetchAllUser())
+    setIsOpenDeleteUser(false)
     try{
       await axios.delete(`https://coding-fairy.com/api/mock-api-resources/ols/user_request/${idDelete}`)
     }
     catch(e){
       console.log("This user doesn't have request message")
     }
-    await axios.delete(`https://coding-fairy.com/api/mock-api-resources/ols/user/${idDelete}`)
-    setIsOpenDeleteUser(false)
     
   }
   const closeDeleteUserModalWithoutDelete = () => {
