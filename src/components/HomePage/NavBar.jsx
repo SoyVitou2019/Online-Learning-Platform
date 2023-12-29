@@ -36,10 +36,10 @@ export const NavBar = () => {
       </ul>
       <div className="flex items-center">
         <ul className="flex items-center space-x-6">
-          <Link to="/" className="font-semibold text-gray-700">
+          <Link to="/contact-us" className="font-semibold text-gray-700">
             Contact us
           </Link>
-          <Link to="/" className="font-semibold text-gray-700">
+          <Link to="/donate" className="font-semibold text-gray-700">
             Donate
           </Link>
         </ul>
