@@ -1,73 +1,125 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState, useEffect } from 'react'
-import fetchUser from '../api/getUser';
-import fetchAllUser from '../api/getAllUser';
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState, useEffect } from "react";
+import END_POINTS from "../../../constants/endpoints";
+
 import axios from "axios";
 
 const Admin = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isOpenMessage, setIsOpenMessage] = useState(false)
-  const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false)
-  const [identifyRequestModel, setIdentifyRequestModel] = useState()
-  const [clickDelete, setClickDelete] = useState()
-  const [roleDisplay, setRoleDisplay] = useState("users")
-  const [users, setStateOfUser] = useState([])
-  const [allusers, setStateOfAllUser] = useState([])
-  
-  useEffect(()=>{
-    fetchUser();
-    
-  },[users])
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMessage, setIsOpenMessage] = useState(false);
+  const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
+  const [identifyRequestModel, setIdentifyRequestModel] = useState();
+  const [clickDelete, setClickDelete] = useState();
+  const [roleDisplay, setRoleDisplay] = useState("users");
+  const [users, setStateOfUser] = useState([]);
+  const [allusers, setStateOfAllUser] = useState([]);
 
-  useEffect(()=>{
+  const fetchAllUser = async () => {
+    try {
+      const response1 = await axios.get(END_POINTS.USER);
+
+      const userMsgs = response1.data; // Assuming the API response is an array of user requests
+      // Fetch user information for each user request
+      const userPromises = userMsgs.map(async (item) => {
+        return {
+          userId: item.id,
+          userProfile: item.profileUrl,
+          fullName: item.firstName + " " + item.lastName,
+          createdAt: item.createAt.slice(0, 10),
+          roleType: item.roleType,
+        };
+      });
+
+      // Wait for all user information requests to complete
+      const userInfoResults = await Promise.all(userPromises);
+
+      // Update state with the combined user information
+      setStateOfAllUser(userInfoResults);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchUser = async () => {
+    console.log("work");
+    try {
+      const response1 = await axios.get(END_POINTS.USER_REQUEST);
+
+      const userMsgs = response1.data; // Assuming the API response is an array of user requests
+
+      // Fetch user information for each user request
+      const userPromises = userMsgs.map(async (item) => {
+        const response2 = await axios.get(END_POINTS.USER + item.user_id);
+
+        return {
+          userId: item.user_id,
+          userProfile: response2.data.profileUrl,
+          fullName: response2.data.firstName + " " + response2.data.lastName,
+          createdAt: response2.data.createAt.slice(0, 10),
+          roleType: response2.data.roleType,
+          message: item.request_msg,
+        };
+      });
+
+      // Wait for all user information requests to complete
+      const userInfoResults = await Promise.all(userPromises);
+
+      // Update state with the combined user information
+      setStateOfUser(userInfoResults);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchAllUser();
-  },[allusers])
-  
+  }, []);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   function openRequestModal() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
 
   function closeRequestModal() {
-    setIsOpen(false)
+    setIsOpen(false);
   }
 
-
   function openDeleteUserModal(id) {
-    setClickDelete(id)
-    setIsOpenDeleteUser(true)
+    setClickDelete(id);
+    setIsOpenDeleteUser(true);
   }
 
   const closeDeleteUserModal = async (idDelete) => {
-    await axios.delete(`https://coding-fairy.com/api/mock-api-resources/ols/user/${idDelete}`)
-    setStateOfUser(fetchUser())
-    setStateOfAllUser(fetchAllUser())
-    setIsOpenDeleteUser(false)
-    try{
-      await axios.delete(`https://coding-fairy.com/api/mock-api-resources/ols/user_request/${idDelete}`)
+    await axios.delete(END_POINTS.USER + idDelete);
+    fetchAllUser();
+    fetchUser();
+
+    setIsOpenDeleteUser(false);
+    try {
+      await axios.delete(END_POINTS.USER_REQUEST + idDelete);
+    } catch (e) {
+      console.log("This user doesn't have request message");
     }
-    catch(e){
-      console.log("This user doesn't have request message")
-    }
-    
-  }
+  };
   const closeDeleteUserModalWithoutDelete = () => {
-    setIsOpenDeleteUser(false)
-  }
+    setIsOpenDeleteUser(false);
+  };
 
   const closeAndRejectRequest = async (idDelete) => {
-    await axios.delete(`https://coding-fairy.com/api/mock-api-resources/ols/user_request/${idDelete}`)
-    setIsOpenMessage(false)
-  }
+    await axios.delete(END_POINTS.USER + idDelete);
+    setIsOpenMessage(false);
+  };
   function closeRequestMessageModal() {
-    setIsOpenMessage(false)
+    setIsOpenMessage(false);
   }
 
   const openRequestMessageModal = (id) => {
-    setIdentifyRequestModel(id)
-    setIsOpenMessage(true)
-  }
-
-
+    setIdentifyRequestModel(id);
+    setIsOpenMessage(true);
+  };
 
   return (
     <section className={`bg-slate-300 ${openRequestModal}`}>
@@ -105,7 +157,12 @@ const Admin = () => {
                     Do you want to be a teacher for upload video?
                   </Dialog.Title>
                   <div className="mt-2">
-                    <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-800 bg-gray-50 rounded-lg" placeholder="Write your thoughts here..."></textarea>
+                    <textarea
+                      id="message"
+                      rows="4"
+                      className="block p-2.5 w-full text-sm text-gray-800 bg-gray-50 rounded-lg"
+                      placeholder="Write your thoughts here..."
+                    ></textarea>
                   </div>
 
                   <div className="mt-4 flex justify-end gap-3">
@@ -136,20 +193,38 @@ const Admin = () => {
           <div className="flex px-12 items-center py-2 ">
             <div className=" flex gap-14 pl-16 ">
               <button
-                onClick={() => { setRoleDisplay("users") }}
-                className={roleDisplay === "users" ? 'bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg' : 'px-4 py-2'}
+                onClick={() => {
+                  setRoleDisplay("users");
+                }}
+                className={
+                  roleDisplay === "users"
+                    ? "bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg"
+                    : "px-4 py-2"
+                }
               >
                 All Users
               </button>
               <button
-                onClick={() => { setRoleDisplay("courses") }}
-                className={roleDisplay === "courses" ? 'bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg' : 'px-4 py-2'}
+                onClick={() => {
+                  setRoleDisplay("courses");
+                }}
+                className={
+                  roleDisplay === "courses"
+                    ? "bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg"
+                    : "px-4 py-2"
+                }
               >
                 Courses
               </button>
               <button
-                onClick={() => { setRoleDisplay("inboxs") }}
-                className={roleDisplay === "inboxs" ? 'bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg' : 'px-4 py-2'}
+                onClick={() => {
+                  setRoleDisplay("inboxs");
+                }}
+                className={
+                  roleDisplay === "inboxs"
+                    ? "bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg"
+                    : "px-4 py-2"
+                }
               >
                 Inbox
               </button>
@@ -219,67 +294,75 @@ const Admin = () => {
               </tr>
             </thead>
             {/* all users */}
-            <tbody className={roleDisplay === "users" ? '' : 'hidden'} >
-              {
-                allusers.map((item, index) => (
-                  <tr className="bg-white border-b " key={index}>
-                    <th scope="row" className="px-6 py-4 font-medium text-black">
-                      {item.userId}
-                    </th>
-                    <td className="px-3 py-4 w-16">
-                      <img src={item.userProfile} alt="Description of the image" />
-                    </td>
-                    <td className="px-6 py-4">{item.fullName}</td>
-                    <td className="px-6 py-4">{item.createdAt}</td>
-                    <td className="px-6 py-4">{item.roleType}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-7" onClick={() => { openDeleteUserModal(item.userId) }}>
-                        <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              }
+            <tbody className={roleDisplay === "users" ? "" : "hidden"}>
+              {allusers.map((item, index) => (
+                <tr className="bg-white border-b " key={index}>
+                  <th scope="row" className="px-6 py-4 font-medium text-black">
+                    {item.userId}
+                  </th>
+                  <td className="px-3 py-4 w-16">
+                    <img
+                      src={item.userProfile}
+                      alt="Description of the image"
+                    />
+                  </td>
+                  <td className="px-6 py-4">{item.fullName}</td>
+                  <td className="px-6 py-4">{item.createdAt}</td>
+                  <td className="px-6 py-4">{item.roleType}</td>
+                  <td className="px-6 py-4">
+                    <div
+                      className="flex gap-7"
+                      onClick={() => {
+                        openDeleteUserModal(item.userId);
+                      }}
+                    >
+                      <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
             {/* user requested */}
-            <tbody className={roleDisplay === "inboxs" ? '' : 'hidden'} >
-              {
-                users.map((item, index) => (
-                  <tr className="bg-white border-b " key={index}>
-                    <th scope="row" className="px-6 py-4 font-medium text-black">
-                      {item.userId}
-                    </th>
-                    <td className="px-3 py-4 w-16">
-                      <img src={item.userProfile} alt="Description of the image" />
-                    </td>
-                    <td className="px-6 py-4">{item.fullName}</td>
-                    <td className="px-6 py-4">{item.createdAt}</td>
-                    <td className="px-6 py-4">{item.roleType}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-7">
-                        <button
-                          id={item.userId}
-                          onClick={() => openRequestMessageModal(item.userId)}
-                          className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
-                        >
-                          View
-                        </button>
-                      </div>
-                    </td>
-
-                  </tr>
-                ))
-              }
+            <tbody className={roleDisplay === "inboxs" ? "" : "hidden"}>
+              {users.map((item, index) => (
+                <tr className="bg-white border-b " key={index}>
+                  <th scope="row" className="px-6 py-4 font-medium text-black">
+                    {item.userId}
+                  </th>
+                  <td className="px-3 py-4 w-16">
+                    <img
+                      src={item.userProfile}
+                      alt="Description of the image"
+                    />
+                  </td>
+                  <td className="px-6 py-4">{item.fullName}</td>
+                  <td className="px-6 py-4">{item.createdAt}</td>
+                  <td className="px-6 py-4">{item.roleType}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-7">
+                      <button
+                        id={item.userId}
+                        onClick={() => openRequestMessageModal(item.userId)}
+                        className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
+                      >
+                        View
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
-
-
           </table>
         </div>
       </div>
 
       {/* dialog inbox */}
       <Transition appear show={isOpenMessage} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeRequestMessageModal}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closeRequestMessageModal}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -308,20 +391,28 @@ const Admin = () => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Requested from {users.map((item, index) => {
-                      return item.userId === identifyRequestModel ? item.fullName : null;
+                    Requested from{" "}
+                    {users.map((item, index) => {
+                      return item.userId === identifyRequestModel
+                        ? item.fullName
+                        : null;
                     })}
                   </Dialog.Title>
-                  <p className='text-black'>
+                  <p className="text-black">
                     {users.map((item, index) => {
-                      return item.userId === identifyRequestModel ? item.message : null;
+                      return item.userId === identifyRequestModel
+                        ? item.message
+                        : null;
                     })}
                   </p>
                   <div className="mt-4 flex justify-end gap-3">
                     <button
                       type="button"
                       className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={() => { closeRequestMessageModal; closeAndRejectRequest(identifyRequestModel) }}
+                      onClick={() => {
+                        closeRequestMessageModal;
+                        closeAndRejectRequest(identifyRequestModel);
+                      }}
                     >
                       Reject
                     </button>
@@ -342,7 +433,11 @@ const Admin = () => {
 
       {/* dialog delete */}
       <Transition appear show={isOpenDeleteUser} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeDeleteUserModalWithoutDelete}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closeDeleteUserModalWithoutDelete}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -371,9 +466,11 @@ const Admin = () => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Do you want to delete {allusers.map((item, index) => {
+                    Do you want to delete{" "}
+                    {allusers.map((item, index) => {
                       return item.userId === clickDelete ? item.fullName : null;
-                    })} ?
+                    })}{" "}
+                    ?
                   </Dialog.Title>
                   <div className="mt-4 flex justify-end gap-3">
                     <button
@@ -397,9 +494,6 @@ const Admin = () => {
           </div>
         </Dialog>
       </Transition>
-
-
-
     </section>
   );
 };
