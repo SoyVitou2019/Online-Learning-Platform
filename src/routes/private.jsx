@@ -73,10 +73,6 @@ export const protectedRoutes = [
         path: "admin",
         element: <AdminPage />,
       },
-      {
-        path: "auth/reset-password",
-        element: <ResetPasswordPage />,
-      },
 
       {
         path: "home",

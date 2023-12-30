@@ -53,27 +53,8 @@ const RegisterForm = () => {
       <h1 className="text-2xl font-semibold mb-6 text-center">Welcome to VM</h1>
       <div className="flex items-center justify-center">
         <div className="max-w-md mx-auto p-6 bg-white rounded shadow-md">
-          <h2 className="text-2xl font-semibold mb-6">Register</h2>
+          <h2 className="text-2xl font-semibold mb-6">Change password</h2>
           <form onSubmit={handleSubmit}>
-            {/* Email Address */}
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-gray-600 text-sm font-medium mb-2"
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                required
-              />
-            </div>
-
             {/* Password */}
             <div className="mb-4">
               <label
@@ -181,7 +162,10 @@ const RegisterForm = () => {
 
             <p className="text-gray-600 text-sm mt-4">
               Already registered?{" "}
-              <Link to="/auth/login" className="text-blue-500 hover:underline">
+              <Link
+                to="/auth/register"
+                className="text-blue-500 hover:underline"
+              >
                 Log in here
               </Link>
             </p>
