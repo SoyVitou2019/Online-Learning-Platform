@@ -1,31 +1,34 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { supabase } from "../api/client";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAuth } from "../api/Auth";
 
 const ResetPasswordPage = () => {
+  const navigate = useNavigate();
+  const { updatePassword } = useAuth();
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
   });
 
   const handleChange = (e) => {
-    setPassword(e.target.value);
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    /*add validation */
     try {
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "http://example.com/account/update-password",
-      });
-
+      const { data, error } = await updatePassword(formData.password);
+      console.log(data);
+      console.log(error);
       if (error) throw error;
 
       Swal.fire({
         icon: "success",
-        title: "Login success",
+        title: "Password updated successfully",
       });
 
       navigate("/");
@@ -36,10 +39,9 @@ const ResetPasswordPage = () => {
         text: error,
       });
     }
-
-    // Add your logic for handling the forgot password request, such as sending a reset email.
-    console.log("Forgot Password form submitted with email:", email);
   };
+
+  // Add your logic for handling the forgot password request, such as sending a reset email.  };
 
   return (
     <div className="h-screen flex flex-col justify-center">

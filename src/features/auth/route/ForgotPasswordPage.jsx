@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../api/client";
 import Swal from "sweetalert2";
 
 const ForgotPasswordPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
   const handleChange = (e) => {
@@ -14,21 +15,18 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
 
     try {
-      const { data, error } = await supabase.auth.resetPasswordForEmail(
-        "hello@example.com",
-        {
-          redirectTo: "http://example.com/account/update-password",
-        }
-      );
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: "http://localhost:3333/auth/reset-password",
+      });
 
       if (error) throw error;
 
       Swal.fire({
         icon: "success",
-        title: "Login success",
+        title: "Reset link is sent to email",
       });
 
-      navigate("/");
+      navigate("/auth/login");
     } catch (error) {
       Swal.fire({
         icon: "error",

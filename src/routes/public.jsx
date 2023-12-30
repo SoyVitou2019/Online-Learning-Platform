@@ -8,6 +8,7 @@ import { HomeRoutes } from "../features/homepage/route";
 import { LandingPage } from "../features/landing/route/LandingPage";
 import { ProfileRoutes } from "../features/profile/route";
 import UploadPage from "../features/teach/route/UploadPage";
+import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
 
 export const publicRoutes = [
   {
@@ -31,6 +32,7 @@ export const commonRoutes = [
     path: "/donate",
     element: <DonatePage />,
   },
+
   {
     path: "*",
     element: <RouteError />,

@@ -4,6 +4,7 @@ import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
 import ForgotPasswordPage from "./ForgotPasswordPage";
 import ResetPasswordPage from "./ResetPasswordPage";
+import RouteError from "../../../components/RouteError";
 
 export const AuthRoutes = () => {
   return (

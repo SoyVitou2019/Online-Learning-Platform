@@ -14,6 +14,8 @@ import { SelectCourse } from "../features/course/components/SelectCourse";
 import SelectCoursePage from "../features/course/route/SelectCoursePage";
 import { CourseRoutes } from "../features/course/route";
 import RouteError from "../components/RouteError";
+import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
+
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -70,6 +72,10 @@ export const protectedRoutes = [
       {
         path: "admin",
         element: <AdminPage />,
+      },
+      {
+        path: "auth/reset-password",
+        element: <ResetPasswordPage />,
       },
 
       {
