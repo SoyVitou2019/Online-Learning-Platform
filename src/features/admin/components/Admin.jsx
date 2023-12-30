@@ -41,7 +41,6 @@ const Admin = () => {
   };
 
   const fetchUser = async () => {
-    console.log("work");
     try {
       const response1 = await axios.get(END_POINTS.USER_REQUEST);
 
@@ -58,6 +57,7 @@ const Admin = () => {
           createdAt: response2.data.createAt.slice(0, 10),
           roleType: response2.data.roleType,
           message: item.request_msg,
+          id: item.id
         };
       });
 
@@ -91,18 +91,24 @@ const Admin = () => {
     setClickDelete(id);
     setIsOpenDeleteUser(true);
   }
-
+  
   const closeDeleteUserModal = async (idDelete) => {
     await axios.delete(END_POINTS.USER + idDelete);
+    
+    users.map(async (item) => {
+      if (item.userId === idDelete) {
+        try {
+          await axios.delete(END_POINTS.USER_REQUEST + item.id);
+        } catch (e) {
+          console.log("This user doesn't have request message");
+        }
+      }
+    })
     fetchAllUser();
     fetchUser();
-
+    
     setIsOpenDeleteUser(false);
-    try {
-      await axios.delete(END_POINTS.USER_REQUEST + idDelete);
-    } catch (e) {
-      console.log("This user doesn't have request message");
-    }
+
   };
   const closeDeleteUserModalWithoutDelete = () => {
     setIsOpenDeleteUser(false);
@@ -120,7 +126,6 @@ const Admin = () => {
     setIdentifyRequestModel(id);
     setIsOpenMessage(true);
   };
-
   return (
     <section className={`bg-slate-300 ${openRequestModal}`}>
       {/* dialog */}
