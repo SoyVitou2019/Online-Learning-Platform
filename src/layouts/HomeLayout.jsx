@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { NavBar } from "../components/HomePage/NavBar";
-import SideBar from "../components/HomePage/SideBar";
+import { NavBar } from "./HomePage/NavBar";
+import SideBar from "./HomePage/SideBar";
 
-
-export const HomeLayout = ({ children }) => {
+const LayoutHome = ({ children }) => {
     return (
         <>
-            <div className="flex flex-col h-screen">
+            <div>
                 <NavBar />
+            </div>
 
-                <div className="flex items-stretch overflow-hidden">
+            <div className="flex justify-start">
+                <div className="sticky">
                     <SideBar />
-
-                    <div className="px-5 w-full overflow-y-auto">{children}</div>
                 </div>
+                <div className="mx-5 w-full">{children}</div>
             </div>
         </>
     );
 };
+export default LayoutHome;

@@ -1,10 +1,10 @@
-import LayoutHome from "../../../components/LayoutHome";
 import { UserProfileSection } from "../components/UserProfileSection";
 
+import { useParams } from "react-router-dom";
+
 const ProfilePage = () => {
-    return (
-        <UserProfileSection />
-    );
+  let { id } = useParams();
+  return <UserProfileSection user_id={id} />;
 };
 
 export default ProfilePage;

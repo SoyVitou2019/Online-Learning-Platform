@@ -12,6 +12,8 @@ import { ProfileRoutes } from "../features/profile/route";
 import UploadPage from "../features/teach/route/UploadPage";
 import { SelectCourse } from "../features/course/components/SelectCourse";
 import SelectCoursePage from "../features/course/route/SelectCoursePage";
+import { CourseRoutes } from "../features/course/route";
+import RouteError from "../components/RouteError";
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -24,14 +26,20 @@ import SelectCoursePage from "../features/course/route/SelectCoursePage";
 
 const App = () => {
   return (
+    // <HomeLayout>
+    //   <Suspense
+    //     fallback={
+    //       <div className="h-full w-full flex items-center justify-center">
+    //         <Spinner size="xl" />
+    //       </div>
+    //     }
+    //   >
+    //     <Outlet />
+    //   </Suspense>
+    // </HomeLayout>
+
     <HomeLayout>
-      <Suspense
-        fallback={
-          <div className="h-full w-full flex items-center justify-center">
-            <Spinner size="xl" />
-          </div>
-        }
-      >
+      <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>
     </HomeLayout>
@@ -42,30 +50,36 @@ export const protectedRoutes = [
   {
     path: "/",
     element: <App />,
+    errorElement: <RouteError />,
     children: [
       // { path: '/discussions/*', element: <DiscussionsRoutes /> },
       // { path: '/users', element: <Users /> },
 
       {
-        path: "/profile",
+        path: "profile/*",
         element: <ProfileRoutes />,
       },
       {
-        path: "/course",
-        element: <SelectCoursePage />,
+        path: "course/*",
+        element: <CourseRoutes />,
       },
       {
-        path: "/upload",
+        path: "upload",
         element: <UploadPage />,
       },
       {
-        path: "/admin",
+        path: "admin",
         element: <AdminPage />,
       },
 
       {
-        path: "",
+        path: "home",
         element: <HomeRoutes />,
+      },
+
+      {
+        path: "",
+        element: <Navigate to="/home" />,
       },
 
       // { path: '/', element: <Dashboard /> },

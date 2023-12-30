@@ -4,15 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3333",
+    "dev": "start vite --port 3333 && start json-server --watch server/meng_db.json --port 3334",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "startDev": "nodemon ./src/features/auth/api/server.js"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.1.1",
+    "@supabase/supabase-js": "^2.39.1",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "bootstrap-icons": "^1.11.2",
@@ -20,6 +22,8 @@
     "cookies": "^0.8.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "emailjs": "^4.0.3",
+    "emailjs-com": "^3.2.0",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "json-server": "^0.17.4",
@@ -29,7 +33,9 @@
     "multer": "^1.4.5-lts.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-loading-skeleton": "^3.3.1",
     "react-router-dom": "^6.17.0",
+    "sweetalert2": "^11.10.2",
     "universal-cookie": "^6.1.1"
   },
   "devDependencies": {

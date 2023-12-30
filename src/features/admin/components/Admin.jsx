@@ -1,25 +1,233 @@
-import { useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState, useEffect } from "react";
+import END_POINTS from "../../../constants/endpoints";
+
+import axios from "axios";
 
 const Admin = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMessage, setIsOpenMessage] = useState(false);
+  const [isOpenDeleteUser, setIsOpenDeleteUser] = useState(false);
+  const [identifyRequestModel, setIdentifyRequestModel] = useState();
+  const [clickDelete, setClickDelete] = useState();
+  const [roleDisplay, setRoleDisplay] = useState("users");
+  const [users, setStateOfUser] = useState([]);
+  const [allusers, setStateOfAllUser] = useState([]);
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
+  const fetchAllUser = async () => {
+    try {
+      const response1 = await axios.get(END_POINTS.USER);
+
+      const userMsgs = response1.data; // Assuming the API response is an array of user requests
+      // Fetch user information for each user request
+      const userPromises = userMsgs.map(async (item) => {
+        return {
+          userId: item.id,
+          userProfile: item.profileUrl,
+          fullName: item.firstName + " " + item.lastName,
+          createdAt: item.createAt.slice(0, 10),
+          roleType: item.roleType,
+        };
+      });
+
+      // Wait for all user information requests to complete
+      const userInfoResults = await Promise.all(userPromises);
+
+      // Update state with the combined user information
+      setStateOfAllUser(userInfoResults);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
-  const handleCloseModal = () => {
-    setOpenModal(false);
+
+  const fetchUser = async () => {
+    console.log("work");
+    try {
+      const response1 = await axios.get(END_POINTS.USER_REQUEST);
+
+      const userMsgs = response1.data; // Assuming the API response is an array of user requests
+
+      // Fetch user information for each user request
+      const userPromises = userMsgs.map(async (item) => {
+        const response2 = await axios.get(END_POINTS.USER + item.user_id);
+
+        return {
+          userId: item.user_id,
+          userProfile: response2.data.profileUrl,
+          fullName: response2.data.firstName + " " + response2.data.lastName,
+          createdAt: response2.data.createAt.slice(0, 10),
+          roleType: response2.data.roleType,
+          message: item.request_msg,
+        };
+      });
+
+      // Wait for all user information requests to complete
+      const userInfoResults = await Promise.all(userPromises);
+
+      // Update state with the combined user information
+      setStateOfUser(userInfoResults);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllUser();
+  }, []);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  function openRequestModal() {
+    setIsOpen(true);
+  }
+
+  function closeRequestModal() {
+    setIsOpen(false);
+  }
+
+  function openDeleteUserModal(id) {
+    setClickDelete(id);
+    setIsOpenDeleteUser(true);
+  }
+
+  const closeDeleteUserModal = async (idDelete) => {
+    await axios.delete(END_POINTS.USER + idDelete);
+    fetchAllUser();
+    fetchUser();
+
+    setIsOpenDeleteUser(false);
+    try {
+      await axios.delete(END_POINTS.USER_REQUEST + idDelete);
+    } catch (e) {
+      console.log("This user doesn't have request message");
+    }
+  };
+  const closeDeleteUserModalWithoutDelete = () => {
+    setIsOpenDeleteUser(false);
+  };
+
+  const closeAndRejectRequest = async (idDelete) => {
+    await axios.delete(END_POINTS.USER + idDelete);
+    setIsOpenMessage(false);
+  };
+  function closeRequestMessageModal() {
+    setIsOpenMessage(false);
+  }
+
+  const openRequestMessageModal = (id) => {
+    setIdentifyRequestModel(id);
+    setIsOpenMessage(true);
   };
 
   return (
-    <section className={`bg-slate-300 ${openModal}`}>
+    <section className={`bg-slate-300 ${openRequestModal}`}>
+      {/* dialog */}
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeRequestModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Do you want to be a teacher for upload video?
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <textarea
+                      id="message"
+                      rows="4"
+                      className="block p-2.5 w-full text-sm text-gray-800 bg-gray-50 rounded-lg"
+                      placeholder="Write your thoughts here..."
+                    ></textarea>
+                  </div>
+
+                  <div className="mt-4 flex justify-end gap-3">
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeRequestModal}
+                    >
+                      Cancle
+                    </button>
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeRequestModal}
+                    >
+                      Submit to be teacher
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
       <div className="h-screen">
         {/* Header */}
         <div className="border-y-2">
           <div className="flex px-12 items-center py-2 ">
             <div className=" flex gap-14 pl-16 ">
-              <p>Users</p>
-              <p>Courses</p>
-              <p>Inbox</p>
+              <button
+                onClick={() => {
+                  setRoleDisplay("users");
+                }}
+                className={
+                  roleDisplay === "users"
+                    ? "bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg"
+                    : "px-4 py-2"
+                }
+              >
+                All Users
+              </button>
+              <button
+                onClick={() => {
+                  setRoleDisplay("courses");
+                }}
+                className={
+                  roleDisplay === "courses"
+                    ? "bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg"
+                    : "px-4 py-2"
+                }
+              >
+                Courses
+              </button>
+              <button
+                onClick={() => {
+                  setRoleDisplay("inboxs");
+                }}
+                className={
+                  roleDisplay === "inboxs"
+                    ? "bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg"
+                    : "px-4 py-2"
+                }
+              >
+                Inbox
+              </button>
             </div>
             <div className=" flex gap-24 justify-end items-center flex-grow">
               <form className=" w-96">
@@ -56,32 +264,7 @@ const Admin = () => {
                   />
                 </div>
               </form>
-              <p>Upload</p>
-            </div>
-          </div>
-        </div>
-        {/* filter */}
-        <div className="border-y-2">
-          <div className="flex gap-14 items-center py-2 px-36">
-            {/* button1 */}
-            <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
-              <i className="bi bi-people"></i>
-              <button className=""> User: All</button>
-            </div>
-            {/* button2 */}
-            <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
-              <i className="bi bi-chat-left-dots"></i>
-              <button className=""> Requested</button>
-            </div>
-            {/* button3 */}
-            <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
-              <i className="bi bi-calendar2-check"></i>
-              <button className=""> Sort by: Date</button>
-            </div>
-            {/* button4 */}
-            <div className="flex gap-2 bg-white text-black py-2 px-4 rounded hover:bg-slate-100 active:bg-green-300">
-              <i className="bi bi-sort-down-alt"></i>
-              <button className=""> Filter</button>
+              <button onClick={() => setIsOpen(true)}>Upload</button>
             </div>
           </div>
         </div>
@@ -110,109 +293,207 @@ const Admin = () => {
                 </th>
               </tr>
             </thead>
-            <tbody>
-              <tr className="bg-white border-b ">
-                <th scope="row" className="px-6 py-4 font-medium text-black">
-                  1
-                </th>
-                <td className="px-6 py-4">
-                  <i
-                    className="bi bi-person-circle w-20 text-6xl "
-                    style={{ color: "black" }}
-                  ></i>
-                </td>
-                <td className="px-6 py-4">Eong Koungmeng</td>
-                <td className="px-6 py-4">19 Jan 2012</td>
-                <td className="px-6 py-4">Student</td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-7">
-                    <button
-                      onClick={handleOpenModal}
-                      className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
+            {/* all users */}
+            <tbody className={roleDisplay === "users" ? "" : "hidden"}>
+              {allusers.map((item, index) => (
+                <tr className="bg-white border-b " key={index}>
+                  <th scope="row" className="px-6 py-4 font-medium text-black">
+                    {item.userId}
+                  </th>
+                  <td className="px-3 py-4 w-16">
+                    <img
+                      src={item.userProfile}
+                      alt="Description of the image"
+                    />
+                  </td>
+                  <td className="px-6 py-4">{item.fullName}</td>
+                  <td className="px-6 py-4">{item.createdAt}</td>
+                  <td className="px-6 py-4">{item.roleType}</td>
+                  <td className="px-6 py-4">
+                    <div
+                      className="flex gap-7"
+                      onClick={() => {
+                        openDeleteUserModal(item.userId);
+                      }}
                     >
-                      View
-                    </button>
-                    <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
-                  </div>
-                </td>
-              </tr>
+                      <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            {/* user requested */}
+            <tbody className={roleDisplay === "inboxs" ? "" : "hidden"}>
+              {users.map((item, index) => (
+                <tr className="bg-white border-b " key={index}>
+                  <th scope="row" className="px-6 py-4 font-medium text-black">
+                    {item.userId}
+                  </th>
+                  <td className="px-3 py-4 w-16">
+                    <img
+                      src={item.userProfile}
+                      alt="Description of the image"
+                    />
+                  </td>
+                  <td className="px-6 py-4">{item.fullName}</td>
+                  <td className="px-6 py-4">{item.createdAt}</td>
+                  <td className="px-6 py-4">{item.roleType}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-7">
+                      <button
+                        id={item.userId}
+                        onClick={() => openRequestMessageModal(item.userId)}
+                        className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
+                      >
+                        View
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* MOdal */}
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <div className="flex justify-center">
-          <div
-            id="alert-additional-content-1"
-            className={`${
-              openModal ? "" : "hidden"
-            } w-full bg-green-200 p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg  `}
-            role="alert"
+      {/* dialog inbox */}
+      <Transition appear show={isOpenMessage} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closeRequestMessageModal}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className="flex items-center">
-              <i className="bi bi-envelope-arrow-down px-4"></i>
-              <span className="sr-only">Info</span>
-              <div className="flex gap-9">
-                <h3 className="text-lg font-medium">Name: Guido van Rossum</h3>
-                <div className="">
-                  <i
-                    className="bi bi-x-square"
-                    style={{ color: "blue" }}
-                    onClick={handleCloseModal}
-                  ></i>
-                </div>
-              </div>
-            </div>
-            <div className="mt-2 mb-4 text-sm">
-              We extend a warm invitation to join our community, VM (Vitou
-              Koungmeng), dedicated to the creation of free educational videos
-              that empower learners around the globe. By becoming a VM teacher,
-              you have the opportunity to play a pivotal role in making
-              high-quality education accessible to everyone. As a member of VM,
-              you &apos ll be part of a collaborative and passionate community
-              of like-minded educators, sharing your expertise to positively
-              impact individuals who may lack traditional learning resources.
-              Imagine the global reach and influence your teachings can have,
-              transcending geographical boundaries and contributing to a more
-              knowledgeable and interconnected world. At VM, we value your
-              unique contributions, offering the flexibility to create content
-              aligned with your expertise while providing recognition and
-              appreciation for your commitment to education. Join us in this
-              transformative journey, where your passion for teaching becomes a
-              beacon of light for those seeking knowledge. Respond to this
-              invitation, and let &apos s together make education a universally
-              accessible force for positive change. Sincerely.
-              <br />
-              <br />
-              [Guido van Rossum] <br />
-              [VM Community]
-            </div>
-            <div className="flex">
-              <button
-                onClick={handleCloseModal}
-                type="button"
-                className="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <i
-                  className="bi bi-check-all px-2"
-                  style={{ color: "white" }}
-                ></i>
-                Accept
-              </button>
-              <button
-                onClick={handleCloseModal}
-                type="button"
-                className="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                <i className="bi bi-ban px-2" style={{ color: "red" }}></i>
-                Decline
-              </button>
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Requested from{" "}
+                    {users.map((item, index) => {
+                      return item.userId === identifyRequestModel
+                        ? item.fullName
+                        : null;
+                    })}
+                  </Dialog.Title>
+                  <p className="text-black">
+                    {users.map((item, index) => {
+                      return item.userId === identifyRequestModel
+                        ? item.message
+                        : null;
+                    })}
+                  </p>
+                  <div className="mt-4 flex justify-end gap-3">
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={() => {
+                        closeRequestMessageModal;
+                        closeAndRejectRequest(identifyRequestModel);
+                      }}
+                    >
+                      Reject
+                    </button>
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeRequestMessageModal}
+                    >
+                      Accept
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
           </div>
-        </div>
-      </div>
+        </Dialog>
+      </Transition>
+
+      {/* dialog delete */}
+      <Transition appear show={isOpenDeleteUser} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closeDeleteUserModalWithoutDelete}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Do you want to delete{" "}
+                    {allusers.map((item, index) => {
+                      return item.userId === clickDelete ? item.fullName : null;
+                    })}{" "}
+                    ?
+                  </Dialog.Title>
+                  <div className="mt-4 flex justify-end gap-3">
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeDeleteUserModalWithoutDelete}
+                    >
+                      Cancle
+                    </button>
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={() => closeDeleteUserModal(clickDelete)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </section>
   );
 };
