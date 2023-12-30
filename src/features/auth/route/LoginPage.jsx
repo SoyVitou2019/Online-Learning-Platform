@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../api/client";
 import Swal from "sweetalert2";
+import { useAuth } from "../api/Auth";
 
 const LoginPage = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -20,10 +22,7 @@ const LoginPage = () => {
     // Add your login logic here, such as API calls or other actions.
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
+      const { data, error } = await login(formData.email, formData.password);
 
       if (error) throw error;
 
