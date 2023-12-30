@@ -34,15 +34,16 @@ function HomePageCardList() {
             key={course.id}
             showDetail={true}
             title={course.course_name}
-            desc={course.couse_description}
+            desc={course.course_description}
             author={course.created_by}
             category={course.category_id}
+            course_id={course.id}
           />
         ))}
 
         <CardPortrait
           showDetail={true}
-          title="Hellasdfasdfasdfasdfasdf"
+          title="Python Course 2023 Beginner"
           desc="hello my name is koungmeng, my name is koungmenghello my name is koungmeng, my name is koungmenghello my name is koungmeng, my name is koungmeng"
           author="koungmeng"
           category={"helllo"}

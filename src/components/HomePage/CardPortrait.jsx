@@ -1,17 +1,25 @@
+import { Link } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
-export const CardPortrait = ({ showDetail, title, desc, author, category }) => {
+export const CardPortrait = ({
+  showDetail,
+  title,
+  desc,
+  author,
+  category,
+  course_id,
+}) => {
   return (
     <div className="w-full bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700">
-      <a href="#">
+      <Link to={"/course/" + course_id}>
         <img className="w-full" src="https://fakeimg.pl/1600x900" alt="" />
-      </a>
+      </Link>
       <div className="p-5">
         <a href="#">
-          <h5 className="mb-2 line-clamp-2 overflow-ellipsis text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h5 className="mb-2 line-clamp-1 overflow-ellipsis text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {title}
           </h5>
         </a>
-        <p className="mb-3 line-clamp-2 overflow-ellipsis font-normal text-gray-700 dark:text-gray-400">
+        <p className="mb-3 line-clamp-1 overflow-ellipsis font-normal text-gray-700 dark:text-gray-400">
           {desc}
         </p>
         {showDetail && (
