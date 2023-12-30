@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function SideBar({
-    isSidebarOpen, setIsSidebarOpen, toggleSidebar
-}) {
+export default function SideBar() {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
 
     return (
-        <div className="">
+        <div className="flex flex-1 ">
             <aside
                 id="logo-sidebar"
-                className={`top-0 left-0 w-full h-full z-40 transition-transform ${isSidebarOpen ? "hidden" : "block"
-                    } `}
+                className={`  ${isSidebarOpen ? "hidden" : "block"} `}
                 aria-label="Sidebar"
             >
-                <div className="h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
+                <div className="h-full  px-3 py-4 bg-gray-50 dark:bg-gray-700">
                     <div className="flex justify-start items-center ps-2.5 mb-5">
                         <Link to="/profile">
                             <i
@@ -69,6 +71,7 @@ export default function SideBar({
                                 </span>
                             </Link>
                         </li>
+>>>>>>> 680921ab9fda04364b9cb4e6789d88ba990c877a
 
                         <li>
                             <Link
@@ -105,7 +108,7 @@ export default function SideBar({
 
             <aside
                 id="logo-sidebar"
-                className={`top-0 left-0 z-40 w-full h-full transition-transform ${isSidebarOpen ? "block" : "hidden"
+                className={`top-0 left-0 z-40 w-full h-full overflow-hidden transition-transform ${isSidebarOpen ? "block" : "hidden"
                     } `}
                 aria-label="Sidebar"
             >

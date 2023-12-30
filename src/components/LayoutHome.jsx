@@ -9,8 +9,9 @@ const LayoutHome = ({ children }) => {
       </div>
 
       <div className="flex justify-start">
-        <SideBar />
-
+        <div className="sticky">
+          <SideBar />
+        </div>
         <div className="mx-5 w-full">{children}</div>
       </div>
     </>

@@ -5,24 +5,8 @@ import { ProfileRoutes } from "../features/profile/route";
 import UploadPage from "../features/teach/route/UploadPage";
 
 export const publicRoutes = [
-    {
-        path: "/landing",
-        element: <LandingPage />,
-    },
-    {
-        path: "/*",
-        element: <HomeRoutes />,
-    },
-    {
-        path: "/profile",
-        element: <ProfileRoutes />,
-    },
-    {
-        path: "/upload",
-        element: <UploadPage />,
-    },
-    {
-        path: "/admin",
-        element: <AdminPage />,
-    },
+  {
+    path: "/landing",
+    element: <LandingPage />,
+  },
 ];
