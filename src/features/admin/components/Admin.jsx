@@ -16,9 +16,10 @@ const Admin = () => {
 
   const fetchAllUser = async () => {
     try {
-      const response1 = await axios.get(END_POINTS.USER);
-
-      const userMsgs = response1.data; // Assuming the API response is an array of user requests
+      const response1 = await axios.get(END_POINTS.USER_SORT);
+      const userMsgs = response1.data;
+      // Sort userMsgs by user_id
+      // userMsgs.sort((a, b) => a.id - b.id);
       // Fetch user information for each user request
       const userPromises = userMsgs.map(async (item) => {
         return {
@@ -91,10 +92,9 @@ const Admin = () => {
     setClickDelete(id);
     setIsOpenDeleteUser(true);
   }
-  
+
   const closeDeleteUserModal = async (idDelete) => {
     await axios.delete(END_POINTS.USER + idDelete);
-    
     users.map(async (item) => {
       if (item.userId === idDelete) {
         try {
@@ -106,7 +106,7 @@ const Admin = () => {
     })
     fetchAllUser();
     fetchUser();
-    
+
     setIsOpenDeleteUser(false);
 
   };
@@ -115,8 +115,18 @@ const Admin = () => {
   };
 
   const closeAndRejectRequest = async (idDelete) => {
-    await axios.delete(END_POINTS.USER + idDelete);
     setIsOpenMessage(false);
+    users.map(async (item) => {
+      if (item.userId === idDelete) {
+        try {
+          await axios.delete(END_POINTS.USER_REQUEST + item.id);
+          fetchAllUser();
+          fetchUser();
+        } catch (e) {
+          console.error("Something went wrong!");
+        }
+      }
+    })
   };
   function closeRequestMessageModal() {
     setIsOpenMessage(false);
@@ -483,7 +493,7 @@ const Admin = () => {
                       className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeDeleteUserModalWithoutDelete}
                     >
-                      Cancle
+                      Cancel
                     </button>
                     <button
                       type="button"

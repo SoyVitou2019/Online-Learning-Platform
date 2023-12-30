@@ -9,10 +9,10 @@ import AdminPage from "../features/admin/route/AdminPage";
 import { HomeRoutes } from "../features/homepage/route";
 import { ProfileRoutes } from "../features/profile/route";
 
-import UploadPage from "../features/teach/route/UploadPage";
 import { SelectCourse } from "../features/course/components/SelectCourse";
 import SelectCoursePage from "../features/course/route/SelectCoursePage";
 import { CourseRoutes } from "../features/course/route";
+import { TeachRoutes } from "../features/teach/route";
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -56,8 +56,8 @@ export const protectedRoutes = [
         element: <CourseRoutes />,
       },
       {
-        path: "/upload",
-        element: <UploadPage />,
+        path: "/teach/*",
+        element: <TeachRoutes />,
       },
       {
         path: "/admin",
