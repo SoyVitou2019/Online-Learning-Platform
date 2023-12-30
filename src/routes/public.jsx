@@ -11,10 +11,17 @@ import UploadPage from "../features/teach/route/UploadPage";
 
 export const publicRoutes = [
   {
-    path: "/landing",
+    path: "/",
     element: <LandingPage />,
   },
 
+  {
+    path: "/auth/*",
+    element: <AuthRoutes />,
+  },
+];
+
+export const commonRoutes = [
   {
     path: "/contact-us",
     element: <ContactUsPage />,
@@ -23,11 +30,6 @@ export const publicRoutes = [
   {
     path: "/donate",
     element: <DonatePage />,
-  },
-
-  {
-    path: "/auth/*",
-    element: <AuthRoutes />,
   },
   {
     path: "*",
