@@ -1,7 +1,7 @@
-import { NavBar } from "./HomePage/NavBar";
-import SideBar from "./HomePage/SideBar";
+import SideBar from "../components/SideBar";
+import { NavBar } from "../components/NavBar";
 
-const LayoutHome = ({ children }) => {
+export const HomeLayout = ({ children }) => {
     return (
         <>
             <div>
@@ -17,4 +17,3 @@ const LayoutHome = ({ children }) => {
         </>
     );
 };
-export default LayoutHome;
