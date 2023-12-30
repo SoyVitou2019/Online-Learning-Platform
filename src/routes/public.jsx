@@ -1,6 +1,7 @@
 import ContactUs from "../components/ContactUs";
 import { ContactUsPage } from "../components/Pages/ContactUsPage";
 import { DonatePage } from "../components/Pages/DonatePage";
+import RouteError from "../components/RouteError";
 import AdminPage from "../features/admin/route/AdminPage";
 import { AuthRoutes } from "../features/auth/route";
 import { HomeRoutes } from "../features/homepage/route";
@@ -27,5 +28,9 @@ export const publicRoutes = [
   {
     path: "/auth/*",
     element: <AuthRoutes />,
+  },
+  {
+    path: "*",
+    element: <RouteError />,
   },
 ];
