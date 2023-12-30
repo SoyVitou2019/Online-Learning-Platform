@@ -19,13 +19,13 @@ import { AppRoutes } from "./routes";
 import AuthProvider from "./features/auth/api/Auth";
 
 function App() {
-    return (
-        <AuthProvider>
-            <AppProvider>
-                <AppRoutes />
-            </AppProvider>
-        </AuthProvider>
-    );
+  return (
+    <AuthProvider>
+      <AppProvider>
+        <AppRoutes />
+      </AppProvider>
+    </AuthProvider>
+  );
 }
 
 export default App;
