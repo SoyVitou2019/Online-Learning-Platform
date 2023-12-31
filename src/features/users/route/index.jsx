@@ -1,30 +1,33 @@
 import { useRoutes } from "react-router-dom";
 import { UpdateProfile, ViewProfile } from "../components"
+import { HomeLayout } from "../../../layouts";
 
-
-const userRoute = [
-
+export const userRoute = [
     {
-        name: "/update",
+        path: "", element: <ViewProfile />
+    },
+    {
+        path: "update",
         element: <UpdateProfile />
     },
 
     {
-        name: "/view",
-        element: <UpdateProfile />
+        path: "view",
+        element: <ViewProfile />
     },
 
     {
-        name: "/update",
+        path: "gugu",
         element: <UpdateProfile />
     }
 
 ]
 
-const UserRoute = () => {
+export const UserProfileRoute = () => {
     const element = useRoutes([...userRoute]);
-    return { element }
-
-
+    return (
+        <div>
+            {element}
+        </div>
+    )
 }
-export default UserRoute;
