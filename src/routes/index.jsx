@@ -14,6 +14,7 @@ export const AppRoutes = () => {
   //const routes = false ? protectedRoutes : publicRoutes;
   const routes = user ? protectedRoutes : publicRoutes;
   const element = useRoutes([...routes, ...commonRoutes]);
+  console.log(...routes, ...commonRoutes);
   return <>{element}</>;
 };
 

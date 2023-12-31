@@ -32,7 +32,6 @@ export const commonRoutes = [
     path: "/donate",
     element: <DonatePage />,
   },
-
   {
     path: "*",
     element: <RouteError />,

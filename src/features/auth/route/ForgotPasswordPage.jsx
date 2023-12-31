@@ -25,8 +25,6 @@ const ForgotPasswordPage = () => {
         icon: "success",
         title: "Reset link is sent to email",
       });
-
-      navigate("/auth/login");
     } catch (error) {
       Swal.fire({
         icon: "error",
