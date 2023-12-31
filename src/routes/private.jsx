@@ -12,6 +12,11 @@ import { ProfileRoutes } from "../features/profile/route";
 import { SelectCourse } from "../features/course/components/SelectCourse";
 import SelectCoursePage from "../features/course/route/SelectCoursePage";
 import { CourseRoutes } from "../features/course/route";
+import RouteError from "../components/RouteError";
+import UploadPage from "../features/teach/route/UploadPage";
+import { Request } from "../features/teach/components/request";
+import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
+import { TeachRoutes } from "../features/teach/route";
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -66,7 +71,7 @@ export const protectedRoutes = [
         element: <UploadPage />,
       },
       {
-        path: "admin",
+        path: "/admin",
         element: <AdminPage />,
       },
       {
@@ -82,6 +87,10 @@ export const protectedRoutes = [
       {
         path: "",
         element: <Navigate to="/home" />,
+      },
+      {
+        path: "/teach/*",
+        element: <TeachRoutes />,
       },
 
       // { path: '/', element: <Dashboard /> },

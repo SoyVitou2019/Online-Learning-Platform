@@ -58,9 +58,22 @@ export const Request = () => {
     <div className="">
       <p className="text-4xl mt-8 ml-8 font-serif">Do you want to be a teacher?</p>
       <hr className="mt-4" />
-      <p className="indent-8 text-wrap">As a teacher in a community that prioritizes technology, you have the unique opportunity to shape the future by empowering students with essential digital skills. By integrating technology into your teaching methods, you not only enhance the learning experience but also prepare students for the rapidly evolving digital landscape. Your role goes beyond traditional education; you become a guide, mentor, and facilitator of knowledge in the digital age. Embracing technology in education allows you to foster creativity, critical thinking, and problem-solving skills in your students, ensuring they are well-equipped to thrive in an increasingly tech-driven world. As a tech-savvy educator, you contribute to building a community that values innovation, adaptability, and lifelong learning, making a lasting impact on both individual lives and the collective progress of society.</p>
+      <p className="indent-8 text-wrap break-all px-2">As a teacher in a community that prioritizes technology, you have the unique opportunity to shape the future by empowering students with essential digital skills. By integrating technology into your teaching methods, you not only enhance the learning experience but also prepare students for the rapidly evolving digital landscape. Your role goes beyond traditional education; you become a guide, mentor, and facilitator of knowledge in the digital age. Embracing technology in education allows you to foster creativity, critical thinking, and problem-solving skills in your students, ensuring they are well-equipped to thrive in an increasingly tech-driven world. As a tech-savvy educator, you contribute to building a community that values innovation, adaptability, and lifelong learning, making a lasting impact on both individual lives and the collective progress of society.</p>
+      <div className='flex'>
 
-      <p className="text-xl font-extralight mt-8 ml-8 select-none">Here is the roles and policy to be a teacher in our community</p>
+        <p className="text-xl font-extralight mt-8 ml-8 select-none">Here is the roles and policy to be a teacher in our community</p>
+        <div>
+          <div onClick={openRequestModal} className="flex justify-center select-none">
+            <button type="button" className="px-14 py-2 mt-8 ml-9 text-xs font-medium text-center inline-flex items-center text-white bg-pink-500 rounded-lg hover:bg-pink-700 ">
+              <svg className="h-3 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
+                <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
+              </svg>
+              Send Mail
+            </button>
+          </div>
+        </div>
+      </div>
       <hr className="mt-4" />
 
       <div className="w-full pt-3">
@@ -87,15 +100,7 @@ export const Request = () => {
         </div>
       </div>
       <hr className="my-4" />
-      <div onClick={openRequestModal} className="flex justify-center select-none">
-        <button type="button" className="px-14 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          <svg className="w-7 h-3 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-            <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-            <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-          </svg>
-          Send Mail
-        </button>
-      </div>
+
       <hr className="my-4" />
       {/* dialog */}
       <Transition appear show={isOpen} as={Fragment}>
@@ -147,7 +152,7 @@ export const Request = () => {
                     <label htmlFor="phone-input" className="block mb-2 text-sm font-medium text-black">Phone number</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                        <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 18">
+                        <svg className="w-4 h-4 text-gray-500 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 18">
                           <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
                         </svg>
                       </div>

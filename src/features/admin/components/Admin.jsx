@@ -202,7 +202,7 @@ const Admin = () => {
           </div>
         </Dialog>
       </Transition>
-      <div className="h-screen">
+      <div className="">
         {/* Header */}
         <div className="border-y-2">
           <div className="flex px-12 items-center py-2 ">
