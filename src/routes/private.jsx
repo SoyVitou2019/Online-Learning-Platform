@@ -12,7 +12,6 @@ import { ProfileRoutes } from "../features/profile/route";
 import { SelectCourse } from "../features/course/components/SelectCourse";
 import SelectCoursePage from "../features/course/route/SelectCoursePage";
 import { CourseRoutes } from "../features/course/route";
-import { TeachRoutes } from "../features/teach/route";
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -25,14 +24,20 @@ import { TeachRoutes } from "../features/teach/route";
 
 const App = () => {
   return (
+    // <HomeLayout>
+    //   <Suspense
+    //     fallback={
+    //       <div className="h-full w-full flex items-center justify-center">
+    //         <Spinner size="xl" />
+    //       </div>
+    //     }
+    //   >
+    //     <Outlet />
+    //   </Suspense>
+    // </HomeLayout>
+
     <HomeLayout>
-      <Suspense
-        fallback={
-          <div className="h-full w-full flex items-center justify-center">
-            <Spinner size="xl" />
-          </div>
-        }
-      >
+      <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>
     </HomeLayout>
@@ -43,30 +48,40 @@ export const protectedRoutes = [
   {
     path: "/",
     element: <App />,
+    errorElement: <RouteError />,
     children: [
       // { path: '/discussions/*', element: <DiscussionsRoutes /> },
       // { path: '/users', element: <Users /> },
 
       {
-        path: "/profile/*",
+        path: "profile/*",
         element: <ProfileRoutes />,
       },
       {
-        path: "/course/*",
+        path: "course/*",
         element: <CourseRoutes />,
       },
       {
-        path: "/teach/*",
-        element: <TeachRoutes />,
+        path: "/upload",
+        element: <UploadPage />,
       },
       {
-        path: "/admin",
+        path: "admin",
         element: <AdminPage />,
+      },
+      {
+        path: "auth/reset-password",
+        element: <ResetPasswordPage />,
+      },
+
+      {
+        path: "home",
+        element: <HomeRoutes />,
       },
 
       {
         path: "",
-        element: <HomeRoutes />,
+        element: <Navigate to="/home" />,
       },
 
       // { path: '/', element: <Dashboard /> },

@@ -5,8 +5,13 @@ const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
 
-const login = (email, password) =>
-  supabase.auth.signInWithPassword({ email, password });
+const login = async (email, password) =>
+  await supabase.auth.signInWithPassword({ email, password });
+
+const updatePassword = async (new_password) =>
+  await supabase.auth.updateUser({
+    password: new_password,
+  });
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -25,7 +30,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, updatePassword }}>
       {children}
     </AuthContext.Provider>
   );

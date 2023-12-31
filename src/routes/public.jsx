@@ -8,13 +8,21 @@ import { HomeRoutes } from "../features/homepage/route";
 import { LandingPage } from "../features/landing/route/LandingPage";
 import { ProfileRoutes } from "../features/profile/route";
 import UploadPage from "../features/teach/route/UploadPage";
+import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
 
 export const publicRoutes = [
   {
-    path: "/landing",
+    path: "/",
     element: <LandingPage />,
   },
 
+  {
+    path: "/auth/*",
+    element: <AuthRoutes />,
+  },
+];
+
+export const commonRoutes = [
   {
     path: "/contact-us",
     element: <ContactUsPage />,
@@ -25,10 +33,6 @@ export const publicRoutes = [
     element: <DonatePage />,
   },
 
-  {
-    path: "/auth/*",
-    element: <AuthRoutes />,
-  },
   {
     path: "*",
     element: <RouteError />,

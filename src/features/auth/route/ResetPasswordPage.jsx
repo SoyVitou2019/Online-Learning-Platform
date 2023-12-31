@@ -1,32 +1,37 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "../api/client";
 import Swal from "sweetalert2";
+import { useAuth } from "../api/Auth";
 
-const ForgotPasswordPage = () => {
+const ResetPasswordPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const { updatePassword } = useAuth();
+  const [formData, setFormData] = useState({
+    password: "",
+    confirmPassword: "",
+  });
 
   const handleChange = (e) => {
-    setEmail(e.target.value);
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    /*add validation */
     try {
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "http://localhost:3333/auth/reset-password",
-      });
-
+      const { data, error } = await updatePassword(formData.password);
+      console.log(data);
+      console.log(error);
       if (error) throw error;
 
       Swal.fire({
         icon: "success",
-        title: "Reset link is sent to email",
+        title: "Password updated successfully",
       });
 
-      navigate("/auth/login");
+      navigate("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -34,31 +39,49 @@ const ForgotPasswordPage = () => {
         text: error,
       });
     }
-
-    // Add your logic for handling the forgot password request, such as sending a reset email.
-    console.log("Forgot Password form submitted with email:", email);
   };
+
+  // Add your logic for handling the forgot password request, such as sending a reset email.  };
 
   return (
     <div className="h-screen flex flex-col justify-center">
       <h1 className="text-2xl font-semibold mb-6 text-center">Welcome to VM</h1>
       <div className="flex items-center justify-center">
         <div className="max-w-md w-full p-6 bg-white rounded shadow-md">
-          <h2 className="text-2xl font-semibold mb-6">Forgot Password</h2>
+          <h2 className="text-2xl font-semibold mb-6">Reset Password</h2>
           <form onSubmit={handleSubmit}>
             {/* Email Address */}
             <div className="mb-4">
               <label
-                htmlFor="email"
+                htmlFor="password"
                 className="block text-gray-600 text-sm font-medium mb-2"
               >
-                Email Address
+                Password
               </label>
               <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                required
+              />
+            </div>
+
+            {/* Confirm Password */}
+            <div className="mb-4">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-gray-600 text-sm font-medium mb-2"
+              >
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                 required
@@ -70,7 +93,7 @@ const ForgotPasswordPage = () => {
               type="submit"
               className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200"
             >
-              Send email to reset
+              Reset Password
             </button>
           </form>
 
@@ -100,4 +123,4 @@ const ForgotPasswordPage = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default ResetPasswordPage;
