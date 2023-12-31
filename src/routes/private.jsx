@@ -28,23 +28,23 @@ import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
 
 const App = () => {
   return (
-    // <HomeLayout>
-    //   <Suspense
-    //     fallback={
-    //       <div className="h-full w-full flex items-center justify-center">
-    //         <Spinner size="xl" />
-    //       </div>
-    //     }
-    //   >
-    //     <Outlet />
-    //   </Suspense>
-    // </HomeLayout>
-
     <HomeLayout>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="h-full w-full flex items-center justify-center">
+            <Spinner size="xl" />
+          </div>
+        }
+      >
         <Outlet />
       </Suspense>
     </HomeLayout>
+
+    // <HomeLayout>
+    //   <Suspense fallback={<div>Loading...</div>}>
+    //     <Outlet />
+    //   </Suspense>
+    // </HomeLayout>
   );
 };
 
@@ -56,7 +56,6 @@ export const protectedRoutes = [
     children: [
       // { path: '/discussions/*', element: <DiscussionsRoutes /> },
       // { path: '/users', element: <Users /> },
-
       {
         path: "profile/*",
         element: <ProfileRoutes />,
@@ -87,5 +86,9 @@ export const protectedRoutes = [
       // { path: '/', element: <Dashboard /> },
       // { path: '*', element: <Navigate to="." /> },
     ],
+  },
+  {
+    path: "auth/reset-password",
+    element: <ResetPasswordPage />,
   },
 ];
