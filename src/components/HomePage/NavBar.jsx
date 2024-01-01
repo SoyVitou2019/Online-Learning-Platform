@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import DropDownCategory from "./DropDownCategory";
 
 export const NavBar = () => {
   return (
@@ -8,7 +9,7 @@ export const NavBar = () => {
           VM
         </Link>
         <Link to="/" className="text-xl text-gray-800">
-          Categories
+          <DropDownCategory />
         </Link>
       </ul>
       <ul className="flex items-center space-x-6">

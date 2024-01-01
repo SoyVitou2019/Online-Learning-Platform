@@ -34,16 +34,18 @@
   "course": [
     {
       "course_name": "សមីការលីនេអ៊ែរ",
+      "vid_id": "ccSYGAeERII",
       "couse_description": "សូមអរគុណសម្រាប់ការតាមដានទស្សនា។ បើមានសំណូមពរ ឬមតិផ្សេងៗ សូមcommentខាងក្រោម។ សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
-      "created_by": "Koungmeng",
+      "created_by_user_id": "2",
       "created_at": "10/4/2023",
-      "category_id": "1",
+      "category": "Math",
+      "rank": 2,
       "posts": [
         1,
         2,
         3
       ],
-      "course_result": [
+      "course_expectation": [
         "You will master linear algebra",
         "You will pass grade 12",
         "You can understand Einstein's equations",
@@ -54,16 +56,18 @@
     },
     {
       "course_name": "ដេរីវេ",
+      "vid_id": "LZ7SFpCiekU",
       "couse_description": "សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
-      "created_by": "Koungmeng",
+      "created_by_user_id": "2",
       "created_at": "28/3/2023",
-      "category_id": "1",
+      "category": "Math",
+      "rank": 1,
       "posts": [
         4,
         5,
         6
       ],
-      "course_result": [
+      "course_expectation": [
         "You will master derivative",
         "You will pass grade 12",
         "You will pass ICT entrace",
