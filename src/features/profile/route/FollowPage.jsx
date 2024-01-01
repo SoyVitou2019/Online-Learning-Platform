@@ -14,16 +14,16 @@ export const FollowPage = ({ isFollowing }) => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          "https://coding-fairy.com/api/mock-api-resources/ols/follow/" + id
+          "http://localhost:3334/follow/" + id
         ); // Replace with your actual API endpoint
         setFollow(response.data); // Assuming the API response is an array of courses
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     // Call the fetch function
     fetchCourses();
+    console.log(follows)
   }, [id]); // Empty dependency array ensures that the effect runs only once (on mount)
 
   return (
@@ -39,14 +39,15 @@ export const FollowPage = ({ isFollowing }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-1/2">
         {isFollowing === true
-          ? follows?.following?.map((following) => (
-              <ProfileLandscape key={following} user_id={following} />
+          ? follows?.following?.map((following, idx) => (
+              <ProfileLandscape key={idx} user_id={following} />
             ))
-          : follows?.follower?.map((follower) => (
-              <ProfileLandscape key={follower} user_id={follower} />
+          : follows?.follower?.map((follower, idx) => (
+              <ProfileLandscape key={idx} user_id={follower} />
             ))}
+        ?
 
-        <div className="flex items-center m-3">
+        {/* <div className="flex items-center m-3">
           <img
             src="https://fakeimg.pl/60x60"
             alt="Profile Image"
@@ -66,9 +67,9 @@ export const FollowPage = ({ isFollowing }) => {
           >
             Unfollow
           </a>
-        </div>
+        </div> */}
 
-        <div className="flex items-center m-3">
+        {/* <div className="flex items-center m-3">
           <img
             src="https://fakeimg.pl/60x60"
             alt="Profile Image"
@@ -88,29 +89,7 @@ export const FollowPage = ({ isFollowing }) => {
           >
             Unfollow
           </a>
-        </div>
-
-        <div className="flex items-center m-3">
-          <img
-            src="https://fakeimg.pl/60x60"
-            alt="Profile Image"
-            className="w-30 h-30 rounded-full mr-2"
-          />
-          <div className="pl-3">
-            <h2 className="text-l font-semibold">Eong Koungmeng</h2>
-            <div className="flex justify-start">
-              <a href="#" className=" py-2 text-sm font-medium text-center">
-                Follower: 2
-              </a>
-            </div>
-          </div>
-          <a
-            href="#"
-            className="ml-10 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Unfollow
-          </a>
-        </div>
+        </div> */}
       </div>
     </>
   );

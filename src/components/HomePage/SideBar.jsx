@@ -50,7 +50,7 @@ export default function SideBar() {
             </li>
             <li>
               <Link
-                to="/profile"
+                to="/profile/1"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="bi bi-person-lines-fill text-2xl"></i>
@@ -74,7 +74,7 @@ export default function SideBar() {
 
             <li>
               <Link
-                to="/upload"
+                to="/teach/request"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <i className="bi bi-play-fill text-2xl"></i>
