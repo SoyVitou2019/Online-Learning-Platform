@@ -17,13 +17,13 @@ const updatePassword = async (new_password) =>
   });
 
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [role, setRole] = useState("");
   // const [x, setX] = useState(0);
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
       const { user: currentUser } = data;
@@ -47,8 +47,6 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     };
     getUser();
-
-    console.log("effect");
 
     let isCallbackExecuted = false;
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
@@ -92,13 +90,13 @@ const AuthProvider = ({ children }) => {
         setRole("");
         setUser(null);
       }
+      setLoading(false);
     });
     return () => {
       data.subscription.unsubscribe();
     };
   }, []);
 
-  // console.log(x);
   return (
     <AuthContext.Provider value={{ role, user, login, updatePassword }}>
       {loading ? (

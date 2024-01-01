@@ -10,6 +10,9 @@ export const AppRoutes = () => {
   // const auth = useAuth();
 
   const { user, role } = useAuth();
+
+  console.log(user.id);
+
   let routes;
 
   console.log(role);
