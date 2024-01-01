@@ -64,6 +64,7 @@ const AuthProvider = ({ children }) => {
         let userDataFromSup = session.user?.user_metadata ?? {};
         if (Object.keys(userDataFromSup).length !== 0) {
           userDataFromSup.uid = session.user.id;
+          userDataFromSup.created_at = session.user.created_at;
         }
 
         axios

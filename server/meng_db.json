@@ -6,7 +6,6 @@
       "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
       "email": "soyvitou234@gmail.com",
       "password": "$2b$10$BL.PaonceXC780oc6IJHBOrFnT7bWA3DwTKUs3qmdnZxqZxxTza3.",
-      "createAt": "2023-12-29T03:33:51.264Z",
       "role": "student",
       "uid": "1",
       "id": 1
@@ -16,7 +15,9 @@
       "firstName": "Koung",
       "lastName": "Meng",
       "profileUrl": "https://media.licdn.com/dms/image/D4E03AQHY9xlXN16B0w/profile-displayphoto-shrink_800_800/0/1691300047851?e=2147483647&v=beta&t=X7qiEGjW3qOkJI0Sq_yHASQqzEhYeWHfJGP27uFxj6s",
-      "uid": "c6a44190-4fae-465a-bf0a-8562f5173896",
+      "role": "admin",
+      "uid": "d0cce29f-0b06-4bd8-beb8-bbf3ce8866f7",
+      "created_at": "2024-01-01T10:18:53.872668Z",
       "id": 2
     }
   ],
