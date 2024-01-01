@@ -8,7 +8,7 @@
       "email": "soyvitoupro@gmail.com",
       "password": "$2b$10$VuixtFIwA1mNrd2iBNpkN.rf4YPmdZitV.PkK1D5voi71WUv02r2W",
       "createAt": "2023-12-29T03:33:51.264Z",
-      "roleType": "student",
+      "roleType": "Student",
       "id": 7
     },
     {
@@ -19,7 +19,7 @@
       "email": "soyvitou234@gmail.com",
       "password": "$2b$10$BL.PaonceXC780oc6IJHBOrFnT7bWA3DwTKUs3qmdnZxqZxxTza3.",
       "createAt": "2023-12-29T03:33:51.264Z",
-      "roleType": "student",
+      "roleType": "Student",
       "id": 6
     },
     {
@@ -30,8 +30,19 @@
       "email": "mengmeng@gmail.com",
       "password": "$2b$10$glEpByNvwFej74xiane8YeseM/x/dJ3GD.X9M7akQIpduHwZe9iZO",
       "createAt": "2023-12-27T14:10:11.289Z",
-      "roleType": "student",
+      "roleType": "Student",
       "id": 3
+    },
+    {
+      "firstName": "CHoa",
+      "lastName": "Chao",
+      "profileUrl": "https://media.licdn.com/dms/image/D4E03AQHY9xlXN16B0w/profile-displayphoto-shrink_800_800/0/1691300047851?e=2147483647&v=beta&t=X7qiEGjW3qOkJI0Sq_yHASQqzEhYeWHfJGP27uFxj6s",
+      "recovery": "$2b$10$oZjFMgduZiqU5MfPfvmz.eTUYVs7DVaePfp8hKyejk.fWFNQ2aZT6",
+      "email": "Choa.Chao@gmail.com",
+      "password": "$2b$10$glEpByNvwFej74xiane8YeseM/x/dJ3GD.X9M7akQIpduHwZe9iZO",
+      "createAt": "2023-12-27T14:10:11.289Z",
+      "roleType": "Student",
+      "id": 1
     }
   ],
   "course": [
@@ -104,26 +115,10 @@
   ],
   "follow": [
     {
-      "user_id": 1,
-      "following": [
-        2
-      ],
-      "follower": [
-        2,
-        3
-      ],
-      "id": 1
-    },
-    {
-      "user_id": 2,
-      "following": [
-        3,
-        1
-      ],
-      "follower": [
-        3
-      ],
-      "id": 2
+      "id": 1,
+      "user_id": [1, 1, 1, 2],
+      "follower": [2, 3, 5, 3]
+      
     }
   ],
   "popular_courses": [

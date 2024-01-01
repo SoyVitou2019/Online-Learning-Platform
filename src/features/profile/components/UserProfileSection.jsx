@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import END_POINTS from "../../../constants/endpoints";
 
 export const UserProfileSection = ({ user_id }) => {
   const [user, setUser] = useState({});
@@ -10,14 +11,13 @@ export const UserProfileSection = ({ user_id }) => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "https://coding-fairy.com/api/mock-api-resources/ols/user/" + user_id
+          END_POINTS.USER + user_id
         ); // Replace with your actual API endpoint
         setUser(response.data); // Assuming the API response is an array of courses
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     // Call the fetch function
     fetchProfile();
   }, [user_id]); // Empty dependency array ensures that the effect runs only once (on mount)
@@ -34,23 +34,23 @@ export const UserProfileSection = ({ user_id }) => {
       <div className="flex items-center justify-between pl-8 text-black">
         <div className="flex items-center">
           <img
-            src="https://fakeimg.pl/100x100"
+            src={user.profileUrl}
             alt="Profile Image"
-            className="w-30 h-30 rounded-full mr-2"
+            className="w-16 h-30 rounded-full mr-2"
           />
           <div className="pl-5">
-            <h3 className="text-xl">{user.roleType}</h3>
+            <h3 className="text-sm mt-2">{user.roleType}</h3>
             <h2 className="text-xl font-semibold">
               {user.firstName + " " + user.lastName}
             </h2>
             <div className="flex justify-start">
               <a
                 href="#"
-                className=" mr-2 py-2 text-sm font-medium text-center"
+                className=" mr-2 mb-2 text-sm font-medium text-center"
               >
                 Follower: 2
               </a>
-              <a href="#" className="ml-auto py-2 text-sm font-medium ">
+              <a href="#" className="ml-auto mb-2 text-sm font-medium ">
                 Following: 4
               </a>
             </div>
