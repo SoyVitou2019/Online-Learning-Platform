@@ -10,13 +10,13 @@ export const Request = () => {
   const [formData, setFormData] = useState({
     user_id: 1,
     phoneNumber: "",
-    reasonRequest: ""
+    request_msg: ""
   });
   function openRequestModal() {
     setFormData({
       user_id: 1,
       phoneNumber: "",
-      reasonRequest: ""
+      request_msg: ""
     })
     setIsOpen(true);
   }
@@ -162,11 +162,11 @@ export const Request = () => {
                   </form>
 
                   <div className="mt-5">
-                    <label htmlFor="reasonRequest" className="block mb-2 text-sm font-medium text-black">Write your reason here</label>
+                    <label htmlFor="request_msg" className="block mb-2 text-sm font-medium text-black">Write your reason here</label>
                     <textarea
-                      id="reasonRequest"
-                      name='reasonRequest'
-                      value={formData.reasonRequest}
+                      id="request_msg"
+                      name='request_msg'
+                      value={formData.request_msg}
                       onChange={handleChange}
                       rows="4"
                       className="block p-2.5 w-full text-sm text-gray-800 bg-gray-50 rounded-lg"
