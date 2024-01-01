@@ -36,6 +36,7 @@ const RegisterForm = () => {
             firstName: formData.firstName,
             lastName: formData.lastName,
             profileUrl: formData.profileUrl,
+            role: "student",
           },
         },
       });

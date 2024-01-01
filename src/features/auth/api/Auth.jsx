@@ -20,6 +20,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(null);
   const [user, setUser] = useState(null);
   const [role, setRole] = useState("");
+  // const [x, setX] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -30,9 +31,11 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser ?? null);
 
       //if user exist set role state
-      if (user) {
+      if (currentUser) {
         try {
-          const response = await axios.get(END_POINTS.USER + `?uid=${user.id}`);
+          const response = await axios.get(
+            END_POINTS.USER + `?uid=${currentUser.id}`
+          );
           setRole(response.data[0].role);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -45,15 +48,23 @@ const AuthProvider = ({ children }) => {
     };
     getUser();
 
+    console.log("effect");
+
+    let isCallbackExecuted = false;
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (isCallbackExecuted) {
+        return;
+      }
+      isCallbackExecuted = true;
+
       if (event === "SIGNED_IN") {
         setUser(session.user);
+        // setX(x + 1);
 
         let userDataFromSup = session.user?.user_metadata ?? {};
         if (Object.keys(userDataFromSup).length !== 0) {
           userDataFromSup.uid = session.user.id;
         }
-        console.log(userDataFromSup);
 
         axios
           .get(END_POINTS.USER + `?uid=${session.user.id}`)
@@ -61,14 +72,13 @@ const AuthProvider = ({ children }) => {
             // Check if the response has user data
 
             //check if user not exist in json
-            if (Object.keys(response.data).length === 0) {
+            if (response.data.length === 0) {
+              setRole(session.user?.user_metadata?.role);
               axios.post(END_POINTS.USER, userDataFromSup).catch((error) => {
                 console.log("error post data", error);
               });
-              setRole(session.user?.user_metadata?.role);
             } else {
               //user exist
-
               setRole(response.data[0].role);
             }
           })
@@ -87,6 +97,7 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  // console.log(x);
   return (
     <AuthContext.Provider value={{ role, user, login, updatePassword }}>
       {loading ? (
