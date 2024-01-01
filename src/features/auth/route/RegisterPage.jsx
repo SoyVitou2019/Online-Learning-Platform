@@ -30,6 +30,14 @@ const RegisterForm = () => {
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
+        options: {
+          data: {
+            email: formData.email,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            profileUrl: formData.profileUrl,
+          },
+        },
       });
       if (error) throw error;
 

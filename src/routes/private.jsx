@@ -64,6 +64,84 @@ export const protectedRoutes = [
         path: "course/*",
         element: <CourseRoutes />,
       },
+
+      {
+        path: "home",
+        element: <HomeRoutes />,
+      },
+
+      {
+        path: "",
+        element: <Navigate to="/home" />,
+      },
+
+      // { path: '/', element: <Dashboard /> },
+      // { path: '*', element: <Navigate to="." /> },
+    ],
+  },
+  {
+    path: "auth/reset-password",
+    element: <ResetPasswordPage />,
+  },
+];
+
+export const contentCreatorRoutes = [
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <RouteError />,
+    children: [
+      // { path: '/discussions/*', element: <DiscussionsRoutes /> },
+      // { path: '/users', element: <Users /> },
+      {
+        path: "profile/*",
+        element: <ProfileRoutes />,
+      },
+      {
+        path: "course/*",
+        element: <CourseRoutes />,
+      },
+      {
+        path: "upload",
+        element: <UploadPage />,
+      },
+
+      {
+        path: "home",
+        element: <HomeRoutes />,
+      },
+
+      {
+        path: "",
+        element: <Navigate to="/home" />,
+      },
+
+      // { path: '/', element: <Dashboard /> },
+      // { path: '*', element: <Navigate to="." /> },
+    ],
+  },
+  {
+    path: "auth/reset-password",
+    element: <ResetPasswordPage />,
+  },
+];
+
+export const adminRoutes = [
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <RouteError />,
+    children: [
+      // { path: '/discussions/*', element: <DiscussionsRoutes /> },
+      // { path: '/users', element: <Users /> },
+      {
+        path: "profile/*",
+        element: <ProfileRoutes />,
+      },
+      {
+        path: "course/*",
+        element: <CourseRoutes />,
+      },
       {
         path: "upload",
         element: <UploadPage />,

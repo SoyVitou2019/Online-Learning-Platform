@@ -1,0 +1,247 @@
+{
+  "user": [
+    {
+      "firstName": "Vitou",
+      "lastName": "Pro",
+      "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
+      "email": "soyvitou234@gmail.com",
+      "password": "$2b$10$BL.PaonceXC780oc6IJHBOrFnT7bWA3DwTKUs3qmdnZxqZxxTza3.",
+      "createAt": "2023-12-29T03:33:51.264Z",
+      "roleType": "student",
+      "uid": "1",
+      "id": 6
+    },
+    {
+      "role": "Student",
+      "id": 7
+    },
+    {
+      "role": "Student",
+      "id": 8
+    },
+    {
+      "role": "Student",
+      "id": 9
+    },
+    {
+      "role": "Student",
+      "id": 10
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 11
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 12
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 13
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 14
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 15
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 16
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 17
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 18
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 19
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 20
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 21
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 22
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 23
+    },
+    {
+      "role": "Student",
+      "email": "j3058175@gmail.com",
+      "id": 24
+    },
+    {
+      "role": "Student",
+      "uid": "9e7a4b2d-076e-4392-9d22-a1161da1a483",
+      "id": 25
+    },
+    {
+      "role": "Student",
+      "uid": "9e7a4b2d-076e-4392-9d22-a1161da1a483",
+      "id": 26
+    }
+  ],
+  "course": [
+    {
+      "course_name": "សមីការលីនេអ៊ែរ",
+      "couse_description": "សូមអរគុណសម្រាប់ការតាមដានទស្សនា។ បើមានសំណូមពរ ឬមតិផ្សេងៗ សូមcommentខាងក្រោម។ សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+      "created_by": "Koungmeng",
+      "created_at": "10/4/2023",
+      "category_id": "1",
+      "posts": [
+        1,
+        2,
+        3
+      ],
+      "course_result": [
+        "You will master linear algebra",
+        "You will pass grade 12",
+        "You can understand Einstein's equations",
+        "You will get A++",
+        "Understand the universe"
+      ],
+      "id": 1
+    },
+    {
+      "course_name": "ដេរីវេ",
+      "couse_description": "សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+      "created_by": "Koungmeng",
+      "created_at": "28/3/2023",
+      "category_id": "1",
+      "posts": [
+        4,
+        5,
+        6
+      ],
+      "course_result": [
+        "You will master derivative",
+        "You will pass grade 12",
+        "You will pass ICT entrace",
+        "You will get A++",
+        "Understand the universe"
+      ],
+      "id": 2
+    }
+  ],
+  "post": [
+    {
+      "title": "High order derivative",
+      "id": 5
+    },
+    {
+      "title": "Derivative simple",
+      "id": 4
+    },
+    {
+      "title": "Final Linear Algebra",
+      "id": 3
+    },
+    {
+      "title": "Linear Algebra Verson 2",
+      "id": 2
+    },
+    {
+      "title": "Introduction to Linear Algebra",
+      "id": 1
+    },
+    {
+      "title": "Taylor Series",
+      "id": 6
+    }
+  ],
+  "follow": [
+    {
+      "user_id": 1,
+      "following": [
+        2
+      ],
+      "follower": [
+        2,
+        3
+      ],
+      "id": 1
+    },
+    {
+      "user_id": 2,
+      "following": [
+        3,
+        1
+      ],
+      "follower": [
+        3
+      ],
+      "id": 2
+    }
+  ],
+  "popular_courses": [
+    {
+      "course_name": "សមីការលីនេអ៊ែរ",
+      "course_description": "សូមអរគុណសម្រាប់ការតាមដានទស្សនា។ បើមានសំណូមពរ ឬមតិផ្សេងៗ សូមcommentខាងក្រោម។ សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+      "created_by": "Koungmeng",
+      "created_at": "10/4/2023",
+      "category_id": "1",
+      "course_result": [
+        "You will master linear algebra",
+        "You will pass grade 12",
+        "You can understand Einstein's equations",
+        "You will get A++",
+        "Understand the universe"
+      ],
+      "id": 1
+    },
+    {
+      "course_name": "ដេរីវេ",
+      "course_description": "សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+      "created_by": "Koungmeng",
+      "created_at": "28/3/2023",
+      "category_id": "1",
+      "course_result": [
+        "You will master derivative",
+        "You will pass grade 12",
+        "You will pass ICT entrace",
+        "You will get A++",
+        "Understand the universe"
+      ],
+      "id": 2
+    }
+  ],
+  "user_request": [
+    {
+      "user_id": 3,
+      "request_msg": "Learning is the process of acquiring new understanding, knowledge, behaviors, skills, values, attitudes, and preferences. The ability to learn is possessed by humans, animals, and some machines; there is also evidence for some kind of learning in certain plants.",
+      "id": 2
+    }
+  ],
+  "service_role": [
+    {
+      "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRudHJhZmhzZmpwa3ZuenR2cGFvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMzg1OTU5MSwiZXhwIjoyMDE5NDM1NTkxfQ.MMUnMykMX2ppUxQbdmDkTWrbGrLFoOxB4GKGWtTcUfo"
+    }
+  ]
+}
