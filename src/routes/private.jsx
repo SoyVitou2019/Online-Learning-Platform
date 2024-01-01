@@ -9,12 +9,13 @@ import AdminPage from "../features/admin/route/AdminPage";
 import { HomeRoutes } from "../features/homepage/route";
 import { ProfileRoutes } from "../features/profile/route";
 
-import UploadPage from "../features/teach/route/UploadPage";
 import { SelectCourse } from "../features/course/components/SelectCourse";
 import SelectCoursePage from "../features/course/route/SelectCoursePage";
 import { CourseRoutes } from "../features/course/route";
 import RouteError from "../components/RouteError";
 import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
+import RequestPage from "../features/teach/route/RequestPage";
+import UploadPage from "../features/teach/route/UploadPage";
 
 // import { lazyImport } from '@/utils/lazyImport';
 
@@ -74,6 +75,10 @@ export const protectedRoutes = [
         path: "",
         element: <Navigate to="/home" />,
       },
+      {
+        path: "teach/request",
+        element: <RequestPage />,
+      },
 
       // { path: '/', element: <Dashboard /> },
       // { path: '*', element: <Navigate to="." /> },
@@ -102,7 +107,7 @@ export const contentCreatorRoutes = [
         element: <CourseRoutes />,
       },
       {
-        path: "upload",
+        path: "teach/upload",
         element: <UploadPage />,
       },
 
@@ -143,12 +148,12 @@ export const adminRoutes = [
         element: <CourseRoutes />,
       },
       {
-        path: "upload",
-        element: <UploadPage />,
-      },
-      {
         path: "admin",
         element: <AdminPage />,
+      },
+      {
+        path: "teach/upload",
+        element: <UploadPage />,
       },
 
       {
