@@ -26,7 +26,6 @@ export const UpdateProfile = () => {
         <div className="flex items-center pt-10 flex-col bg-gray-100 w-full h-screen px-8 ">
             <div className="p-8 border rounded-xl w-full bg-white shadow-sm">
                 <div className="pt-2">
-
                     <h1 className="text-xl font-bold">Update profile</h1>
                     <h1 className="text-slate-500 pt-2 pb-4">Here is where you update your information</h1>
                     <hr />
