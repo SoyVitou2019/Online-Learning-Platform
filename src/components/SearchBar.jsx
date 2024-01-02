@@ -8,7 +8,6 @@ const SearchBar = () => {
   const [data, setData] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedItem, setSelectedItem] = useState(-1);
-  const [prevSearchResult, setPrevSearchResult] = useState([]);
 
   const handleClearSearch = () => {
     setSearchValue("");
@@ -89,19 +88,25 @@ const SearchBar = () => {
             setSearchResults(filteredData.slice(0, 5));
             setSelectedItem(-1);
           }}
-          onFocus={() => setIsFocused(true)}
+          onFocus={() => {
+            setIsFocused(true);
+            const filteredData = data.filter((item) =>
+              item.course_name.toLowerCase().includes("")
+            );
+            setSearchResults(filteredData.slice(0, 5));
+            setSelectedItem(-1);
+          }}
           onBlur={() => setIsFocused(false)}
           onKeyDown={handleKeyDown}
         />
-        {searchValue && (
-          <button
-            className="text-gray-600"
-            onClick={handleClearSearch}
-            title="Clear search"
-          >
-            x
-          </button>
-        )}
+
+        <button
+          className={`text-gray-600 ${searchValue ? "visible" : "invisible"}`}
+          onClick={handleClearSearch}
+          title="Clear search"
+        >
+          x
+        </button>
       </div>
       {/* Display search suggestions */}
       {isFocused && searchResults.length > 0 && (
