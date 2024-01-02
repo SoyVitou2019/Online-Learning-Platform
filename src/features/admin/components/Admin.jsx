@@ -26,8 +26,8 @@ const Admin = () => {
           userId: item.id,
           userProfile: item.profileUrl,
           fullName: item.firstName + " " + item.lastName,
-          createdAt: item.createAt.slice(0, 10),
-          roleType: item.roleType,
+          createdAt: item.created_at.slice(0, 10),
+          roleType: item.role,
         };
       });
 
@@ -45,18 +45,17 @@ const Admin = () => {
     try {
       const response1 = await axios.get(END_POINTS.USER_REQUEST);
 
-      const userMsgs = response1.data; // Assuming the API response is an array of user requests
-
+      const userMsgs = response1.data;
+      // console.log(userMsgs)
       // Fetch user information for each user request
       const userPromises = userMsgs.map(async (item) => {
-        const response2 = await axios.get(END_POINTS.USER + item.user_id);
-
+        const response2 = await axios.get(END_POINTS.USER + "/" + item.user_id);
         return {
           userId: item.user_id,
           userProfile: response2.data.profileUrl,
           fullName: response2.data.firstName + " " + response2.data.lastName,
-          createdAt: response2.data.createAt.slice(0, 10),
-          roleType: response2.data.roleType,
+          createdAt: response2.data.created_at.slice(0, 10),
+          roleType: response2.data.role,
           message: item.request_msg,
           id: item.id
         };

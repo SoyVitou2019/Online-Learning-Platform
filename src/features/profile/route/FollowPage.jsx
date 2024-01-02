@@ -1,96 +1,142 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
-import ProfileLandscape from "../components/ProfileLandscape";
+import { useEffect, useState } from "react";
+import END_POINTS from "../../../constants/endpoints";
 
-export const FollowPage = ({ isFollowing }) => {
-  let { id } = useParams();
+// import ProfileLandscape from "../components/ProfileLandscape";
 
-  const [follows, setFollow] = useState({});
+export const FollowPage = () => {
+  // let { id } = useParams();
+  const [userFollowData, setUserFollowData] = useState({
+    id: [],
+    userId: [],
+    follower: []
+  })
+  const [follower, setFollower] = useState({
+    followerId: []
+  });
+  const [following, setFollowing] = useState({
+    followingId: []
+  });
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const getFollower = (user_id) => {
+    let userFollower = []
+    userFollowData.userId.map((item, idx) => {
+      if (item === user_id) {
+        userFollower.push(userFollowData.follower[idx])
+      }
+    })
+    setFollower({ followerId: userFollower })
+  }
+
+  const getFollowing = (user_id) => {
+    let userFollowing = []
+    userFollowData.follower.map((item, idx) => {
+      if (item === user_id) {
+        userFollowing.push(userFollowData.userId[idx])
+      }
+    })
+    setFollowing({ followingId: userFollowing })
+  }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(END_POINTS.FOLLOW);
+      const userFollow = response.data[0];
+      setUserFollowData(userFollow);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const removeFollower = async (id) => {
+    try {
+      
+      // userFollowData.follower.map((item, idx)=>{
+      //   if(item === id){
+      //     userFollowData.userId.pop(idx)
+      //     userFollowData.follower.pop(idx)
+      //   }
+      //   return userFollowData
+      // })
+      
+      console.log(userFollowData);
+      const response = await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
+      console.log(response.data)
+    } catch (error) {
+      console.error("Error remove follower:", error)
+    }
+  }
 
   useEffect(() => {
-    // Function to fetch data from the API
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3334/follow/" + id
-        ); // Replace with your actual API endpoint
-        setFollow(response.data); // Assuming the API response is an array of courses
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    // Call the fetch function
-    fetchCourses();
-    console.log(follows)
-  }, [id]); // Empty dependency array ensures that the effect runs only once (on mount)
+    fetchData()
+  }, []);
+
+  useEffect(() => {
+    getFollower(1);
+    getFollowing(1);
+  }, [userFollowData]);
 
   return (
     <>
-      <div className="pl-5 flex justify-start border-t border-b border-gray-300">
-        <a href="#" className=" p-4 py-2 text-md font-medium text-center">
+      <div className="pl-5 flex py-3 gap-10 justify-start border-t border-b border-gray-300">
+        <button
+          onClick={() => setIsFollowing(false)}
+          className={!isFollowing ? "bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg"
+            : "px-4 py-2"}
+        >
           Follower
-        </a>
-        <a href="#" className=" p-4  py-2 text-md font-medium ">
+        </button>
+        <button
+          onClick={() => setIsFollowing(true)}
+          className={isFollowing ? "bg-lime-700 hover:bg-lime-600 text-white px-4 py-2 rounded-lg"
+            : "px-4 py-2"}
+        >
           Following
-        </a>
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-1/2">
-        {isFollowing === true
-          ? follows?.following?.map((following, idx) => (
-              <ProfileLandscape key={idx} user_id={following} />
-            ))
-          : follows?.follower?.map((follower, idx) => (
-              <ProfileLandscape key={idx} user_id={follower} />
-            ))}
-        ?
 
-        {/* <div className="flex items-center m-3">
-          <img
-            src="https://fakeimg.pl/60x60"
-            alt="Profile Image"
-            className="w-30 h-30 rounded-full mr-2"
-          />
-          <div className="pl-3">
-            <h2 className="text-l font-semibold">Eong Koungmeng</h2>
-            <div className="flex justify-start">
-              <a href="#" className=" py-2 text-sm font-medium text-center">
-                Follower: 2
-              </a>
-            </div>
-          </div>
-          <a
-            href="#"
-            className="ml-10 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Unfollow
-          </a>
-        </div> */}
+      {
+        isFollowing ?
+          (
+            < div className="grid grid-cols-2 mx-8 mt-10 md:grid-cols-6 md:gap-4">
+              {following.followingId.map((item, idx) => (
+                <div key={idx} className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+                  <img className="w-full h-48 object-cover" src="https://fakeimg.pl/60x60" alt="Profile Image" />
+                  <div className="px-6 py-4">
+                    <div className="font-bold text-xl mb-2 line-clamp-1">Username {item}</div>
+                    <p className="text-gray-700 text-base">Description or bio goes here...</p>
+                  </div>
+                  <div className="px-6 py-4">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                      Unfollow
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div >
+          )
+          :
+          (
+            < div className="grid grid-cols-2 mx-8 mt-10 md:grid-cols-6 md:gap-4">
+              {follower.followerId.map((item, idx) => (
+                <div key={idx} className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+                  <img className="w-full h-48 object-cover" src="https://fakeimg.pl/60x60" alt="Profile Image" />
+                  <div className="px-6 py-4">
+                    <div className="font-bold text-xl mb-2 line-clamp-1">Username {item}</div>
+                    <p className="text-gray-700 text-base">Description or bio goes here...</p>
+                  </div>
+                  <div className="px-6 py-4">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                      Remove
+                    </button>
+                  </div>
+                </div>
 
-        {/* <div className="flex items-center m-3">
-          <img
-            src="https://fakeimg.pl/60x60"
-            alt="Profile Image"
-            className="w-30 h-30 rounded-full mr-2"
-          />
-          <div className="pl-3">
-            <h2 className="text-l font-semibold">Eong Koungmeng</h2>
-            <div className="flex justify-start">
-              <a href="#" className=" py-2 text-sm font-medium text-center">
-                Follower: 2
-              </a>
-            </div>
-          </div>
-          <a
-            href="#"
-            className="ml-10 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Unfollow
-          </a>
-        </div> */}
-      </div>
+              ))}
+            </div >
+          )
+      }
     </>
   );
 };

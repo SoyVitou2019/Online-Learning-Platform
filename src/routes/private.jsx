@@ -16,7 +16,7 @@ import RouteError from "../components/RouteError";
 import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
 import RequestPage from "../features/teach/route/RequestPage";
 import UploadPage from "../features/teach/route/UploadPage";
-
+import { FollowPage } from "../features/profile/route/FollowPage";
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -72,6 +72,11 @@ export const protectedRoutes = [
       },
 
       {
+        path: "following",
+        element: <FollowPage />,
+      },
+
+      {
         path: "",
         element: <Navigate to="/home" />,
       },
@@ -114,6 +119,10 @@ export const contentCreatorRoutes = [
       {
         path: "home",
         element: <HomeRoutes />,
+      },
+      {
+        path: "following",
+        element: <FollowPage />,
       },
 
       {

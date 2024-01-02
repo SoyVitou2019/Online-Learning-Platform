@@ -4,5 +4,6 @@ const END_POINTS = {
   USER_REQUEST: "http://localhost:3334/user_request/",
   COURSE: "http://localhost:3334/course",
   KEY: "http://localhost:3334/service_role",
+  FOLLOW: "http://localhost:3334/follow"
 };
 export default END_POINTS;
