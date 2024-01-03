@@ -1,0 +1,39 @@
+{
+    "theme_color": "#100f0f",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "vm community",
+    "short_name": "vm",
+    "description": "4 free 4 ever ",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "../src/assets/maskable.png",
+            "sizes":"196x196",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "../src/assets/logo199x192.png",
+            "sizes": "199x192",
+            "type": "image/png"
+        },
+        {
+            "src": "../src/assets/logo256x247.png",
+            "sizes": "256x247",
+            "type": "image/png"
+        },
+        {
+            "src": "../src/assets/logo384x271.png",
+            "sizes": "384x371",
+            "type": "image/png"
+        },
+        {
+            "src": "../src/assets/logo512x494.png",
+            "sizes": "512x494",
+            "type": "image/png"
+        }
+    ]
+}

@@ -18,7 +18,7 @@ import RequestPage from "../features/teach/route/RequestPage";
 import UploadPage from "../features/teach/route/UploadPage";
 import { SearchRoutes } from "../features/search/route";
 import { CategoryPage } from "../components/Pages/CategoryPage";
-
+import { FollowPage } from "../features/profile/route/FollowPage";
 // import { lazyImport } from '@/utils/lazyImport';
 
 // const { DiscussionsRoutes } = lazyImport(
@@ -83,6 +83,11 @@ export const protectedRoutes = [
       },
 
       {
+        path: "following",
+        element: <FollowPage />,
+      },
+
+      {
         path: "",
         element: <Navigate to="/home" />,
       },
@@ -134,6 +139,10 @@ export const contentCreatorRoutes = [
         path: "home",
         element: <HomeRoutes />,
       },
+      {
+        path: "following",
+        element: <FollowPage />,
+      },
 
       {
         path: "",
@@ -184,7 +193,7 @@ export const adminRoutes = [
       },
 
       {
-        path: "home",
+        path: "home/*",
         element: <HomeRoutes />,
       },
 

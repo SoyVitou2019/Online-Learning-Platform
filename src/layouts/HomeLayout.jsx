@@ -9,7 +9,6 @@ export const HomeLayout = ({ children }) => {
 
         <div className="flex items-stretch overflow-hidden h-full">
           <SideBar />
-
           <div className="px-5 w-full overflow-y-auto">{children}</div>
         </div>
       </div>
