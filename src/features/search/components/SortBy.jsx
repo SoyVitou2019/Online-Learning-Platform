@@ -23,11 +23,18 @@ const SortBy = ({ sortBy, sortByList, onSortBy }) => {
 
       {isOpen && (
         <div className="absolute mt-2 p-2 bg-white rounded shadow z-40">
-          <button className="block" onClick={() => handleSelectSort("")}>
+          <button
+            className="block hover:bg-gray-100"
+            onClick={() => handleSelectSort("")}
+          >
             None
           </button>
           {sortByList.map((sortbyl, index) => (
-            <button key={index} onClick={() => handleSelectSort(sortbyl)}>
+            <button
+              className="hover:bg-gray-100"
+              key={index}
+              onClick={() => handleSelectSort(sortbyl)}
+            >
               {sortbyl}
             </button>
           ))}

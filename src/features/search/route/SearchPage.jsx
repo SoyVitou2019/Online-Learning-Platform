@@ -6,12 +6,15 @@ import { useState, useEffect } from "react";
 import SwitchCourse from "../../../components/SwitchCourse";
 import CategoryFilter from "../components/CategoryFilter";
 import SortBy from "../components/SortBy";
+import { Spinner } from "../../../components/Spinner";
 
 const SearchPage = () => {
   const { search_query } = useParams();
   const [searchResult, setSearchResult] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [allCategories, setAllCategories] = useState([]);
+  const [hasData, setHasData] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [selectedSortBy, setSelectedSortBy] = useState("");
   const sortByList = ["Relevance", "Latest", "Oldest"];
@@ -65,6 +68,11 @@ const SearchPage = () => {
           item.course_name.toLowerCase().includes(search_query?.toLowerCase())
         );
 
+        if (filteredData.length === 0) {
+          setHasData(false);
+        } else {
+          setHasData(true);
+        }
         // Fetch creator names for each course
         const coursesWithNames = await Promise.all(
           filteredData.map(async (course) => {
@@ -76,6 +84,7 @@ const SearchPage = () => {
         );
 
         setSearchResult(coursesWithNames);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -117,10 +126,18 @@ const SearchPage = () => {
         </div>
       </div>
       <div className="flex justify-between text-2xl  mx-5 mt-3">
-        <h1 className=" ">{searchResult.length} Results</h1>
-        <SwitchCourse />
+        <h1 className=" ">
+          {searchResult.length > 1
+            ? searchResult.length + " results"
+            : searchResult.length + " result"}
+        </h1>
       </div>
       <hr className="mx-5 mt-2" />
+      {isLoading && (
+        <div className="flex justify-center h-[80vh] flex-col items-center">
+          <Spinner size="lg" />
+        </div>
+      )}
       <div className="grid grid-cols-1 p-5 gap-4">
         {searchResult?.map((course, index) => (
           <CardLandscape
@@ -140,6 +157,7 @@ const SearchPage = () => {
           />
         ))}
       </div>
+      {!hasData ? <h1 className="ms-5">No courses in category</h1> : ""}
     </div>
   );
 };

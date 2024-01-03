@@ -17,6 +17,7 @@ import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
 import RequestPage from "../features/teach/route/RequestPage";
 import UploadPage from "../features/teach/route/UploadPage";
 import { SearchRoutes } from "../features/search/route";
+import { CategoryPage } from "../components/Pages/CategoryPage";
 
 // import { lazyImport } from '@/utils/lazyImport';
 
@@ -77,6 +78,11 @@ export const protectedRoutes = [
       },
 
       {
+        path: "category/:catID",
+        element: <CategoryPage />,
+      },
+
+      {
         path: "",
         element: <Navigate to="/home" />,
       },
@@ -110,6 +116,10 @@ export const contentCreatorRoutes = [
       {
         path: "course/*",
         element: <CourseRoutes />,
+      },
+      {
+        path: "category/:catID",
+        element: <CategoryPage />,
       },
       {
         path: "search/*",
@@ -155,6 +165,10 @@ export const adminRoutes = [
       {
         path: "course/*",
         element: <CourseRoutes />,
+      },
+      {
+        path: "category/:catID",
+        element: <CategoryPage />,
       },
       {
         path: "search/*",

@@ -16,18 +16,25 @@ const CategoryFilter = ({ categories, selectedCategory, onSelectCategory }) => {
     <div className="relative inline-block">
       <button
         onClick={handleToggleDropdown}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className="bg-blue-500 text-white px-4 py-2 rounded "
       >
         {selectedCategory || "All"}
       </button>
 
       {isOpen && (
         <div className="absolute mt-2 p-2 bg-white rounded shadow">
-          <button className="block" onClick={() => handleSelectCategory("")}>
+          <button
+            className="block  hover:bg-gray-100"
+            onClick={() => handleSelectCategory("")}
+          >
             All
           </button>
           {categories.map((category, index) => (
-            <button key={index} onClick={() => handleSelectCategory(category)}>
+            <button
+              className="block hover:bg-gray-100"
+              key={index}
+              onClick={() => handleSelectCategory(category)}
+            >
               {category}
             </button>
           ))}

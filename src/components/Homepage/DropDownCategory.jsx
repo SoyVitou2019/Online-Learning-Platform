@@ -46,13 +46,13 @@ export default function DropDownCategory() {
         >
           <Menu.Items
             static
-            className="z-40 absolute mt-2 w-64 h-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+            className="z-40 absolute mt-2 w-64 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
           >
             {courses.map((course) => (
               <Menu.Item key={course.id}>
                 {({ active }) => (
                   <Link
-                    to={`/course/${course.id}`}
+                    to={`/category/${course.id}`}
                     className={`${
                       active ? "bg-gray-100" : ""
                     } block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100`}
