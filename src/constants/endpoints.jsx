@@ -7,5 +7,6 @@ const END_POINTS = {
   KEY: "http://localhost:3334/service_role",
   YT: "http://localhost:3334/youtube_key",
   POST: "http://localhost:3334/post",
+  FOLLOW: "http://localhost:3334/follow",
 };
 export default END_POINTS;
