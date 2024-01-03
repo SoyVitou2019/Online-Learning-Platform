@@ -166,7 +166,7 @@ export const adminRoutes = [
       },
 
       {
-        path: "home",
+        path: "home/*",
         element: <HomeRoutes />,
       },
 
