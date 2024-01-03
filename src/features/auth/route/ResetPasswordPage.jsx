@@ -20,7 +20,14 @@ const ResetPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    /*add validation */
+    if (formData.password !== formData.confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Password don't match",
+        text: "Please password and confirm password",
+      });
+      return;
+    }
     try {
       const { data, error } = await updatePassword(formData.password);
       console.log(data);

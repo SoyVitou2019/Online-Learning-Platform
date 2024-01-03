@@ -48,6 +48,15 @@ const RegisterForm = () => {
       return;
     }
 
+    if (formData.password !== formData.confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Password don't match",
+        text: "Please password and confirm password",
+      });
+      return;
+    }
+
     const isImage = await isValidImageUrl(formData.profileUrl);
     if (!isImage) {
       Swal.fire({
@@ -57,6 +66,7 @@ const RegisterForm = () => {
       });
       return;
     }
+
     try {
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
