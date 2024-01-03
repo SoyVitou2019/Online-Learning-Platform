@@ -4,10 +4,10 @@ import RegisterModal from "../../../components/LoginPage/RegisterModal";
 
 export const HeroSection = () => {
   return (
-    <section className="bg-gray-900">
+    <section className="bg-gray-800 h-[75vh] flex justify-center items-center">
       <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
         <div className="hidden lg:mt-0 lg:col-span-4 lg:flex">
-          <img src="https://fakeimg.pl/400x400" alt="mockup" />
+          <img src="/src/assets/landing/front.svg" alt="mockup" />
         </div>
         <div className="ms-auto place-self-center lg:col-span-7">
           <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-5xl text-white">
