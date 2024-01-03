@@ -24,11 +24,11 @@ export const CardPortrait = ({
         />
       </Link>
       <div className="p-5">
-        <a href="#">
+        <Link to={"/course/" + course_id}>
           <h5 className="mb-2 line-clamp-1 overflow-ellipsis text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {course_name}
           </h5>
-        </a>
+        </Link>
         <p className="mb-3 line-clamp-1 overflow-ellipsis font-normal text-gray-700 dark:text-gray-400">
           {course_description}
         </p>

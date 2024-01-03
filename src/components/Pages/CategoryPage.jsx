@@ -1,26 +1,36 @@
-import { CardPortrait } from "../../../components/HomePage/CardPortrait";
-import HomePageFilter from "../../../components/HomePage/HomePageFilter";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import END_POINTS from "../../../constants/endpoints";
-import { Spinner } from "../../../components/Spinner";
+import END_POINTS from "../../constants/endpoints";
+import { CardPortrait } from "../HomePage/CardPortrait";
 
-function HomePageCardList() {
+export const CategoryPage = () => {
+  const { catID } = useParams();
+
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [page, setPage] = useState(1);
   const itemsPerPage = 20;
   const [totalPages, setTotalPages] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
+  const [category, setCategory] = useState("");
+  const [hasData, setHasData] = useState(true);
 
   useEffect(() => {
+    setCourses([]);
     const fetchCourses = async () => {
       try {
+        const cat = await axios.get(`${END_POINTS.CATEGORY}/${catID}`);
+        setCategory(cat.data.title);
         const response = await axios.get(
-          `${END_POINTS.COURSE}?_sort=rank&_page=${page}&_limit=${itemsPerPage}`
+          `${END_POINTS.COURSE}?category=${cat.data.title}&_sort=rank&_page=${page}&_limit=${itemsPerPage}`
         );
         const coursesData = response.data;
 
-        console.log(response);
+        if (coursesData.length === 0) {
+          setHasData(false);
+        } else {
+          setHasData(true);
+        }
         const linkHeader = response.headers.link;
         if (linkHeader) {
           const totalPagesRegex = /_page=(\d+)&_limit=(\d+)>; rel="last"/;
@@ -37,11 +47,11 @@ function HomePageCardList() {
             return { ...course, creatorName };
           })
         );
-
+        console.log(coursesWithNames);
         setCourses((prevCourses) => [...prevCourses, ...coursesWithNames]);
-        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        navigate("/");
       }
     };
 
@@ -56,7 +66,7 @@ function HomePageCardList() {
     };
 
     fetchCourses();
-  }, [page, itemsPerPage]);
+  }, [catID, page, itemsPerPage]);
 
   const handleShowMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -64,17 +74,12 @@ function HomePageCardList() {
 
   return (
     <div className="mb-14">
-      <h1 className=" text-2xl font-bold ms-5 mt-3">Popular courses</h1>
+      <h1 className=" text-2xl font-bold ms-5 mt-3">{category}</h1>
       <hr className="mx-5 mt-2" />
-      {isLoading && (
-        <div className="flex justify-center h-[80vh] flex-col items-center">
-          <Spinner size="lg" />
-        </div>
-      )}
       <div className="grid grid-cols-4 p-5 gap-4">
-        {courses.map((course) => (
+        {courses.map((course, index) => (
           <CardPortrait
-            key={course.id}
+            key={index}
             showDetail={true}
             course_name={course.course_name}
             vid_id={course.vid_id}
@@ -98,8 +103,8 @@ function HomePageCardList() {
           Show More
         </button>
       )}
+
+      {!hasData ? <h1 className="ms-5">No courses in category</h1> : ""}
     </div>
   );
-}
-
-export default HomePageCardList;
+};

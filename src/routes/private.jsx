@@ -16,6 +16,8 @@ import RouteError from "../components/RouteError";
 import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
 import RequestPage from "../features/teach/route/RequestPage";
 import UploadPage from "../features/teach/route/UploadPage";
+import { SearchRoutes } from "../features/search/route";
+import { CategoryPage } from "../components/Pages/CategoryPage";
 import { FollowPage } from "../features/profile/route/FollowPage";
 // import { lazyImport } from '@/utils/lazyImport';
 
@@ -62,6 +64,10 @@ export const protectedRoutes = [
         element: <ProfileRoutes />,
       },
       {
+        path: "search/*",
+        element: <SearchRoutes />,
+      },
+      {
         path: "course/*",
         element: <CourseRoutes />,
       },
@@ -74,6 +80,11 @@ export const protectedRoutes = [
       {
         path: "following",
         element: <FollowPage />,
+      },
+
+      {
+        path: "category/:catID",
+        element: <CategoryPage />,
       },
 
       {
@@ -110,6 +121,14 @@ export const contentCreatorRoutes = [
       {
         path: "course/*",
         element: <CourseRoutes />,
+      },
+      {
+        path: "category/:catID",
+        element: <CategoryPage />,
+      },
+      {
+        path: "search/*",
+        element: <SearchRoutes />,
       },
       {
         path: "teach/upload",
@@ -155,6 +174,14 @@ export const adminRoutes = [
       {
         path: "course/*",
         element: <CourseRoutes />,
+      },
+      {
+        path: "category/:catID",
+        element: <CategoryPage />,
+      },
+      {
+        path: "search/*",
+        element: <SearchRoutes />,
       },
       {
         path: "admin",
