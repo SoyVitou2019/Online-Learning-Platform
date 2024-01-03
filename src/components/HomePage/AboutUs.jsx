@@ -39,17 +39,20 @@ export const AboutUs = () => {
           </div>
         </div>
 
-        {/* <div className="flex flex-wrap justify-center space-x-12 text-center">
+        <div className="flex flex-wrap justify-center space-x-12 text-center">
           <div className="flex flex-col w-64 justify-center">
-            <img src="https://fakeimg.pl/1600x1300" alt="" />
+            <img
+              src="https://media.licdn.com/dms/image/D4E03AQHMk0mRwaWOEw/profile-displayphoto-shrink_800_800/0/1686373037854?e=1709769600&v=beta&t=c7KwYSMmQwUzj9tpbUknN6ZqimtRsf45lsAkmHnEOQs"
+              alt=""
+            />
             <p className="mt-5 mb-2 text-xl font-semibold tracking-tight text-white">
               Lu Samreth
             </p>
             <p className="text-sm mb-5 font-semibold tracking-tight text-white">
-              Linux Developer
+              Linux Admin/Dev
             </p>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
