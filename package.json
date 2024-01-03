@@ -2,7 +2,7 @@
   "name": "online-learning-platform",
   "private": true,
   "version": "0.0.0",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "start vite --port 3333 && start json-server --watch server/meng_db.json --port 3334",
     "startdev": "start vite --port 3333 && start json-server --watch server/db.json --port 3334",
