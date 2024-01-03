@@ -57,7 +57,7 @@ export const protectedRoutes = [
       // { path: '/users', element: <Users /> },
       {
         path: "profile/*",
-        element: <ProfileRoutes />,
+        element: <UserProfileRoute />,
       },
       {
         path: "search/*",
@@ -111,7 +111,7 @@ export const contentCreatorRoutes = [
       // { path: '/users', element: <Users /> },
       {
         path: "profile/*",
-        element: <ProfileRoutes />,
+        element: <UserProfileRoute />,
       },
       {
         path: "course/*",
@@ -162,10 +162,7 @@ export const adminRoutes = [
     children: [
       // { path: '/discussions/*', element: <DiscussionsRoutes /> },
       // { path: '/users', element: <Users /> },
-      {
-        path: "profile/*",
-        element: <ProfileRoutes />,
-      },
+
       {
         path: "course/*",
         element: <CourseRoutes />,
