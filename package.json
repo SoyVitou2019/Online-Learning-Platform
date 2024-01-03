@@ -2,10 +2,11 @@
   "name": "online-learning-platform",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "start vite --port 3333 && start json-server --watch server/meng_db.json --port 3334",
     "startdev": "start vite --port 3333 && start json-server --watch server/db.json --port 3334",
+    "serve": "serve -s build",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -35,8 +36,9 @@
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.3.1",
     "react-router-dom": "^6.17.0",
-    "sweetalert2": "^11.10.2",
-    "universal-cookie": "^6.1.1"
+    "sweetalert2": "^11.6.13",
+    "universal-cookie": "^6.1.1",
+    "workbox-webpack-plugin": "^7.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -50,6 +52,7 @@
     "nodemon": "^3.0.2",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-pwa": "^0.17.4"
   }
 }
