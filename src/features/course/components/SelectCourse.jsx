@@ -130,7 +130,7 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
 
-          <div className="mt-9 pt-3 pb-3 bg-slate-200">
+          <div className="mt-9 pt-3 pb-3 bg-slate-200 h-[55vh] overflow-y-scroll">
             <div className="px-3">
               <p className="text-xl">Course Content</p>
               <div className="grid grid-flow-row h-auto gap-4 mt-4">
@@ -147,49 +147,10 @@ export const SelectCourse = ({ course_id }) => {
                     vid_id={post.vid_id}
                   />
                 ))}
-                <div className="flex items-center bg-green-300">
-                  <img
-                    className="w-40 aspect-video"
-                    src="https://fakeimg.pl/1600x900"
-                    alt=""
-                  />
-                  <div className="flex flex-col flex-grow">
-                    <h5 className="text-black font-bold ml-4">
-                      The Complete Python Course 2023
-                    </h5>
-                  </div>
-                  <p className="flex justify-end mr-4">15:22</p>
-                </div>
 
                 {/* Item2 */}
-                <div className="flex items-center bg-green-300">
-                  <img
-                    className="w-40 aspect-video"
-                    src="https://fakeimg.pl/1600x900"
-                    alt=""
-                  />
-                  <div className="flex flex-col flex-grow">
-                    <h5 className="text-black font-bold ml-4">
-                      The Complete Python Course 2023
-                    </h5>
-                  </div>
-                  <p className="flex justify-end mr-4">15:22</p>
-                </div>
 
                 {/* Item3 */}
-                <div className="flex items-center bg-green-300">
-                  <img
-                    className="w-40 aspect-video"
-                    src="https://fakeimg.pl/1600x900"
-                    alt=""
-                  />
-                  <div className="flex flex-col flex-grow">
-                    <h5 className="text-black font-bold ml-4">
-                      The Complete Python Course 2023
-                    </h5>
-                  </div>
-                  <p className="flex justify-end mr-4">15:22</p>
-                </div>
               </div>
             </div>
           </div>
@@ -223,7 +184,7 @@ export const SelectCourse = ({ course_id }) => {
             Other Courses by {teacher.firstName + " " + teacher.lastName}
           </div>
           <div className=" mx-4 mt-4 pb-10">
-            {courseByTeacher.map((c) => (
+            {courseByTeacher.slice(0, 2).map((c) => (
               <div key={c.id} className="mb-2">
                 <CardPortrait
                   showDetail={true}

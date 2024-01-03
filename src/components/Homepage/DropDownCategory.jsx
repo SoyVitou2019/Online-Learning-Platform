@@ -46,7 +46,7 @@ export default function DropDownCategory() {
         >
           <Menu.Items
             static
-            className="absolute mt-2 w-64 h-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+            className="z-40 absolute mt-2 w-64 h-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
           >
             {courses.map((course) => (
               <Menu.Item key={course.id}>

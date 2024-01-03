@@ -61,9 +61,8 @@ function HomePageCardList() {
 
   return (
     <div className="mb-14">
-      <HomePageFilter />
-      <h1 className=" text-2xl font-bold m-2">Popular</h1>
-      <hr />
+      <h1 className=" text-2xl font-bold ms-5 mt-3">Popular</h1>
+      <hr className="mx-5 mt-2" />
       <div className="grid grid-cols-4 p-5 gap-4">
         {courses.map((course) => (
           <CardPortrait
@@ -83,7 +82,7 @@ function HomePageCardList() {
           />
         ))}
       </div>
-      {page < totalPages && (
+      {courses.length > 0 && page < totalPages && (
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded mt-4 mx-auto block mb-14"
           onClick={handleShowMore}

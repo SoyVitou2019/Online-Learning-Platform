@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import END_POINTS from "../constants/endpoints";
+import { useNavigate, Link } from "react-router-dom";
 
 const SearchBar = () => {
+  const navigate = useNavigate();
+  const inputRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [data, setData] = useState([]);
@@ -40,17 +43,37 @@ const SearchBar = () => {
     ) {
       setSelectedItem(selectedItem + 1);
       setSearchValue(searchResults[selectedItem + 1].course_name);
+    } else if (e.key === "Enter" && searchValue !== "") {
+      // Navigate to the selected search result when Enter is pressed
+      navigate(`/search/${searchValue}`);
+      setIsFocused(false);
     }
   };
 
   const handleHover = (index) => {
     setSelectedItem(index);
   };
+  const handleDocumentClick = (e) => {
+    // Check if the click is outside the input and results
+    if (
+      inputRef.current &&
+      !inputRef.current.contains(e.target) &&
+      !e.target.classList.contains("search-result-item")
+    ) {
+      setIsFocused(false);
+      setSelectedItem(-1);
+    }
+  };
 
   useEffect(() => {
-    // Focus on the input and set the cursor position after changing the search value
-  }, [searchValue]);
-  console.log(searchResults);
+    // Add click event listener to the document
+    document.addEventListener("click", handleDocumentClick);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
 
   return (
     <>
@@ -70,6 +93,7 @@ const SearchBar = () => {
           />
         </svg>
         <input
+          ref={inputRef}
           className="ml-2 outline-none bg-transparent"
           type="text"
           name="search"
@@ -96,7 +120,7 @@ const SearchBar = () => {
             setSearchResults(filteredData.slice(0, 5));
             setSelectedItem(-1);
           }}
-          onBlur={() => setIsFocused(false)}
+          // onBlur={() => setIsFocused(false)}
           onKeyDown={handleKeyDown}
         />
 
@@ -110,24 +134,26 @@ const SearchBar = () => {
       </div>
       {/* Display search suggestions */}
       {isFocused && searchResults.length > 0 && (
-        <div className="absolute w-72 top-16 bg-white border rounded-md p-2">
+        <div className="absolute w-72 top-16 bg-white border rounded-md p-2 z-40">
           {searchResults.map((result, index) => (
-            <p
-              className={`w-full p-3 ${
+            <Link
+              to={`/search/${result.course_name}`}
+              className={`w-full block p-3 ${
                 selectedItem === index ? "bg-gray-100" : ""
               }`}
               key={result.id}
               onMouseEnter={() => handleHover(index)}
+              onClick={() => setSearchValue(result.course_name)}
             >
               {result.course_name}
-            </p>
+            </Link>
           ))}
         </div>
       )}
 
       {/* Display matching results */}
       {isFocused && searchResults.length === 0 && searchValue && (
-        <div className="absolute w-72 top-16 bg-white border rounded-md p-2">
+        <div className="absolute w-72 top-16 bg-white border rounded-md p-2 z-40">
           <p className="p-3">No matching result found</p>
         </div>
       )}

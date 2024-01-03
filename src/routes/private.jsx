@@ -16,6 +16,7 @@ import RouteError from "../components/RouteError";
 import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
 import RequestPage from "../features/teach/route/RequestPage";
 import UploadPage from "../features/teach/route/UploadPage";
+import { SearchRoutes } from "../features/search/route";
 
 // import { lazyImport } from '@/utils/lazyImport';
 
@@ -60,6 +61,10 @@ export const protectedRoutes = [
       {
         path: "profile/*",
         element: <ProfileRoutes />,
+      },
+      {
+        path: "search/*",
+        element: <SearchRoutes />,
       },
       {
         path: "course/*",
@@ -107,6 +112,10 @@ export const contentCreatorRoutes = [
         element: <CourseRoutes />,
       },
       {
+        path: "search/*",
+        element: <SearchRoutes />,
+      },
+      {
         path: "teach/upload",
         element: <UploadPage />,
       },
@@ -146,6 +155,10 @@ export const adminRoutes = [
       {
         path: "course/*",
         element: <CourseRoutes />,
+      },
+      {
+        path: "search/*",
+        element: <SearchRoutes />,
       },
       {
         path: "admin",
