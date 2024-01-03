@@ -5,7 +5,6 @@ const END_POINTS = {
   COURSE: "http://localhost:3334/course",
   CATEGORY: "http://localhost:3334/category",
   KEY: "http://localhost:3334/service_role",
-  FOLLOW: "http://localhost:3334/follow"
   YT: "http://localhost:3334/youtube_key",
   POST: "http://localhost:3334/post",
 };
