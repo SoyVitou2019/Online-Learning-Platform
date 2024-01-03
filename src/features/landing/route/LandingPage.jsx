@@ -8,16 +8,16 @@ import { SupportedBy } from "../../../components/HomePage/SupportedBy";
 import { Footer } from "../../../components/HomePage/Footer";
 
 export const LandingPage = () => {
-  return (
-    <>
-      <NavBar />
-      <HeroSection />
-      <PopularCoursesSection />
-      <HowVMWorks />
-      <Testamonial />
-      <AboutUs />
-      <SupportedBy />
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <NavBar />
+            <HeroSection />
+            <PopularCoursesSection />
+            <HowVMWorks />
+            <Testamonial />
+            <AboutUs />
+            <SupportedBy />
+            <Footer />
+        </>
+    );
 };

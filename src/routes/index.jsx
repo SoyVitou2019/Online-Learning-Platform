@@ -3,8 +3,6 @@ import { useRoutes } from "react-router-dom";
 import { publicRoutes, commonRoutes } from "./public";
 import { adminRoutes, contentCreatorRoutes, protectedRoutes } from "./private";
 import { useAuth } from "../features/auth/api/Auth";
-import { Navigate } from "react-router-dom";
-import { LandingPage } from "../features/landing/route/LandingPage";
 
 export const AppRoutes = () => {
   // const auth = useAuth();

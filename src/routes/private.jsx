@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { Spinner } from "@/components/Spinner";
+import { Spinner } from "../components/Spinner";
 // import { HomeLayout } from '@/components/Layout';
 import { HomeLayout } from "../layouts/HomeLayout";
 
@@ -19,6 +19,7 @@ import UploadPage from "../features/teach/route/UploadPage";
 import { SearchRoutes } from "../features/search/route";
 import { CategoryPage } from "../components/Pages/CategoryPage";
 import { FollowPage } from "../features/profile/route/FollowPage";
+import { ProfilePage, UserProfileRoute, userRoute } from "../features/users";
 
 // import { lazyImport } from '@/utils/lazyImport';
 
@@ -43,12 +44,6 @@ const App = () => {
         <Outlet />
       </Suspense>
     </HomeLayout>
-
-    // <HomeLayout>
-    //   <Suspense fallback={<div>Loading...</div>}>
-    //     <Outlet />
-    //   </Suspense>
-    // </HomeLayout>
   );
 };
 
@@ -205,7 +200,11 @@ export const adminRoutes = [
         path: "",
         element: <Navigate to="/home" />,
       },
-
+      {
+        path: "profile/*",
+        element: <UserProfileRoute />,
+      },
+      // ...userRoute
       // { path: '/', element: <Dashboard /> },
       // { path: '*', element: <Navigate to="." /> },
     ],

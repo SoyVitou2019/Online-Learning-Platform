@@ -4,9 +4,10 @@
 
 @layer components {
     .login-style {
-      @apply flex flex-col w-80 h-auto border-2 border-black;
+        @apply flex flex-col w-80 h-auto border-2 border-black;
     }
-    .border-button{
+
+    .border-button {
         @apply border-b-2 border-black;
     }
-  }
+}
