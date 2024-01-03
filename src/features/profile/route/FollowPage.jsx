@@ -48,45 +48,18 @@ export const FollowPage = () => {
       console.error("Error fetching data:", error);
     }
   };
-  async function removeFollower(removeId, userId) {
+  const removeFollower = async (id) => {
     try {
-      let updateUserId = userFollowData.userId
-      let updatedFollower  = userFollowData.follower
-      userFollowData.follower.map((item, idx)=>{
-        if(item === removeId && userFollowData.userId[idx] === userId){
-          updateUserId.splice(idx, 1)
-          updatedFollower.splice(idx, 1)
-        }
-      })
-
-      setUserFollowData({
-        userId: updateUserId,
-        follower: updatedFollower
-      })
-      console.log(userFollowData)
-      const response = await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
-      console.log(response.data)
-    } catch (error) {
-      console.error("Error remove follower:", error)
-    }
-  }
-
-  async function unfollow(removeId, userId) {
-    try {
-      let updateUserId = userFollowData.userId
-      let updatedFollower  = userFollowData.follower
-      userFollowData.follower.map((item, idx)=>{
-        if(item === userId && userFollowData.userId[idx] === removeId){
-          updateUserId.splice(idx, 1)
-          updatedFollower.splice(idx, 1)
-        }
-      })
-
-      setUserFollowData({
-        userId: updateUserId,
-        follower: updatedFollower
-      })
-      console.log(userFollowData)
+      
+      // userFollowData.follower.map((item, idx)=>{
+      //   if(item === id){
+      //     userFollowData.userId.pop(idx)
+      //     userFollowData.follower.pop(idx)
+      //   }
+      //   return userFollowData
+      // })
+      
+      console.log(userFollowData);
       const response = await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
       console.log(response.data)
     } catch (error) {
@@ -135,7 +108,7 @@ export const FollowPage = () => {
                     <p className="text-gray-700 text-base">Description or bio goes here...</p>
                   </div>
                   <div className="px-6 py-4">
-                    <button onClick={()=>{unfollow(item, 1)}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                       Unfollow
                     </button>
                   </div>
@@ -154,7 +127,7 @@ export const FollowPage = () => {
                     <p className="text-gray-700 text-base">Description or bio goes here...</p>
                   </div>
                   <div className="px-6 py-4">
-                    <button onClick={()=>{removeFollower(item, 1)}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                       Remove
                     </button>
                   </div>
