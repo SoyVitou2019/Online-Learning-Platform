@@ -30,7 +30,6 @@ export const FollowPage = () => {
   }, []);
 
   const [userFollowData, setUserFollowData] = useState({
-    id: [],
     userId: [],
     follower: [],
   });
@@ -91,41 +90,58 @@ export const FollowPage = () => {
         END_POINTS.FOLLOW + "/1",
         userFollowData
       );
-      console.log(response.data);
     } catch (error) {
       console.error("Error remove follower:", error);
     }
   }
-  async function follow(followID, selfID) {
-    try {
-      let updateUserId = [...userFollowData.userId];
-      let updatedFollower = [...userFollowData.follower];
-      userFollowData.userId.map((item, idx) => {
-        if (item == selfID) {
-          updateUserId.splice(idx + 1, 0, item); // Insert item at the specified index
-          updatedFollower.splice(idx + 1, 0, followID); // Insert followID at the specified index
+  
+  async function follow(IDUWant, selfID){
+    
+    // fetch user every update server
+    const checkExitEncounter = () =>{
+      for (let idx = 0; idx < userFollowData.userId.length; idx++) {
+        const item = userFollowData.userId[idx];
+        if (item === IDUWant && selfID === userFollowData.follower[idx]) {
+          return true
         }
-      });
-
+      }
+      return false
+    }
+    let isntExit = checkExitEncounter();
+    try {
+      let updateUserId = userFollowData.userId;
+      let updatedFollower = userFollowData.follower;
+      for (let idx = 0; idx < userFollowData.userId.length; idx++) {
+        const item = userFollowData.userId[idx];
+      
+        if (item === IDUWant & !isntExit) {
+          updateUserId.splice(idx + 1, 0, IDUWant);
+          updatedFollower.splice(idx + 1, 0, selfID);
+          break;
+        }
+      }
+      
       setUserFollowData({
         userId: updateUserId,
         follower: updatedFollower,
       });
-      console.log(userFollowData);
-      const response = await axios.put(
+
+      await axios.put(
         END_POINTS.FOLLOW + "/1",
         userFollowData
       );
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error remove follower:", error);
+    } catch (e) {
+      console.error("Error remove following:", error);
     }
   }
 
+
   async function unfollow(removeId, userId) {
+    // fetch user every update server
+
     try {
-      let updateUserId = [...userFollowData.userId];
-      let updatedFollower = [...userFollowData.follower];
+      let updateUserId = userFollowData.userId;
+      let updatedFollower = userFollowData.follower;
       userFollowData.follower.map((item, idx) => {
         if (item === userId && userFollowData.userId[idx] === removeId) {
           updateUserId.splice(idx, 1);
@@ -138,7 +154,6 @@ export const FollowPage = () => {
         follower: updatedFollower,
       });
 
-      console.log(userFollowData);
       const response = await axios.put(
         END_POINTS.FOLLOW + "/1",
         userFollowData
@@ -147,16 +162,16 @@ export const FollowPage = () => {
       console.error("Error remove following:", error);
     }
   }
-
-  console.log(userID);
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    getFollower(userID);
-    getFollowing(userID);
+    const fetchAll = async () => {
+      await fetchData();
+      getFollower(userID);
+      getFollowing(userID);
+    }
+    fetchAll();
   }, [userFollowData]);
+
+
 
   return (
     <>
@@ -239,8 +254,7 @@ export const FollowPage = () => {
               <div className="px-6 py-4">
                 <button
                   onClick={() => {
-                    // removeFollower(item, userID);
-                    follow(item, userID)
+                    removeFollower(item, userID);
                   }}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                 >
