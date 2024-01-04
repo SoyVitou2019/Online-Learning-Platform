@@ -9,7 +9,7 @@ export const FollowPage = () => {
   // let { id } = useParams();
 
   const { user } = useAuth();
-
+  const [userFollowData, setUserFollowData] = useState({});
   const [userID, setUserID] = useState(null);
 
   useEffect(() => {
@@ -22,16 +22,15 @@ export const FollowPage = () => {
         console.error("Error fetching data:", error);
       }
     };
-
+    console.log(user.id);
     if (user.id !== null) {
+      fetchData();
       fetchUser();
+      getFollower(userID);
+      getFollowing(userID);
     }
   }, [userID, user]);
 
-  const [userFollowData, setUserFollowData] = useState({
-    userId: [],
-    follower: [],
-  });
   const [follower, setFollower] = useState({
     followerId: [],
   });
@@ -42,7 +41,7 @@ export const FollowPage = () => {
 
   const getFollower = (user_id) => {
     let userFollower = [];
-    userFollowData.userId.map((item, idx) => {
+    userFollowData?.userId?.map((item, idx) => {
       if (item === user_id) {
         userFollower.push(userFollowData.follower[idx]);
       }
@@ -52,7 +51,7 @@ export const FollowPage = () => {
 
   const getFollowing = (user_id) => {
     let userFollowing = [];
-    userFollowData.follower.map((item, idx) => {
+    userFollowData?.follower?.map((item, idx) => {
       if (item === user_id) {
         userFollowing.push(userFollowData.userId[idx]);
       }
@@ -61,9 +60,14 @@ export const FollowPage = () => {
   };
   const fetchData = async () => {
     try {
-      const response = await axios.get(END_POINTS.FOLLOW);
-      const userFollow = await response.data[0];
-      setUserFollowData(userFollow);
+      axios.get(END_POINTS.FOLLOW).then((response) => {
+        const arr = response.data[0];
+        setUserFollowData(arr);
+        console.log(response.data[0]);
+      });
+      console.log("in fetch data");
+
+      console.log(userFollowData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -153,12 +157,6 @@ export const FollowPage = () => {
       console.error("Error remove following:", e);
     }
   }
-
-  useEffect(() => {
-    fetchData();
-    getFollower(userID);
-    getFollowing(userID);
-  }, [user, userID]);
 
   return (
     <>
