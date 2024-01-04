@@ -96,6 +96,31 @@ export const FollowPage = () => {
       console.error("Error remove follower:", error);
     }
   }
+  async function follow(followID) {
+    try {
+      let updateUserId = userFollowData.userId;
+      let updatedFollower = userFollowData.follower;
+      userFollowData.follower.map((item, idx) => {
+        if (item === followID) {
+          updateUserId.append(followID, idx);
+          updatedFollower.splice(followID, idx);
+        }
+      });
+
+      setUserFollowData({
+        userId: updateUserId,
+        follower: updatedFollower,
+      });
+      console.log(userFollowData);
+      const response = await axios.put(
+        END_POINTS.FOLLOW + "/1",
+        userFollowData
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error remove follower:", error);
+    }
+  }
 
   async function unfollow(removeId, userId) {
     try {
