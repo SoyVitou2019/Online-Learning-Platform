@@ -11,7 +11,7 @@ export const AppRoutes = () => {
 
   let routes;
 
-  console.log(user);
+  console.log(role);
   if (user) {
     if (role === "admin") {
       routes = adminRoutes;

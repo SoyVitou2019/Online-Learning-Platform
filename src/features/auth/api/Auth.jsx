@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
   // const [x, setX] = useState(0);
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
       const { user: currentUser } = data;
@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
             END_POINTS.USER + `?uid=${currentUser.id}`
           );
           setRole(response.data[0].role);
-          console.log(response.data);
+          setLoading(false);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -53,11 +53,8 @@ const AuthProvider = ({ children }) => {
         return;
       }
       isCallbackExecuted = true;
-      console.log(event);
-      console.log(session);
 
       if (event === "SIGNED_IN") {
-        console.log("sign in");
         // setX(x + 1);
 
         let userDataFromSup = session.user?.user_metadata ?? {};
@@ -79,22 +76,22 @@ const AuthProvider = ({ children }) => {
                 console.log("error post data", error);
               });
             } else {
-              //user exist
               setRole(response.data[0].role);
             }
+            // setLoading(false);
+
             setUser(session.user);
           })
           .catch((error) => {
             console.error("Error fetching user data:", error);
           });
-        console.log("updated");
 
         //if not exist than add it to the json server
       } else if (event === "SIGNED_OUT") {
         setRole("");
         setUser(null);
       }
-      setLoading(false);
+      isCallbackExecuted = false;
     });
     return () => {
       data.subscription.unsubscribe();
