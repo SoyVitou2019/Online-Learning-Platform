@@ -163,13 +163,11 @@ export const FollowPage = () => {
     }
   }
   useEffect(() => {
-    const fetchAll = async () => {
-      await fetchData();
+      fetchData();
+      console.log(userFollowData)
       getFollower(userID);
       getFollowing(userID);
-    }
-    fetchAll();
-  }, [userFollowData]);
+  }, []);
 
 
 
