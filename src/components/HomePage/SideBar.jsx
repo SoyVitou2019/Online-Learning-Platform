@@ -14,6 +14,7 @@ export default function SideBar() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(END_POINTS.USER + `?uid=${user.id}`);
+
         setCurrUser(response.data[0]);
       } catch (error) {
         console.error("Error fetching data:", error);

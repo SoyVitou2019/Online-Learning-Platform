@@ -94,47 +94,42 @@ export const FollowPage = () => {
       console.error("Error remove follower:", error);
     }
   }
-  
-  async function follow(IDUWant, selfID){
-    
+
+  async function follow(IDUWant, selfID) {
     // fetch user every update server
-    const checkExitEncounter = () =>{
+    const checkExitEncounter = () => {
       for (let idx = 0; idx < userFollowData.userId.length; idx++) {
         const item = userFollowData.userId[idx];
         if (item === IDUWant && selfID === userFollowData.follower[idx]) {
-          return true
+          return true;
         }
       }
-      return false
-    }
+      return false;
+    };
     let isntExit = checkExitEncounter();
     try {
       let updateUserId = userFollowData.userId;
       let updatedFollower = userFollowData.follower;
       for (let idx = 0; idx < userFollowData.userId.length; idx++) {
         const item = userFollowData.userId[idx];
-      
-        if (item === IDUWant & !isntExit) {
+
+        if ((item === IDUWant) & !isntExit) {
           updateUserId.splice(idx + 1, 0, IDUWant);
           updatedFollower.splice(idx + 1, 0, selfID);
           break;
         }
       }
-      
+
       setUserFollowData({
         userId: updateUserId,
         follower: updatedFollower,
       });
 
-      await axios.put(
-        END_POINTS.FOLLOW + "/1",
-        userFollowData
-      );
+      await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
     } catch (e) {
       console.error("Error remove following:", e);
     }
   }
-
 
   async function unfollow(removeId, userId) {
     // fetch user every update server

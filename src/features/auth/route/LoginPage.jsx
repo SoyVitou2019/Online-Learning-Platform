@@ -37,9 +37,7 @@ const LoginPage = () => {
         text: error,
       });
     }
-    const { data } = await supabase.auth.getUser();
-    const { user: currentUser } = data;
-    setUser(currentUser ?? null);
+
     navigate("/");
   };
 
