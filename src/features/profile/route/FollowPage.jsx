@@ -96,14 +96,14 @@ export const FollowPage = () => {
       console.error("Error remove follower:", error);
     }
   }
-  async function follow(followID) {
+  async function follow(followID, selfID) {
     try {
-      let updateUserId = userFollowData.userId;
-      let updatedFollower = userFollowData.follower;
-      userFollowData.follower.map((item, idx) => {
-        if (item === followID) {
-          updateUserId.append(followID, idx);
-          updatedFollower.splice(followID, idx);
+      let updateUserId = [...userFollowData.userId];
+      let updatedFollower = [...userFollowData.follower];
+      userFollowData.userId.map((item, idx) => {
+        if (item == selfID) {
+          updateUserId.splice(idx + 1, 0, item); // Insert item at the specified index
+          updatedFollower.splice(idx + 1, 0, followID); // Insert followID at the specified index
         }
       });
 
@@ -124,8 +124,8 @@ export const FollowPage = () => {
 
   async function unfollow(removeId, userId) {
     try {
-      let updateUserId = userFollowData.userId;
-      let updatedFollower = userFollowData.follower;
+      let updateUserId = [...userFollowData.userId];
+      let updatedFollower = [...userFollowData.follower];
       userFollowData.follower.map((item, idx) => {
         if (item === userId && userFollowData.userId[idx] === removeId) {
           updateUserId.splice(idx, 1);
@@ -239,7 +239,8 @@ export const FollowPage = () => {
               <div className="px-6 py-4">
                 <button
                   onClick={() => {
-                    removeFollower(item, userID);
+                    // removeFollower(item, userID);
+                    follow(item, userID)
                   }}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                 >
