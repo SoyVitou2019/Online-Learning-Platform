@@ -11,13 +11,13 @@ export const FollowPage = () => {
   const { user } = useAuth();
 
   const [userID, setUserID] = useState(null);
+  const [updateData, setUpdateData] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(END_POINTS.USER + "?uid=" + user.id);
         const userData = response.data;
-
         setUserID(userData[0].id);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -27,10 +27,9 @@ export const FollowPage = () => {
     if (user.id !== null) {
       fetchUser();
     }
-  }, []);
+  }, [user]);
 
   const [userFollowData, setUserFollowData] = useState({
-    id: [],
     userId: [],
     follower: [],
   });
@@ -64,8 +63,9 @@ export const FollowPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(END_POINTS.FOLLOW);
-      const userFollow = response.data[0];
+      const userFollow = await response.data[0];
       setUserFollowData(userFollow);
+      setUpdateData(true);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -91,13 +91,50 @@ export const FollowPage = () => {
         END_POINTS.FOLLOW + "/1",
         userFollowData
       );
-      console.log(response.data);
     } catch (error) {
       console.error("Error remove follower:", error);
     }
   }
 
+  async function follow(IDUWant, selfID) {
+    // fetch user every update server
+    const checkExitEncounter = () => {
+      for (let idx = 0; idx < userFollowData.userId.length; idx++) {
+        const item = userFollowData.userId[idx];
+        if (item === IDUWant && selfID === userFollowData.follower[idx]) {
+          return true;
+        }
+      }
+      return false;
+    };
+    let isntExit = checkExitEncounter();
+    try {
+      let updateUserId = userFollowData.userId;
+      let updatedFollower = userFollowData.follower;
+      for (let idx = 0; idx < userFollowData.userId.length; idx++) {
+        const item = userFollowData.userId[idx];
+
+        if ((item === IDUWant) & !isntExit) {
+          updateUserId.splice(idx + 1, 0, IDUWant);
+          updatedFollower.splice(idx + 1, 0, selfID);
+          break;
+        }
+      }
+
+      setUserFollowData({
+        userId: updateUserId,
+        follower: updatedFollower,
+      });
+
+      await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
+    } catch (e) {
+      console.error("Error remove following:", error);
+    }
+  }
+
   async function unfollow(removeId, userId) {
+    // fetch user every update server
+
     try {
       let updateUserId = userFollowData.userId;
       let updatedFollower = userFollowData.follower;
@@ -113,25 +150,21 @@ export const FollowPage = () => {
         follower: updatedFollower,
       });
 
-      console.log(userFollowData);
       const response = await axios.put(
         END_POINTS.FOLLOW + "/1",
         userFollowData
       );
     } catch (e) {
-      console.error("Error remove following:", error);
+      console.error("Error remove following:", e);
     }
   }
 
-  console.log(userID);
   useEffect(() => {
     fetchData();
-  }, []);
-
-  useEffect(() => {
+    console.log(userFollowData);
     getFollower(userID);
     getFollowing(userID);
-  }, [userFollowData]);
+  }, [user, updateData]);
 
   return (
     <>
