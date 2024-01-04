@@ -18,6 +18,7 @@ const Admin = () => {
     try {
       const response1 = await axios.get(END_POINTS.USER_SORT);
       const userMsgs = response1.data;
+      console.log(userMsgs);
       // Sort userMsgs by user_id
       // userMsgs.sort((a, b) => a.id - b.id);
       // Fetch user information for each user request
@@ -49,7 +50,7 @@ const Admin = () => {
 
       // Fetch user information for each user request
       const userPromises = userMsgs.map(async (item) => {
-        const response2 = await axios.get(END_POINTS.USER + item.user_id);
+        const response2 = await axios.get(END_POINTS.USER + "/" + item.user_id);
 
         return {
           userId: item.user_id,
@@ -58,7 +59,7 @@ const Admin = () => {
           createdAt: response2.data.createAt.slice(0, 10),
           roleType: response2.data.roleType,
           message: item.request_msg,
-          id: item.id
+          id: item.id,
         };
       });
 
@@ -103,12 +104,11 @@ const Admin = () => {
           console.log("This user doesn't have request message");
         }
       }
-    })
+    });
     fetchAllUser();
     fetchUser();
 
     setIsOpenDeleteUser(false);
-
   };
   const closeDeleteUserModalWithoutDelete = () => {
     setIsOpenDeleteUser(false);
@@ -126,7 +126,7 @@ const Admin = () => {
           console.error("Something went wrong!");
         }
       }
-    })
+    });
   };
   function closeRequestMessageModal() {
     setIsOpenMessage(false);
