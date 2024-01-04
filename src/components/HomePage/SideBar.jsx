@@ -13,8 +13,10 @@ export default function SideBar() {
     // Function to fetch data from the API
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(END_POINTS.USER + `?uid=${user.id}`); // Replace with your actual API endpoint
-        setCurrUser(response.data[0]); // Assuming the API response is an array of courses
+        const response = await axios.get(END_POINTS.USER + `?uid=${user.id}`);
+        console.log(END_POINTS.USER + `?uid=${user.id}`);
+        console.log(response);
+        setCurrUser(response.data[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

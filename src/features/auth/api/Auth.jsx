@@ -37,14 +37,13 @@ const AuthProvider = ({ children }) => {
             END_POINTS.USER + `?uid=${currentUser.id}`
           );
           setRole(response.data[0].role);
+          console.log(response.data);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       } else {
         setRole("");
       }
-
-      setLoading(false);
     };
     getUser();
 
@@ -54,13 +53,16 @@ const AuthProvider = ({ children }) => {
         return;
       }
       isCallbackExecuted = true;
+      console.log(event);
+      console.log(session);
 
       if (event === "SIGNED_IN") {
-        setUser(session.user);
+        console.log("sign in");
         // setX(x + 1);
 
         let userDataFromSup = session.user?.user_metadata ?? {};
         if (Object.keys(userDataFromSup).length !== 0) {
+          userDataFromSup.about = "";
           userDataFromSup.uid = session.user.id;
           userDataFromSup.created_at = session.user.created_at;
         }
@@ -80,10 +82,12 @@ const AuthProvider = ({ children }) => {
               //user exist
               setRole(response.data[0].role);
             }
+            setUser(session.user);
           })
           .catch((error) => {
             console.error("Error fetching user data:", error);
           });
+        console.log("updated");
 
         //if not exist than add it to the json server
       } else if (event === "SIGNED_OUT") {
@@ -98,7 +102,9 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ role, user, login, updatePassword }}>
+    <AuthContext.Provider
+      value={{ role, user, setUser, login, updatePassword }}
+    >
       {loading ? (
         <div className="flex justify-center h-screen flex-col items-center">
           <Spinner size="lg" />
