@@ -11,13 +11,13 @@ export const FollowPage = () => {
   const { user } = useAuth();
 
   const [userID, setUserID] = useState(null);
+  const [updateData, setUpdateData] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(END_POINTS.USER + "?uid=" + user.id);
         const userData = response.data;
-
         setUserID(userData[0].id);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -28,6 +28,7 @@ export const FollowPage = () => {
       fetchUser();
     }
   }, []);
+
 
   const [userFollowData, setUserFollowData] = useState({
     userId: [],
@@ -63,8 +64,9 @@ export const FollowPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(END_POINTS.FOLLOW);
-      const userFollow = response.data[0];
+      const userFollow = await response.data[0];
       setUserFollowData(userFollow);
+      setUpdateData(true);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -162,12 +164,13 @@ export const FollowPage = () => {
       console.error("Error remove following:", error);
     }
   }
+
   useEffect(() => {
       fetchData();
       console.log(userFollowData)
       getFollower(userID);
       getFollowing(userID);
-  }, []);
+  }, [updateData]);
 
 
 
