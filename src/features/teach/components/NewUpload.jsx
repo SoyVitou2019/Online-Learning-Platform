@@ -68,11 +68,6 @@ const VideoTable = () => {
     // closeModal();
   };
 
-  //   const handleEdit = (video) => {
-  //     setEditingVideo(video);
-  //     // openModal();
-  //   };
-
   //   const handleDelete = (id) => {
   //     setVideos((prevVideos) => prevVideos.filter((video) => video.id !== id));
   //   };
@@ -108,7 +103,6 @@ const VideoTable = () => {
   };
 
   const handleAdd = async () => {
-    console.log(addingVideo);
     setAddModalOpen(false);
     const regex =
       /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
@@ -133,6 +127,7 @@ const VideoTable = () => {
         title: "Ooops, something went wrong",
         text: "YouTube link invalid",
       });
+      return;
     }
 
     try {
@@ -163,8 +158,54 @@ const VideoTable = () => {
     setEditModalOpen(false);
   };
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     setEditModalOpen(false);
+
+    const regex =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+
+    // Extract video ID from the input link using the regex
+    const match = editingVideo.link.match(regex);
+
+    let videoData = {};
+
+    videoData.link = editingVideo.link;
+
+    let isValid = false;
+    if (match && match[7].length == 11) {
+      isValid = await validVideoId(match[7]);
+      console.log(isValid);
+    }
+
+    if (isValid === false) {
+      Swal.fire({
+        icon: "error",
+        title: "Ooops, something went wrong",
+        text: "YouTube link invalid",
+      });
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${match[7]}&key=${youtubeKey}`
+      );
+
+      if (response.data.items.length > 0) {
+        videoData.name = response.data.items[0].snippet.title;
+
+        setVideos((prevVideos) =>
+          prevVideos.map((video) =>
+            video.id === editingVideo.id ? { ...video, ...videoData } : video
+          )
+        );
+      } else {
+        console.error("No video details found.");
+        return;
+      }
+    } catch (error) {
+      console.error("Error fetching video details:", error);
+    }
   };
 
   // delete modal
