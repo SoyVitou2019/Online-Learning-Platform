@@ -3,6 +3,7 @@ import { Fragment, useState, useEffect } from "react";
 import END_POINTS from "../../../constants/endpoints";
 
 import axios from "axios";
+import { supabaseAuth } from "../../auth/api/client";
 
 const Admin = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,6 +95,11 @@ const Admin = () => {
   }
 
   const closeDeleteUserModal = async (idDelete) => {
+    const response = await axios.get(END_POINTS.USER + "/" + idDelete);
+
+    const { data, error } = await supabaseAuth.auth.admin.deleteUser(
+      response.data.uid
+    );
     await axios.delete(END_POINTS.USER + "/" + idDelete);
     users.map(async (item) => {
       if (item.userId === idDelete) {
@@ -104,6 +110,7 @@ const Admin = () => {
         }
       }
     });
+
     fetchAllUser();
     fetchUser();
 
