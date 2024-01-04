@@ -9,6 +9,7 @@ import { LandingPage } from "../features/landing/route/LandingPage";
 import { ProfileRoutes } from "../features/profile/route";
 import UploadPage from "../features/teach/route/UploadPage";
 import ResetPasswordPage from "../features/auth/route/ResetPasswordPage";
+import { Navigate } from "react-router";
 
 export const publicRoutes = [
   {
@@ -19,6 +20,11 @@ export const publicRoutes = [
   {
     path: "/auth/*",
     element: <AuthRoutes />,
+  },
+
+  {
+    path: "/*",
+    element: <Navigate to="/auth/login" />,
   },
 ];
 

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useAuth } from "../api/Auth";
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, setUser } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -30,8 +30,6 @@ const LoginPage = () => {
         icon: "success",
         title: "Login success",
       });
-
-      navigate("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -40,7 +38,7 @@ const LoginPage = () => {
       });
     }
 
-    console.log("Form submitted:", formData);
+    navigate("/");
   };
 
   return (

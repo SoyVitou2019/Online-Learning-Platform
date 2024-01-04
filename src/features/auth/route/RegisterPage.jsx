@@ -18,15 +18,56 @@ const RegisterForm = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
+  const isValidImageUrl = async (url) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        return false;
+      }
+
+      const contentType = response.headers.get("content-type");
+      return contentType.startsWith("image");
+    } catch (error) {
+      return false;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Add your registration logic here, such as API calls or other actions.
-    console.log("Form submitted:", formData);
+    if (
+      !formData.email ||
+      !formData.password ||
+      !formData.firstName ||
+      !formData.lastName
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Please fill out all the required fields",
+      });
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Password don't match",
+        text: "Please password and confirm password",
+      });
+      return;
+    }
+
+    const isImage = await isValidImageUrl(formData.profileUrl);
+    if (!isImage) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid profile URL",
+        text: "Please provide a valid image URL for the profile",
+      });
+      return;
+    }
 
     try {
-      console.log(formData.email);
-      console.log(formData.password);
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,

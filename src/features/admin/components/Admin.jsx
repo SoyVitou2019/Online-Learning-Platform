@@ -3,6 +3,7 @@ import { Fragment, useState, useEffect } from "react";
 import END_POINTS from "../../../constants/endpoints";
 
 import axios from "axios";
+import { supabaseAuth } from "../../auth/api/client";
 
 const Admin = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,8 +27,8 @@ const Admin = () => {
           userId: item.id,
           userProfile: item.profileUrl,
           fullName: item.firstName + " " + item.lastName,
-          createdAt: item.createAt.slice(0, 10),
-          roleType: item.roleType,
+          created_at: item.created_at.slice(0, 10),
+          role: item.role,
         };
       });
 
@@ -49,16 +50,16 @@ const Admin = () => {
 
       // Fetch user information for each user request
       const userPromises = userMsgs.map(async (item) => {
-        const response2 = await axios.get(END_POINTS.USER + item.user_id);
+        const response2 = await axios.get(END_POINTS.USER + "/" + item.user_id);
 
         return {
           userId: item.user_id,
           userProfile: response2.data.profileUrl,
           fullName: response2.data.firstName + " " + response2.data.lastName,
-          createdAt: response2.data.createAt.slice(0, 10),
-          roleType: response2.data.roleType,
+          created_at: response2.data.created_at.slice(0, 10),
+          role: response2.data.role,
           message: item.request_msg,
-          id: item.id
+          id: item.id,
         };
       });
 
@@ -94,7 +95,12 @@ const Admin = () => {
   }
 
   const closeDeleteUserModal = async (idDelete) => {
-    await axios.delete(END_POINTS.USER + idDelete);
+    const response = await axios.get(END_POINTS.USER + "/" + idDelete);
+
+    const { data, error } = await supabaseAuth.auth.admin.deleteUser(
+      response.data.uid
+    );
+    await axios.delete(END_POINTS.USER + "/" + idDelete);
     users.map(async (item) => {
       if (item.userId === idDelete) {
         try {
@@ -103,12 +109,12 @@ const Admin = () => {
           console.log("This user doesn't have request message");
         }
       }
-    })
+    });
+
     fetchAllUser();
     fetchUser();
 
     setIsOpenDeleteUser(false);
-
   };
   const closeDeleteUserModalWithoutDelete = () => {
     setIsOpenDeleteUser(false);
@@ -126,7 +132,30 @@ const Admin = () => {
           console.error("Something went wrong!");
         }
       }
-    })
+    });
+  };
+
+  const closeAndAcceptRequest = async (idAccept) => {
+    console.log("accept");
+    setIsOpenMessage(false);
+    users.map(async (item) => {
+      if (item.userId === idAccept) {
+        try {
+          console.log(item);
+
+          let response = await axios.get(END_POINTS.USER + "/" + item.userId);
+          response.data.role = "content_creator";
+
+          await axios.delete(END_POINTS.USER_REQUEST + item.id).then(() => {
+            axios.put(END_POINTS.USER + "/" + item.userId, response.data);
+          });
+          fetchAllUser();
+          fetchUser();
+        } catch (e) {
+          console.error("Something went wrong!");
+        }
+      }
+    });
   };
   function closeRequestMessageModal() {
     setIsOpenMessage(false);
@@ -136,6 +165,7 @@ const Admin = () => {
     setIdentifyRequestModel(id);
     setIsOpenMessage(true);
   };
+
   return (
     <section className={`bg-slate-300 ${openRequestModal}`}>
       {/* dialog */}
@@ -186,7 +216,7 @@ const Admin = () => {
                       className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeRequestModal}
                     >
-                      Cancle
+                      Cancel
                     </button>
                     <button
                       type="button"
@@ -315,15 +345,16 @@ const Admin = () => {
                   <th scope="row" className="px-6 py-4 font-medium text-black">
                     {item.userId}
                   </th>
-                  <td className="px-3 py-4 w-16">
+                  <td className="px-3 py-4 ">
                     <img
+                      className="w-12 h-12 object-cover"
                       src={item.userProfile}
                       alt="Description of the image"
                     />
                   </td>
                   <td className="px-6 py-4">{item.fullName}</td>
-                  <td className="px-6 py-4">{item.createdAt}</td>
-                  <td className="px-6 py-4">{item.roleType}</td>
+                  <td className="px-6 py-4">{item.created_at}</td>
+                  <td className="px-6 py-4">{item.role}</td>
                   <td className="px-6 py-4">
                     <div
                       className="flex gap-7"
@@ -351,8 +382,8 @@ const Admin = () => {
                     />
                   </td>
                   <td className="px-6 py-4">{item.fullName}</td>
-                  <td className="px-6 py-4">{item.createdAt}</td>
-                  <td className="px-6 py-4">{item.roleType}</td>
+                  <td className="px-6 py-4">{item.created_at}</td>
+                  <td className="px-6 py-4">{item.role}</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-7">
                       <button
@@ -434,7 +465,10 @@ const Admin = () => {
                     <button
                       type="button"
                       className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeRequestMessageModal}
+                      onClick={() => {
+                        closeRequestMessageModal;
+                        closeAndAcceptRequest(identifyRequestModel);
+                      }}
                     >
                       Accept
                     </button>

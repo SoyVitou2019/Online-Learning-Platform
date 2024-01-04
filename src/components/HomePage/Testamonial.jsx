@@ -11,7 +11,7 @@ export const Testamonial = () => {
           Peakmi <br />
           Takeo
         </p>
-        <img src="https://fakeimg.pl/70x70" alt="" />
+        <img src="src/assets/landing/peakmi.svg" alt="" />
       </div>
     </div>
   );

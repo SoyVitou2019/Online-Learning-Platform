@@ -18,6 +18,11 @@ import RequestPage from "../features/teach/route/RequestPage";
 import UploadPage from "../features/teach/route/UploadPage";
 import { SearchRoutes } from "../features/search/route";
 import { CategoryPage } from "../components/Pages/CategoryPage";
+import { FollowPage } from "../features/profile/route/FollowPage";
+import { ProfilePage, UserProfileRoute, userRoute } from "../features/users";
+import NewUpload from "../features/teach/components/NewUpload";
+import { TeachRoutes } from "../features/teach/route";
+import TeacherDashboard from "../features/teach/components/TeacherDashboard";
 
 
 const App = () => {
@@ -33,8 +38,6 @@ const App = () => {
                 <Outlet />
             </Suspense>
         </HomeLayout>
-
-
     );
 };
 
@@ -48,7 +51,7 @@ export const protectedRoutes = [
             // { path: '/users', element: <Users /> },
             {
                 path: "profile/*",
-                element: <ProfileRoutes />,
+                element: <UserProfileRoute />,
             },
             {
                 path: "search/*",
@@ -62,6 +65,10 @@ export const protectedRoutes = [
             {
                 path: "home",
                 element: <HomeRoutes />,
+            },
+            {
+                path: "following",
+                element: <FollowPage />,
             },
 
             {
@@ -98,11 +105,15 @@ export const contentCreatorRoutes = [
             // { path: '/users', element: <Users /> },
             {
                 path: "profile/*",
-                element: <ProfileRoutes />,
+                element: <UserProfileRoute />,
             },
             {
                 path: "course/*",
                 element: <CourseRoutes />,
+            },
+            {
+                path: "following",
+                element: <FollowPage />,
             },
             {
                 path: "category/:catID",
@@ -121,7 +132,10 @@ export const contentCreatorRoutes = [
                 path: "home",
                 element: <HomeRoutes />,
             },
-
+            {
+                path: "teach/dashboard",
+                element: <TeacherDashboard />,
+            },
             {
                 path: "",
                 element: <Navigate to="/home" />,
@@ -145,13 +159,14 @@ export const adminRoutes = [
         children: [
             // { path: '/discussions/*', element: <DiscussionsRoutes /> },
             // { path: '/users', element: <Users /> },
-            {
-                path: "profile/*",
-                element: <ProfileRoutes />,
-            },
+
             {
                 path: "course/*",
                 element: <CourseRoutes />,
+            },
+            {
+                path: "following",
+                element: <FollowPage />,
             },
             {
                 path: "category/:catID",
@@ -167,21 +182,24 @@ export const adminRoutes = [
             },
             {
                 path: "teach/upload",
-                element: <UploadPage />,
+                element: <NewUpload />,
             },
 
             {
                 path: "home",
                 element: <HomeRoutes />,
             },
-
+            {
+                path: "teach/dashboard",
+                element: <TeacherDashboard />,
+            },
             {
                 path: "",
                 element: <Navigate to="/home" />,
             },
             {
                 path: "profile/*",
-                element: <UserProfileRoute />
+                element: <UserProfileRoute />,
             },
             // ...userRoute
             // { path: '/', element: <Dashboard /> },

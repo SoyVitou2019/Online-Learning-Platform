@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
   // const [x, setX] = useState(0);
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
       const { user: currentUser } = data;
@@ -37,49 +37,70 @@ const AuthProvider = ({ children }) => {
             END_POINTS.USER + `?uid=${currentUser.id}`
           );
           setRole(response.data[0].role);
+          setLoading(false);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       } else {
         setRole("");
+        setLoading(false);
       }
-
-      setLoading(false);
     };
     getUser();
 
-    let isCallbackExecuted = false;
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      if (isCallbackExecuted) {
-        return;
-      }
-      isCallbackExecuted = true;
-
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN") {
-        setUser(session.user);
         // setX(x + 1);
 
         let userDataFromSup = session.user?.user_metadata ?? {};
         if (Object.keys(userDataFromSup).length !== 0) {
+          userDataFromSup.about = "";
           userDataFromSup.uid = session.user.id;
           userDataFromSup.created_at = session.user.created_at;
         }
 
-        axios
+        await axios
           .get(END_POINTS.USER + `?uid=${session.user.id}`)
-          .then((response) => {
+          .then(async (response) => {
             // Check if the response has user data
 
             //check if user not exist in json
             if (response.data.length === 0) {
+              setLoading(true);
               setRole(session.user?.user_metadata?.role);
-              axios.post(END_POINTS.USER, userDataFromSup).catch((error) => {
-                console.log("error post data", error);
-              });
+              await axios
+                .post(END_POINTS.USER, userDataFromSup)
+                .catch((error) => {
+                  console.log("error post data", error);
+                });
+              setLoading(false);
             } else {
-              //user exist
               setRole(response.data[0].role);
+              // Check if there are duplicate records
+              setLoading(true);
+              while (response.data.length > 1) {
+                // Get the id of the duplicate record
+                const duplicateUserId = response.data[1].id;
+
+                // Call the delete method from the API
+                await axios
+                  .delete(`${END_POINTS.USER}/${duplicateUserId}`)
+                  .catch((error) => {
+                    console.log(
+                      `Error deleting user with id ${duplicateUserId}`,
+                      error
+                    );
+                  });
+
+                // Fetch the updated user data
+                const updatedResponse = await axios.get(
+                  END_POINTS.USER + `?uid=${session.user.id}`
+                );
+                response = updatedResponse;
+              }
+              setLoading(false);
             }
+            setUser(session.user);
           })
           .catch((error) => {
             console.error("Error fetching user data:", error);
@@ -90,7 +111,6 @@ const AuthProvider = ({ children }) => {
         setRole("");
         setUser(null);
       }
-      setLoading(false);
     });
     return () => {
       data.subscription.unsubscribe();
@@ -98,7 +118,9 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ role, user, login, updatePassword }}>
+    <AuthContext.Provider
+      value={{ role, user, setUser, login, updatePassword }}
+    >
       {loading ? (
         <div className="flex justify-center h-screen flex-col items-center">
           <Spinner size="lg" />
