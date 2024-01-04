@@ -375,7 +375,7 @@ const VideoTable = () => {
       {/* header */}
       <div className="px-5 flex justify-start border-t border-b border-gray-300">
         <Link
-          to="/teacher/upload"
+          to="/teach/upload"
           className=" p-4 py-2 text-md font-medium text-center"
         >
           Course
