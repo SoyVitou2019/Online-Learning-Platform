@@ -20,6 +20,7 @@ import { SearchRoutes } from "../features/search/route";
 import { CategoryPage } from "../components/Pages/CategoryPage";
 import { FollowPage } from "../features/profile/route/FollowPage";
 import { ProfilePage, UserProfileRoute, userRoute } from "../features/users";
+import NewUpload from "../features/teach/components/NewUpload";
 
 // import { lazyImport } from '@/utils/lazyImport';
 
@@ -185,7 +186,7 @@ export const adminRoutes = [
       },
       {
         path: "teach/upload",
-        element: <UploadPage />,
+        element: <NewUpload />,
       },
 
       {
