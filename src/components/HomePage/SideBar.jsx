@@ -1,18 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../features/auth/api/Auth";
+import axios from "axios";
+import END_POINTS from "../../constants/endpoints";
 
 export default function SideBar() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [currUser, setCurrUser] = useState({});
+    const { user } = useAuth();
+
+    useEffect(() => {
+        // Function to fetch data from the API
+        const fetchProfile = async () => {
+            try {
+                const response = await axios.get(END_POINTS.USER + `?uid=${user.id}`); // Replace with your actual API endpoint
+                setCurrUser(response.data[0]); // Assuming the API response is an array of courses
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        // Call the fetch function
+        fetchProfile();
+    }, []); // Empty dependency array ensures that the effect runs only once (on mount)
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
     return (
-        <div className="flex flex-1 ">
+        <div className="flex ">
             <aside
                 id="logo-sidebar"
-                className={`  ${isSidebarOpen ? "hidden" : "block"} `}
+                className={`w-72  ${isSidebarOpen ? "hidden" : "block"} `}
                 aria-label="Sidebar"
             >
                 <div className="h-full  px-3 py-4 bg-gray-50 dark:bg-gray-700">
@@ -23,10 +42,12 @@ export default function SideBar() {
                                 style={{ color: "white" }}
                             ></i>
                         </Link>
-                        <Link to="/profile" className="flex-col px-3 mr-auto">
-                            <div className="text-white text-xs">Student</div>
-                            <span className="text-xl whitespace-nowrap dark:text-white">
-                                Eong Koungmeng
+                        <Link to="/profile" className="flex-col ps-5 mr-auto">
+                            <div className="text-white text-xs">{currUser.role}</div>
+                            <span className="text-xl text-overflow: ellipsis whitespace-nowrap dark:text-white">
+                                {currUser.firstName && currUser.firstName.length > 0
+                                    ? currUser.firstName[0] + ". " + (currUser.lastName || "")
+                                    : ""}
                             </span>
                             <div className="text-white text-xs">Followers: 15</div>
                         </Link>
@@ -50,6 +71,15 @@ export default function SideBar() {
                         </li>
                         <li>
                             <Link
+                                to="/following"
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                            >
+                                <i className="bi bi-box2-heart text-2xl"></i>
+                                <span className="flex-1 ms-3 whitespace-nowrap">Following</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
                                 to="/profile"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
@@ -57,49 +87,40 @@ export default function SideBar() {
                                 <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
                             </Link>
                         </li>
-                        <li>
-                            <Link
-                                to="/notifications"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                            >
-                                <i className="bi bi-app-indicator text-2xl"></i>
-                                <span className="flex-1 ms-3 whitespace-nowrap">
-                                    Notification
-                                </span>
-                                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-400 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-300">
-                                    3
-                                </span>
-                            </Link>
-                        </li>
 
-                        <li>
+                        <>
                             <Link
-                                to="/upload"
+                                to={
+                                    currUser.role === "admin" ||
+                                        currUser.role === "content_creator"
+                                        ? "/teach/upload"
+                                        : "teach/request"
+                                }
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <i className="bi bi-play-fill text-2xl"></i>
                                 <span className="flex-1 ms-3 whitespace-nowrap">Teach</span>
                             </Link>
-                        </li>
-                        <li>
-                            <Link
-                                to="/admin"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                            >
-                                <i className="bi bi-bar-chart text-2xl"></i>
-                                <span className="flex-1 ms-3 whitespace-nowrap">Admin</span>
-                            </Link>
-                        </li>
+                        </>
+                        {currUser.role === "admin" && (
+                            <li>
+                                <Link
+                                    to="/admin"
+                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                                >
+                                    <i className="bi bi-bar-chart text-2xl"></i>
+                                    <span className="flex-1 ms-3 whitespace-nowrap">Admin</span>
+                                </Link>
+                            </li>
+                        )}
+
                         <hr></hr>
                         <li>
-                            <a
-                                href="#"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                            >
+                            <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <span className="flex-1 ms-3 whitespace-nowrap">
                                     Continue learning
                                 </span>
-                            </a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -148,6 +169,14 @@ export default function SideBar() {
                                 href="#"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
+                                <i className="bi bi-box2-heart text-2xl"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                            >
                                 <i className="bi bi-person-lines-fill text-2xl"></i>
                             </a>
                         </li>
@@ -156,7 +185,7 @@ export default function SideBar() {
                                 href="#"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
-                                <i className="bi bi-app-indicator text-2xl"></i>
+                                <i className="bi bi-play-fill text-2xl"></i>
                             </a>
                         </li>
                         <li>
@@ -164,15 +193,7 @@ export default function SideBar() {
                                 href="#"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
-                                <i className="bi bi-currency-dollar text-2xl"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                            >
-                                <i className="bi bi-caret-right-square text-2xl"></i>
+                                <i className="bi bi-bar-chart text-2xl"></i>
                             </a>
                         </li>
                         <hr></hr>

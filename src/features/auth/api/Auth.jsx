@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "./client";
 import { Spinner } from "../../../components/Spinner";
+import END_POINTS from "../../../constants/endpoints";
+import axios from "axios";
 
 const AuthContext = createContext({});
 
@@ -15,31 +17,80 @@ const updatePassword = async (new_password) =>
   });
 
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [auth, setAuth] = useState(false);
+  const [role, setRole] = useState("");
+  // const [x, setX] = useState(0);
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     const getUser = async () => {
       const { data } = await supabase.auth.getUser();
       const { user: currentUser } = data;
+
       setUser(currentUser ?? null);
+
+      //if user exist set role state
+      if (currentUser) {
+        try {
+          const response = await axios.get(
+            END_POINTS.USER + `?uid=${currentUser.id}`
+          );
+          setRole(response.data[0].role);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      } else {
+        setRole("");
+      }
+
       setLoading(false);
     };
     getUser();
 
+    let isCallbackExecuted = false;
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event);
-      if (event == "PASSWORD_RECOVERY") {
-        setAuth(false);
-      } else if (event === "SIGNED_IN") {
+      if (isCallbackExecuted) {
+        return;
+      }
+      isCallbackExecuted = true;
+
+      if (event === "SIGNED_IN") {
         setUser(session.user);
-        setAuth(true);
+        // setX(x + 1);
+
+        let userDataFromSup = session.user?.user_metadata ?? {};
+        if (Object.keys(userDataFromSup).length !== 0) {
+          userDataFromSup.uid = session.user.id;
+          userDataFromSup.created_at = session.user.created_at;
+        }
+
+        axios
+          .get(END_POINTS.USER + `?uid=${session.user.id}`)
+          .then((response) => {
+            // Check if the response has user data
+
+            //check if user not exist in json
+            if (response.data.length === 0) {
+              setRole(session.user?.user_metadata?.role);
+              axios.post(END_POINTS.USER, userDataFromSup).catch((error) => {
+                console.log("error post data", error);
+              });
+            } else {
+              //user exist
+              setRole(response.data[0].role);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching user data:", error);
+          });
+
+        //if not exist than add it to the json server
       } else if (event === "SIGNED_OUT") {
-        setAuth(false);
+        setRole("");
         setUser(null);
       }
+      setLoading(false);
     });
     return () => {
       data.subscription.unsubscribe();
@@ -47,7 +98,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ auth, user, login, updatePassword }}>
+    <AuthContext.Provider value={{ role, user, login, updatePassword }}>
       {loading ? (
         <div className="flex justify-center h-screen flex-col items-center">
           <Spinner size="lg" />

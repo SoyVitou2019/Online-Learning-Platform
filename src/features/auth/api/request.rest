@@ -45,7 +45,7 @@ GET  https://coding-fairy.com/api/mock-api-resources/ols/user
 
 
 ###
-DELETE   https://coding-fairy.com/api/mock-api-resources/ols/user_request/2
+DELETE   https://coding-fairy.com/api/mock-api-resources/ols/user_request
 
 
 
