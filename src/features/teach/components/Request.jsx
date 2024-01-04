@@ -56,7 +56,7 @@ export const Request = () => {
   const handleSubmit = async () => {
     closeRequestModal();
 
-    const phoneRegex = /^\d{9}$/; // Assumes a 10-digit phone number format
+    const phoneRegex = /^\d{9,10}$/; // Assumes a 10-digit phone number format
     if (!phoneRegex.test(formData.phoneNumber)) {
       Swal.fire({
         icon: "error",

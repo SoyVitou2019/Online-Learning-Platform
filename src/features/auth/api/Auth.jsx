@@ -43,17 +43,12 @@ const AuthProvider = ({ children }) => {
         }
       } else {
         setRole("");
+        setLoading(false);
       }
     };
     getUser();
 
-    let isCallbackExecuted = false;
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      if (isCallbackExecuted) {
-        return;
-      }
-      isCallbackExecuted = true;
-
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN") {
         // setX(x + 1);
 
@@ -64,22 +59,47 @@ const AuthProvider = ({ children }) => {
           userDataFromSup.created_at = session.user.created_at;
         }
 
-        axios
+        await axios
           .get(END_POINTS.USER + `?uid=${session.user.id}`)
-          .then((response) => {
+          .then(async (response) => {
             // Check if the response has user data
 
             //check if user not exist in json
             if (response.data.length === 0) {
+              setLoading(true);
               setRole(session.user?.user_metadata?.role);
-              axios.post(END_POINTS.USER, userDataFromSup).catch((error) => {
-                console.log("error post data", error);
-              });
+              await axios
+                .post(END_POINTS.USER, userDataFromSup)
+                .catch((error) => {
+                  console.log("error post data", error);
+                });
+              setLoading(false);
             } else {
               setRole(response.data[0].role);
-            }
-            // setLoading(false);
+              // Check if there are duplicate records
+              setLoading(true);
+              while (response.data.length > 1) {
+                // Get the id of the duplicate record
+                const duplicateUserId = response.data[1].id;
 
+                // Call the delete method from the API
+                await axios
+                  .delete(`${END_POINTS.USER}/${duplicateUserId}`)
+                  .catch((error) => {
+                    console.log(
+                      `Error deleting user with id ${duplicateUserId}`,
+                      error
+                    );
+                  });
+
+                // Fetch the updated user data
+                const updatedResponse = await axios.get(
+                  END_POINTS.USER + `?uid=${session.user.id}`
+                );
+                response = updatedResponse;
+              }
+              setLoading(false);
+            }
             setUser(session.user);
           })
           .catch((error) => {
@@ -91,7 +111,6 @@ const AuthProvider = ({ children }) => {
         setRole("");
         setUser(null);
       }
-      isCallbackExecuted = false;
     });
     return () => {
       data.subscription.unsubscribe();

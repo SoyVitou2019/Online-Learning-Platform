@@ -94,7 +94,7 @@ const Admin = () => {
   }
 
   const closeDeleteUserModal = async (idDelete) => {
-    await axios.delete(END_POINTS.USER + idDelete);
+    await axios.delete(END_POINTS.USER + "/" + idDelete);
     users.map(async (item) => {
       if (item.userId === idDelete) {
         try {
