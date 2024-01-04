@@ -69,7 +69,7 @@ const VideoTable = () => {
   };
 
   //   const handleDelete = (id) => {
-  //     setVideos((prevVideos) => prevVideos.filter((video) => video.id !== id));
+  //
   //   };
 
   function validVideoId(id) {
@@ -219,6 +219,9 @@ const VideoTable = () => {
 
   const handleDelete = () => {
     setDeleteModalOpen(false);
+    setVideos((prevVideos) =>
+      prevVideos.filter((video) => video.id !== deletingVideo.id)
+    );
   };
 
   const [courseData, setCourseData] = useState({
