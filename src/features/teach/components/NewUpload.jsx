@@ -6,29 +6,21 @@ import axios from "axios";
 import END_POINTS from "@/src/constants/endpoints";
 import Swal from "sweetalert2";
 import { youtubeKey } from "../../auth/api/client";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/api/Auth";
 const VideoTable = () => {
-  const [videos, setVideos] = useState([
-    {
-      id: 1,
-      name: "Video 1",
-      link: "https://www.example.com/video1",
-    },
-    {
-      id: 2,
-      name: "Video 2",
-      link: "https://www.example.com/video2",
-    },
-  ]);
+  const [videos, setVideos] = useState([]);
 
   const [course, setCourse] = useState();
 
+  const navigate = useNavigate();
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingVideo, setEditingVideo] = useState({ link: "" });
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [addingVideo, setAddingVideo] = useState({ link: "" });
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deletingVideo, setDeletingVideo] = useState({ link: "" });
+  const [loading, setLoading] = useState(false);
 
   const [categories, setCategories] = useState([
     { title: "Mathematic", id: 1 },
@@ -37,6 +29,24 @@ const VideoTable = () => {
   ]);
 
   const [selected, setSelected] = useState({ title: "Mathematic", id: 1 });
+
+  const [userID, setUserID] = useState(null);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(END_POINTS.USER + "?uid=" + user.id);
+        const userData = response.data;
+        setUserID(userData[0].id);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    if (user.id !== null) {
+      fetchUser();
+    }
+  }, [userID, user]);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -120,7 +130,7 @@ const VideoTable = () => {
       console.log(isValid);
     }
 
-    setAddingVideo({});
+    setAddingVideo({ link: "" });
     if (isValid === false) {
       Swal.fire({
         icon: "error",
@@ -137,7 +147,8 @@ const VideoTable = () => {
 
       if (response.data.items.length > 0) {
         videoData.name = response.data.items[0].snippet.title;
-        videoData.id = videos[videos.length - 1].id + 1;
+        videoData.id =
+          videos.length !== 0 ? videos[videos.length - 1].id + 1 : 1;
 
         setVideos((prevVideos) => [...prevVideos, videoData]);
       } else {
@@ -207,7 +218,22 @@ const VideoTable = () => {
       console.error("Error fetching video details:", error);
     }
   };
+  function getCurrentDateTimeFormatted() {
+    const now = new Date();
 
+    // Get the components of the date and time
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+
+    // Format the date and time
+    const formattedDateTime = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+
+    return formattedDateTime;
+  }
   // delete modal
   const openDeleteModal = (video) => {
     setDeleteModalOpen(true);
@@ -238,6 +264,112 @@ const VideoTable = () => {
       [name]: value,
     }));
   };
+
+  const handleSubmit = async () => {
+    if (loading) return;
+    setLoading(true);
+
+    console.log(courseData);
+    console.log(videos);
+
+    if (
+      !courseData.courseName ||
+      !selected.title ||
+      !courseData.courseDescription ||
+      !courseData.courseExpectations ||
+      videos.length === 0
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Ooops, something went wrong",
+        text: "Please fill in the form and add videos",
+      });
+      setLoading(false);
+      return;
+    }
+
+    let courseVidID = "";
+    let arrID = [];
+    await Promise.all(
+      videos.map(async (vid, index) => {
+        let vid_id;
+        const regex =
+          /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+
+        // Extract video ID from the input link using the regex
+        const match = vid.link.match(regex);
+
+        if (match && match[7].length == 11) {
+          vid_id = match[7];
+        }
+        let postVidData = {};
+        postVidData.title = vid.name;
+        postVidData.vid_id = vid_id;
+
+        if (index === 0) {
+          courseVidID = vid_id;
+        }
+        console.log(postVidData);
+        const response = await axios.post(END_POINTS.POST, postVidData);
+        arrID = [...arrID, response.data.id];
+        console.log(arrID);
+      })
+    );
+
+    //post data to course
+    let postCourseData = {};
+
+    postCourseData.course_name = courseData.courseName;
+    postCourseData.vid_id = courseVidID;
+    postCourseData.couse_description = courseData.courseDescription;
+    postCourseData.created_by_user_id = userID;
+    postCourseData.created_at = getCurrentDateTimeFormatted();
+    postCourseData.category = selected.title;
+    postCourseData.rank = 10;
+    postCourseData.posts = arrID;
+    console.log(arrID);
+    postCourseData.course_expectation =
+      courseData.courseExpectations.split("\n");
+
+    // "course_name": "ដេរីវេ second",
+    //   "vid_id": "LZ7SFpCiekU",
+    //   "couse_description": "សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+    //   "created_by_user_id": "2",
+    //   "created_at": "2022-02-01 21:05:02",
+    //   "category": "Mathematic",
+    //   "rank": 2,
+    //   "posts": [
+    //     4,
+    //     5,
+    //     6
+    //   ],
+    //   "course_expectation": [
+    //     "You will master derivative",
+    //     "You will pass grade 12",
+    //     "You will pass ICT entrace",
+    //     "You will get A++",
+    //     "Understand the universe"
+    //   ],
+    //   "id": 28
+    try {
+      await axios.post(END_POINTS.COURSE, postCourseData);
+      Swal.fire({
+        icon: "success",
+        title: "Course uploaded",
+      });
+      navigate("/");
+    } catch (e) {
+      Swal.fire({
+        icon: "error",
+        title: "Cannot upload",
+        text: e,
+      });
+    }
+
+    setLoading(false);
+  };
+
+  console.log(videos);
   return (
     <div className="mb-32">
       {/* header */}
@@ -248,12 +380,12 @@ const VideoTable = () => {
         <a href="#" className=" p-4  py-2 text-md font-medium ">
           Analytics
         </a>
-        <a
-          href="#"
+        <button
           className=" p-4  py-2 text-md font-medium ml-auto bg-green-200 "
+          onClick={handleSubmit}
         >
           Publish
-        </a>
+        </button>
       </div>
       <p className="font-bold pl-9 pt-4 ">Upload Videos</p>
 
@@ -491,7 +623,7 @@ const VideoTable = () => {
                     <input
                       id="link"
                       name="link"
-                      value={addingVideo?.link}
+                      value={addingVideo.link}
                       onChange={(e) =>
                         setAddingVideo({
                           ...addingVideo,
