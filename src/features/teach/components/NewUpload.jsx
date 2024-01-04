@@ -374,12 +374,15 @@ const VideoTable = () => {
     <div className="mb-32">
       {/* header */}
       <div className="px-5 flex justify-start border-t border-b border-gray-300">
-        <a href="#" className=" p-4 py-2 text-md font-medium text-center">
+        <Link
+          to="/teacher/upload"
+          className=" p-4 py-2 text-md font-medium text-center"
+        >
           Course
-        </a>
-        <a href="#" className=" p-4  py-2 text-md font-medium ">
-          Analytics
-        </a>
+        </Link>
+        <Link to="/teach/dashboard" className=" p-4  py-2 text-md font-medium ">
+          Dashboard
+        </Link>
         <button
           className=" p-4  py-2 text-md font-medium ml-auto bg-green-200 "
           onClick={handleSubmit}

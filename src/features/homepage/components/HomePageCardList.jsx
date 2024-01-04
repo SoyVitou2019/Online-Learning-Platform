@@ -16,11 +16,10 @@ function HomePageCardList() {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `${END_POINTS.COURSE}?_sort=rank&_page=${page}&_limit=${itemsPerPage}`
+          `${END_POINTS.COURSE}?_sort=created_at&_page=${page}&_limit=${itemsPerPage}`
         );
         const coursesData = response.data;
 
-        console.log(response);
         const linkHeader = response.headers.link;
         if (linkHeader) {
           const totalPagesRegex = /_page=(\d+)&_limit=(\d+)>; rel="last"/;

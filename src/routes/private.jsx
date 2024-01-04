@@ -21,6 +21,8 @@ import { CategoryPage } from "../components/Pages/CategoryPage";
 import { FollowPage } from "../features/profile/route/FollowPage";
 import { ProfilePage, UserProfileRoute, userRoute } from "../features/users";
 import NewUpload from "../features/teach/components/NewUpload";
+import { TeachRoutes } from "../features/teach/route";
+import TeacherDashboard from "../features/teach/components/TeacherDashboard";
 
 // import { lazyImport } from '@/utils/lazyImport';
 
@@ -139,7 +141,10 @@ export const contentCreatorRoutes = [
         path: "home",
         element: <HomeRoutes />,
       },
-
+      {
+        path: "teach/dashboard",
+        element: <TeacherDashboard />,
+      },
       {
         path: "",
         element: <Navigate to="/home" />,
@@ -193,7 +198,10 @@ export const adminRoutes = [
         path: "home",
         element: <HomeRoutes />,
       },
-
+      {
+        path: "teach/dashboard",
+        element: <TeacherDashboard />,
+      },
       {
         path: "",
         element: <Navigate to="/home" />,
