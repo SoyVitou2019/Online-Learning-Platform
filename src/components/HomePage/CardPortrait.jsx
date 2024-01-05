@@ -34,18 +34,18 @@ export const CardPortrait = ({
         </p>
         {showDetail && (
           <div className="flex justify-between">
-            <a
-              href="#"
+            <Link
+              to={"/profile/" + creator_id}
               className=" px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               {created_by}
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="#"
               className="ml-auto px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               {category}
-            </a>
+            </Link>
           </div>
         )}
       </div>

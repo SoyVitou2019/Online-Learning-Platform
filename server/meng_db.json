@@ -1,17 +1,6 @@
 {
   "user": [
     {
-      "firstName": "Vitou",
-      "lastName": "Pro",
-      "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
-      "email": "soyvitou234@gmail.com",
-      "created_at": "2024-01-01T10:18:53.872668Z",
-      "about": "I am a user",
-      "role": "student",
-      "uid": "1",
-      "id": 1
-    },
-    {
       "email": "j3058175@gmail.com",
       "firstName": "Koung",
       "lastName": "Meng",
@@ -28,7 +17,7 @@
       "lastName": "Vitou",
       "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
       "role": "student",
-      "about": "I am a user",
+      "about": "Relax, enjoy and have fun",
       "uid": "613f3765-fa75-45ee-955b-e3eb33eed648",
       "created_at": "2024-01-01T10:24:06.188823Z",
       "id": 3
@@ -36,13 +25,46 @@
     {
       "email": "randopmdude@gmail.com",
       "firstName": "John",
-      "lastName": "Random",
+      "lastName": "dom",
       "profileUrl": "https://media.licdn.com/dms/image/D4E03AQHY9xlXN16B0w/profile-displayphoto-shrink_800_800/0/1691300047851?e=2147483647&v=beta&t=X7qiEGjW3qOkJI0Sq_yHASQqzEhYeWHfJGP27uFxj6s",
       "role": "student",
-      "about": "",
+      "about": "Work hard, Play harder",
       "uid": "42be5e9c-2a37-4f17-9a30-20d883634b10",
       "created_at": "2024-01-04T07:04:58.026972Z",
       "id": 4
+    },
+    {
+      "email": "soyvitou999@gmail.com",
+      "firstName": "Soy",
+      "lastName": "Vitou",
+      "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
+      "role": "student",
+      "about": "",
+      "uid": "9339d5ab-bc4e-4a1b-970a-5f961033a2c0",
+      "created_at": "2024-01-05T06:14:36.726671Z",
+      "id": 5
+    },
+    {
+      "email": "9ball2019@gmail.com",
+      "firstName": "Cam",
+      "lastName": "Dev",
+      "profileUrl": "https://marketplace.canva.com/EAFHfL_zPBk/1/0/1600w/canva-yellow-inspiration-modern-instagram-profile-picture-kpZhUIzCx_w.jpg",
+      "role": "student",
+      "about": "",
+      "uid": "c25204b6-a8dd-4fdb-bbea-7562afd46cd3",
+      "created_at": "2024-01-05T06:18:22.708494Z",
+      "id": 6
+    },
+    {
+      "email": "soyvitoupro@gmail.com",
+      "firstName": "Nak",
+      "lastName": "KabDav",
+      "profileUrl": "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
+      "role": "student",
+      "about": "",
+      "uid": "75c7d35e-b6a2-4b7e-81ca-f4ba418e8be6",
+      "created_at": "2024-01-05T06:21:16.947902Z",
+      "id": 7
     }
   ],
   "course": [
@@ -720,32 +742,14 @@
   "follow": [
     {
       "userId": [
-        1,
-        1,
-        1,
         2,
         2,
-        2,
-        2,
-        3,
-        9,
-        9,
-        10,
-        12
+        3
       ],
       "follower": [
-        2,
-        4,
-        7,
-        9,
-        5,
-        1,
         3,
         5,
-        7,
-        3,
-        2,
-        6
+        2
       ],
       "id": 1
     }

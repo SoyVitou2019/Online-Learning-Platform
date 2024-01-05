@@ -70,7 +70,7 @@ export const protectedRoutes = [
       },
 
       {
-        path: "home",
+        path: "home/*",
         element: <HomeRoutes />,
       },
       {
@@ -136,7 +136,7 @@ export const contentCreatorRoutes = [
       },
 
       {
-        path: "home",
+        path: "home/*",
         element: <HomeRoutes />,
       },
 
@@ -190,7 +190,7 @@ export const adminRoutes = [
       },
 
       {
-        path: "home",
+        path: "home/*",
         element: <HomeRoutes />,
       },
 
