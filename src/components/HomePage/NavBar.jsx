@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 
 export const NavBar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
   let menuRef = useRef();
 
   useEffect(() => {
@@ -22,27 +21,13 @@ export const NavBar = () => {
         <Link to="/" className="text-xl text-gray-800 font-bold">
           VM
         </Link>
-        <Link to="/" className=" text-xl text-gray-800">
+        <Link to="/" className="hidden text-xl text-gray-800 sm:block">
           <DropDownCategory />
         </Link>
       </ul>
       <ul className="flex items-center space-x-6">
         <div>
-          <div className={showSearch ? "block" : "hidden"}>
             <SearchBar />
-          </div>
-          <p
-            onClick={() => {
-              setShowSearch(true);
-            }}
-            className={
-              showSearch
-                ? "hidden"
-                : "bg-red-50 px-10 py-1 rounded-xl font-serif sm:hidden"
-            }
-          >
-            Search ...
-          </p>
         </div>
         <i
           ref={menuRef}
