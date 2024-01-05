@@ -239,9 +239,9 @@ export const SelectCourse = ({ course_id }) => {
   return (
     <section className="bg-blue-50">
       <div className="flex pb-10">
-        <div className="ml-10 w-2/3 overflow-y-scroll">
+        <div className="ml-10 w-2/3">
           <BackButton />
-          <h1 className="font-semibold underline text-3xl my-3">
+          <h1 className="font-semibold underline text-3xl my-3 overflow-y-scroll">
             {course.course_name}
           </h1>
           <div>
@@ -250,7 +250,7 @@ export const SelectCourse = ({ course_id }) => {
           <div className=" mt-9 pt-3 pb-3 bg-blue-100">
             <div className="px-3">
               <p className=" text-xl">What you will learn</p>
-              <div className="grid grid-flow-col h-auto gap-8 mt-4 bg-white p-5 ">
+              <div className="grid grid-flow-col h-auto gap-8 mt-4 bg-white p-5">
                 <div className="flex flex-col justify-around gap-8">
                   {course.course_expectation?.map((expectation, index) => (
                     <p key={index}> {"✅ " + expectation}</p>
@@ -260,7 +260,7 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
 
-          <div className="mt-9 pt-3 pb-3 bg-blue-100 h-[20vh]">
+          <div className="mt-9 pt-3 pb-3 bg-blue-100 h-[10vh]">
             <div className="px-3">
               <p className="text-xl">Course Content</p>
               <div className="grid grid-flow-row h-auto gap-4 mt-4">
@@ -286,7 +286,7 @@ export const SelectCourse = ({ course_id }) => {
           </div>
         </div>
         
-        {/* right side */}
+        {/* left side */}
         <div className="mx-10 px-3 py-2 bg-gray-50 w-1/3">
           <p className=" text-2xl font-bold my-3 px-2">About Creator</p>
 

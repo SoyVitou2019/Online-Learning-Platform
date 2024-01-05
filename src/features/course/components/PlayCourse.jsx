@@ -165,8 +165,7 @@ const PlayCourse = () => {
 
     // Call the fetch function
     fetchCourses();
-    console.log(course)
-  }, [course_id, index]); // Empty dependency array ensures that the effect runs only once (on mount)
+  }, [course_id]); // Empty dependency array ensures that the effect runs only once (on mount)
 
   useEffect(() => {
     // Function to fetch post details for each post_id in the course
@@ -213,7 +212,6 @@ const PlayCourse = () => {
     if (course.posts && course.posts.length > 0) {
       fetchDesc();
     }
-    console.log(videoDetails)
   }, [postDetails]);
 
   return (
@@ -222,9 +220,7 @@ const PlayCourse = () => {
 
         <div className="flex h-[90vh]">
           {/* left side */}
-          <div onClick={()=>{
-            setDependency(5)
-          }} className=" bg-white h-full w-[45%] overflow-y-scroll ms-3">
+          <div className=" bg-white h-full w-[45%] overflow-y-scroll ms-3">
             <div className="mx-2 py-2 flex flex-col gap-2  ">
               <p className=" font-bold text-xl line-clamp-1">{course.course_name}</p>
               <p>Content Here</p>
@@ -257,7 +253,7 @@ const PlayCourse = () => {
                   {postDetails.length > 0 ? postDetails[index].title : ""}
                 </p>
               </div>
-              <p className="mt-2 line-clamp-2">{videoDetails.description}</p>
+              <p className="mt-2 line-clamp-2">{videoDetails?.description}</p>
             </div>
             <div className="mt-3 mb-14 flex py-4 ml-10 mr-10 bg-slate-200 ">
               <Link
