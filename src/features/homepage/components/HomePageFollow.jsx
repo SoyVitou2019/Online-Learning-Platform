@@ -8,34 +8,26 @@ import { Link } from "react-router-dom";
 
 import { useAuth } from "../../auth/api/Auth";
 
-function HomePageCardList() {
+function HomePageFollow() {
   const { user } = useAuth();
   const [courses, setCourses] = useState([]);
-  const [page, setPage] = useState(1);
-  const itemsPerPage = 20;
-  const [totalPages, setTotalPages] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const [userData, setUserData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [userFollowData, setUserFollowData] = useState({});
+
+  const [userID, setUserID] = useState("");
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `${END_POINTS.COURSE}?_sort=created_at&_page=${page}&_limit=${itemsPerPage}`
+          `${END_POINTS.COURSE}?_sort=created_at`
         );
-        const coursesData = response.data;
 
-        const linkHeader = response.headers.link;
-        if (linkHeader) {
-          const totalPagesRegex = /_page=(\d+)&_limit=(\d+)>; rel="last"/;
-          const match = linkHeader.match(totalPagesRegex);
-          if (match) {
-            setTotalPages(parseInt(match[1], 10));
-          }
-        }
+        const courseData = response.data;
+
         const coursesWithNames = await Promise.all(
-          coursesData.map(async (course) => {
+          courseData.map(async (course) => {
             const creatorName = await fetchCreatorName(
               course.created_by_user_id
             );
@@ -43,7 +35,7 @@ function HomePageCardList() {
           })
         );
 
-        setCourses((prevCourses) => [...prevCourses, ...coursesWithNames]);
+        setCourses(followingCourseFilter(coursesWithNames, userID));
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -61,23 +53,56 @@ function HomePageCardList() {
     };
 
     fetchCourses();
-  }, [page, itemsPerPage]);
+  }, [userID]);
 
-  const handleShowMore = () => {
-    setPage((prevPage) => prevPage + 1);
+  console.log(courses);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(END_POINTS.USER + "?uid=" + user.id);
+        const responseData = response.data;
+        const res = await axios.get(END_POINTS.FOLLOW);
+        setUserFollowData(res.data[0]);
+        setUserID(responseData[0].id);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchUser();
+  }, [userID]);
+
+  const getFollowing = (user_id) => {
+    user_id = parseInt(user_id);
+    let userFollowing = [];
+    userFollowData?.follower?.map((item, idx) => {
+      if (item === user_id) {
+        userFollowing.push(userFollowData.userId[idx]);
+      }
+    });
+
+    return userFollowing;
+  };
+
+  const followingCourseFilter = (coursef, uid) => {
+    const foll = getFollowing(uid);
+    const filterd = coursef.filter((course) => {
+      return foll.includes(parseInt(course.created_by_user_id));
+    });
+
+    return filterd;
   };
 
   return (
     <div className="mb-14">
       <div className="flex justify-between mx-5 mt-3">
         <h1 className=" text-2xl font-bold">Popular courses</h1>
-        <Link to="/home/course_follow">
+        <Link to="/home">
           <button
             className={
               "px-3 py-2  rounded-2xl text-gray-800 font-semibold border-2 border-gray-500 "
             }
           >
-            Following
+            All
           </button>
         </Link>
       </div>
@@ -87,6 +112,7 @@ function HomePageCardList() {
           <Spinner size="lg" />
         </div>
       )}
+
       <div className="grid grid-cols-4 p-5 gap-4 bg-blue-50">
         {courses.map((course) => (
           <CardPortrait
@@ -106,16 +132,8 @@ function HomePageCardList() {
           />
         ))}
       </div>
-      {courses.length > 0 && page < totalPages && (
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-4 mx-auto block mb-14"
-          onClick={handleShowMore}
-        >
-          Show More
-        </button>
-      )}
     </div>
   );
 }
 
-export default HomePageCardList;
+export default HomePageFollow;
