@@ -88,7 +88,7 @@ function HomePageCardList() {
           <Spinner size="lg" />
         </div>
       )}
-      <div className="grid grid-cols-4 p-5 gap-4 bg-blue-50">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 p-5 gap-4 bg-blue-50">
         {courses.map((course) => (
           <CardPortrait
             key={course.id}

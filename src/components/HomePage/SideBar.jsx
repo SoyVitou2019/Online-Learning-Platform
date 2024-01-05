@@ -18,7 +18,6 @@ export default function SideBar() {
     followerId: [],
   });
 
-  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -30,8 +29,8 @@ export default function SideBar() {
       }
     };
     if (user.id !== null) {
-      fetchUser()
-      fetchData()
+      fetchUser();
+      fetchData();
       getFollower(currUser.id);
     }
   }, [userID, user, dependency]);
@@ -44,7 +43,7 @@ export default function SideBar() {
         userFollower.push(userFollowData.follower[idx]);
       }
     });
-    setDependency(2)
+    setDependency(2);
     setFollower({ followerId: userFollower });
   };
   const fetchData = async () => {
@@ -98,7 +97,9 @@ export default function SideBar() {
                     ? currUser.firstName[0] + ". " + (currUser.lastName || "")
                     : ""}
                 </span>
-                <div className=" text-xs">Followers: {follower.followerId.length} </div>
+                <div className=" text-xs">
+                  Followers: {follower.followerId.length}{" "}
+                </div>
               </Link>
               <button type="button" onClick={toggleSidebar}>
                 <i className="bi bi-list mr-3 text-2xl align-middle"></i>
@@ -199,52 +200,53 @@ export default function SideBar() {
             <hr></hr>
             <ul className="space-y-2 font-medium">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/home"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <i className="bi bi-house-gear-fill text-2xl"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/following"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <i className="bi bi-box2-heart text-2xl"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to={"profile/" + currUser.id}
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <i className="bi bi-person-lines-fill text-2xl"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to={
+                    currUser.role === "admin" ||
+                    currUser.role === "content_creator"
+                      ? "/teach/upload"
+                      : "teach/request"
+                  }
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <i className="bi bi-play-fill text-2xl"></i>
-                </a>
+                </Link>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <i className="bi bi-bar-chart text-2xl"></i>
-                </a>
-              </li>
+              {currUser.role === "admin" && (
+                <li>
+                  <Link
+                    to="/admin"
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  >
+                    <i className="bi bi-bar-chart text-2xl"></i>
+                  </Link>
+                </li>
+              )}
               <hr></hr>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                ></a>
-              </li>
             </ul>
           </div>
         </aside>
