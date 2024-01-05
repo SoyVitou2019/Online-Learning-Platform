@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import DropDownCategory from "./DropDownCategory";
+import DropDownCategory from "../DropDownCategory";
 import SearchBar from "../SearchBar";
 import { useEffect, useRef, useState } from "react";
 

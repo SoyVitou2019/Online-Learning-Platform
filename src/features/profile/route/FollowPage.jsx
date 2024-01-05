@@ -131,6 +131,10 @@ export const FollowPage = () => {
     } catch (e) {
       console.error("Error remove following:", e);
     }
+    fetchData();
+    fetchAllUser();
+    getFollower(userID);
+    getFollowing(userID);
   }
 
   async function unfollow(removeId, userId) {
@@ -155,6 +159,10 @@ export const FollowPage = () => {
     } catch (e) {
       console.error("Error remove following:", e);
     }
+    fetchData();
+    fetchAllUser();
+    getFollower(userID);
+    getFollowing(userID);
   }
 
   return (
