@@ -239,7 +239,9 @@ export const SelectCourse = ({ course_id }) => {
   return (
     <section className="bg-blue-50">
       <div className="flex">
-        <div className="ml-10 w-2/3 overflow-y-scroll">
+
+        {/* left side */}
+        <div className="ml-10 w-2/3 overflow-y-scroll max-h-screen">
           <h1 className="font-semibold flex gap-2 text-3xl my-3 ">
             <BackButton />
             {course.course_name}
@@ -260,12 +262,10 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
 
-          <div className="mt-9 pt-3 pb-3 bg-blue-100 h-[10vh]">
+          <div className="mt-9 pb-3 bg-blue-100">
             <div className="px-3">
               <p className="text-xl">Course Content</p>
-              <div className="grid grid-flow-row h-auto gap-4 mt-4">
-                {/* Landscape content */}
-
+              <div className="grid grid-flow-row gap-4 mt-4">
                 {/* Item1 */}
                 {postDetails.map((post, index) => (
                   <VideoList
@@ -277,18 +277,14 @@ export const SelectCourse = ({ course_id }) => {
                     vid_id={post.vid_id}
                   />
                 ))}
-
-                {/* Item2 */}
-
-                {/* Item3 */}
               </div>
             </div>
           </div>
         </div>
 
-        {/* left side */}
-        <div className="mx-10 px-3 py-2 bg-gray-50 w-1/3">
-          <p className=" text-2xl font-bold my-3 px-2">About Creator</p>
+        {/* right side */}
+        <div className="px-3 bg-gray-50 w-1/3">
+          <p className="text-2xl font-bold px-2">About Creator</p>
 
           <div className="mt-10 ml-4 flex">
             <Link
@@ -341,7 +337,7 @@ export const SelectCourse = ({ course_id }) => {
           <div className=" font-bold mt-5 ml-3">
             Other Courses by {teacher.firstName + " " + teacher.lastName}
           </div>
-          <div className=" mx-4 mt-4 pb-10">
+          <div className=" mx-4 mt-4">
             {courseByTeacher.slice(0, 1).map((c) => (
               <div key={c.id} className="mb-2">
                 <CardPortrait
