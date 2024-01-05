@@ -11,6 +11,7 @@ function HomePageCardList() {
   const itemsPerPage = 20;
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -61,9 +62,24 @@ function HomePageCardList() {
     setPage((prevPage) => prevPage + 1);
   };
 
+  const handleToggleFollowing = () => {
+    setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+  };
+
   return (
     <div className="mb-14">
-      <h1 className=" text-2xl font-bold ms-5 mt-3">Popular courses</h1>
+      <div className="flex justify-between mx-5 mt-3">
+        <h1 className=" text-2xl font-bold">Popular courses</h1>
+        <button
+          className={
+            "px-3 py-2  rounded-2xl text-gray-800 font-semibold border-2 border-gray-500 " +
+            (isFollowing ? "bg-green-300" : "")
+          }
+          onClick={handleToggleFollowing}
+        >
+          Following
+        </button>
+      </div>
       <hr className="mx-5 mt-2" />
       {isLoading && (
         <div className="flex justify-center h-[80vh] flex-col items-center">
