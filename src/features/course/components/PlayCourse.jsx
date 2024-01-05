@@ -225,7 +225,7 @@ const PlayCourse = () => {
             <div className="mx-2 py-2 flex flex-col gap-2  ">
               <div className="flex gap-3">
                 <BackButton />
-                <p className=" font-bold text-xl line-clamp-1">{course.course_name}
+                <p className="line-clamp-1 font-bold text-xl">{course.course_name}
                 </p>
               </div>
               <p>Content Here</p>
