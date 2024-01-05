@@ -1,0 +1,29 @@
+version: "3"
+services : 
+  netlink-web:
+    container_name : online-learning
+    image : online-learning
+    restart : unless-stopped
+    # environment : 
+    #   VITE_API_BASE_URL : ${VITE_API_BASE_URL}
+    #   VITE_API_KEY: ${VITE_API_KEY}
+    ports:
+      - "3080:80"
+    networks:
+      - online-network
+    depends_on: 
+      - jsonserver
+
+  jsonserver: 
+    container_name : online-learning-server
+    image : online-learning-server
+    restart: unless-stopped
+    network_mode: host
+    ports: 
+      - "3334:3334"
+
+networks: 
+
+  online-network:
+    name: online-network
+    driver: bridge

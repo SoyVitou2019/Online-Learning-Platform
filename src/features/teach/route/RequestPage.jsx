@@ -1,10 +1,10 @@
 import React from 'react'
-import {Request} from '../components/request'
+import { Request } from '../components/Request'
 
 function RequestPage() {
-  return (
-    <Request />
-  )
+    return (
+        <Request />
+    )
 }
 
 export default RequestPage

@@ -157,7 +157,7 @@ export const FollowPage = () => {
             console.error("Error remove following:", e);
         }
     }
->>>>>>> b73599705b9a8a6e2670615080148886e7b1a81d
+
 
     return (
         <>
