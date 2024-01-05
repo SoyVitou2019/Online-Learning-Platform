@@ -23,6 +23,8 @@ export const VideoList = ({ post_id, course_id, title, index, vid_id }) => {
       try {
         // Replace 'YOUR_API_KEY' with your actual YouTube Data API key
         const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${vid_id}&key=${youtubeKey}`;
+
+        console.log(apiUrl);
         const response = await axios.get(apiUrl);
 
         // Extract duration from the API response

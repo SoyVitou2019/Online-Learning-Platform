@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VM Community Offline</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>VM Offline</title>
     <style>
         body {
-            margin: 0;
             font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #f4f4f4;
         }
 
@@ -20,44 +19,7 @@
             padding: 1em 0;
         }
 
-        .header-container {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5%;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        nav ul li {
-            margin-right: 20px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .hero-section {
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            color: #fff;
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-template {
+        section {
             max-width: 800px;
             margin: 40px auto;
             padding: 20px;
@@ -65,10 +27,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1,
-        h2 {
+        h1, h2 {
             color: #333;
-            font-size: 30px;
         }
 
         p {
@@ -95,135 +55,38 @@
             color: #fff;
             text-align: center;
             padding: 1em 0;
-            position: block;
-            bottom: 0;
+            position: fixed;
             width: 100%;
-        }
-
-        .logo {
-            font-size: 30px;
-        }
-
-        .founders-section {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .founder-card {
-            margin: 20px;
-        }
-
-        .founder-card img {
-            max-width: 100%;
-            border-radius: 50%;
-        }
-
-        footer {
-            background-color: #f4f4f4;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        .footer-container {
-            display: flex;
-            justify-content: space-around;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-section {
-            flex: 1;
-        }
-
-        .footer-section h3 {
-            color: #333;
-        }
-
-        .footer-section p {
-            margin: 5px 0;
-        }
-
-        .copyright {
-            margin-top: 20px;
-            color: #666;
-        }
-
-        h3 {
-            color: black;
-        }
-
-        @media only screen and (max-width: 767px) {
-            nav {
-                display: none;
-                /* Hide the navigation links on small screens */
-            }
+            bottom: 0;
         }
     </style>
 </head>
-
 <body>
-
     <header>
-        <div class="header-container">
-            <div class="logo">VM Community Offline</div>
-            <nav>
-                <ul>
-                    <li><a href="/offline.html  ">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                </ul>
-            </nav>
-        </div>
+        <h1>Your Brand Name</h1>
+        <p>Tagline or a brief description goes here</p>
     </header>
 
-    <section class="hero-section">
-        <div class="hero-content">
-            <h2>Welcome to Vm Community</h2>
-            <p>Welcome to the VM Community your vibrant hub for ... </p>
-            <h3>Please connect... to Online for More Information</h3>
-        </div>
+    <section>
+        <h2>Welcome to Our Landing Page</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac quam nec dui varius lobortis.</p>
+        <a href="#your-cta-section" class="cta-button">Learn More</a>
     </section>
-    <section class="hero-template">
-        <h2>Catch me if you can</h2>
-        <p>"Catch Me If You Can" is a 2002 American biographical crime film directed by Steven Spielberg, based on the
-            life of Frank Abagnale. The movie stars Leonardo DiCaprio as Frank Abagnale Jr. and Tom Hanks as Carl
-            Hanratty.</p>
-        <a href="#" class="cta-button">Learn More</a>
+
+    <section id="your-cta-section">
+        <h2>Call to Action Section</h2>
+        <p>Provide a compelling reason for users to take action.</p>
+        <a href="#your-contact-form" class="cta-button">Get Started</a>
     </section>
-    <section class="hero-template">
-        <h2>Work hard, play Game</h2>
-        <p class="work-hard">"Work hard, play Game" is a phrase that encapsulates a balanced approach to life, emphasizing the importance
-            of both diligence in one's professional or personal pursuits and the need for relaxation, leisure, and
-            enjoyment. This mantra suggests that individuals should dedicate themselves to their work or
-            responsibilities with determination and commitment, putting in the effort required to achieve their goals or
-            fulfill their duties.</p>
-        <a href="#" class="cta-button">Read Article</a>
+
+    <section id="your-contact-form">
+        <h2>Contact Us</h2>
+        <p>Feel free to reach out to us with any questions or inquiries.</p>
+        <!-- Your contact form HTML goes here -->
     </section>
 
     <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p>Email: SoyVitou999@example.com</p>
-                <p>Email: Eong-Koungmeng@example.com</p>
-
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <p><a href="#">Github: SoyVitouPro</a></p>
-                <p><a href="#">Github: KoungMeng</a></p>
-            </div>
-            <div class="footer-section">
-                <h3>Address</h3>
-                <p>234 Street, Phnom Penh, Cambodia</p>
-                <p>543 Street, Phnom Penh, Cambodia</p>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2024 VM Community. All rights reserved.</p>
-        </div>
+        <p>&copy; 2024 Your Brand Name. All rights reserved.</p>
     </footer>
-
 </body>
-
 </html>

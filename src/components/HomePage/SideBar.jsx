@@ -10,52 +10,6 @@ export default function SideBar() {
   const [currUser, setCurrUser] = useState({});
   const { user } = useAuth();
 
-  const [userID, setUserID] = useState(null);
-  const [userFollowData, setUserFollowData] = useState({});
-  const [dependency, setDependency] = useState(false);
-  const [isCheckUserFollow, setIsCheckUserFollow] = useState(false);
-  const [follower, setFollower] = useState({
-    followerId: [],
-  });
-
-  
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(END_POINTS.USER + "?uid=" + user.id);
-        const userData = response.data;
-        setUserID(userData[0].id);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    if (user.id !== null) {
-      fetchUser()
-      fetchData()
-      getFollower(currUser.id);
-    }
-  }, [userID, user, dependency]);
-
-  const getFollower = (user_id) => {
-    user_id = parseInt(user_id);
-    let userFollower = [];
-    userFollowData?.userId?.map((item, idx) => {
-      if (item === user_id) {
-        userFollower.push(userFollowData.follower[idx]);
-      }
-    });
-    setDependency(2)
-    setFollower({ followerId: userFollower });
-  };
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(END_POINTS.FOLLOW);
-      setUserFollowData(response.data[0]);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
   useEffect(() => {
     // Function to fetch data from the API
     const fetchProfile = async () => {
@@ -98,7 +52,7 @@ export default function SideBar() {
                     ? currUser.firstName[0] + ". " + (currUser.lastName || "")
                     : ""}
                 </span>
-                <div className=" text-xs">Followers: {follower.followerId.length} </div>
+                <div className=" text-xs">Followers: 15</div>
               </Link>
               <button type="button" onClick={toggleSidebar}>
                 <i className="bi bi-list mr-3 text-2xl align-middle"></i>
