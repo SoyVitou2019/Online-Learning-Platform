@@ -108,11 +108,11 @@ export const SelectCourse = ({ course_id }) => {
   }, [course.created_by_user_id]);
 
   return (
-    <section className=" bg-blue-50">
-      <div className="flex mt-5 pt-5 pb-10">
+    <section className="bg-blue-50">
+      <div className="flex pb-10">
         <div className="ml-10 w-2/3">
           <BackButton />
-          <h1 className="font-semibold underline text-3xl my-3">
+          <h1 className="font-semibold underline text-3xl my-3 overflow-y-scroll">
             {course.course_name}
           </h1>
           <div>
@@ -131,7 +131,7 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
 
-          <div className="mt-9 pt-3 pb-3 bg-blue-100 h-[55vh] overflow-y-scroll">
+          <div className="mt-9 pt-3 pb-3 bg-blue-100 h-[10vh]">
             <div className="px-3">
               <p className="text-xl">Course Content</p>
               <div className="grid grid-flow-row h-auto gap-4 mt-4">
@@ -156,6 +156,8 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
         </div>
+
+        {/* left side */}
         <div className="mx-10 px-3 py-2 bg-gray-50 w-1/3">
           <p className=" text-2xl font-bold my-3 px-2">About Creator</p>
 

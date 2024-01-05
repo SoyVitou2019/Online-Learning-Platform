@@ -35,6 +35,7 @@ const PlayCourse = () => {
     // Call the fetch function
     fetchCourses();
   }, [course_id]); // Empty dependency array ensures that the effect runs only once (on mount)
+  }, [course_id]); // Empty dependency array ensures that the effect runs only once (on mount)
 
   console.log(teacher);
   useEffect(() => {
@@ -124,7 +125,7 @@ const PlayCourse = () => {
                   {postDetails.length > 0 ? postDetails[index].title : ""}
                 </p>
               </div>
-              <p className="mt-2">{videoDetails?.description}</p>
+              <p className="mt-2 line-clamp-2">{videoDetails?.description}</p>
             </div>
             <div className="mt-2 ">
               <Link
