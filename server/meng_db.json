@@ -790,6 +790,27 @@
         "Data mining is most commonly defined as the process of using computers and automation to search large sets of data for patterns and trends, turning those findings into business insights and predictions."
       ],
       "id": 33
+    },
+    {
+      "course_name": "Machine Learning",
+      "vid_id": "gUmagAluXpk",
+      "couse_description": "Machine learning (ML) is a field of study in artificial intelligence concerned with the development and study of statistical algorithms that can learn from.",
+      "created_by_user_id": 5,
+      "created_at": "2024/01/06 02:35:31",
+      "category": "Programming",
+      "rank": 10,
+      "posts": [
+        28,
+        27,
+        29,
+        30
+      ],
+      "course_expectation": [
+        "High Demand: ML skills are in high demand across various industries, including technology, healthcare, finance, marketing, and more.",
+        "Job Market Advantage: Knowing ML can give you a competitive edge in the job market as companies increasingly seek professionals with expertise in data science and machine learning.",
+        "Predictive Analysis: ML enables you to build models that can predict future trends and outcomes based on historical data."
+      ],
+      "id": 34
     }
   ],
   "post": [
@@ -922,6 +943,26 @@
       "title": "How data mining works",
       "vid_id": "W44q6qszdqY",
       "id": 26
+    },
+    {
+      "title": "How I’d learn ML in 2024 (if I could start over)",
+      "vid_id": "gUmagAluXpk",
+      "id": 27
+    },
+    {
+      "title": "Machine Learning | What Is Machine Learning? | Introduction To Machine Learning | 2021 | Simplilearn",
+      "vid_id": "ukzFI9rgwfU",
+      "id": 28
+    },
+    {
+      "title": "Machine Learning for Everybody – Full Course",
+      "vid_id": "i_LwzRVP7bg",
+      "id": 29
+    },
+    {
+      "title": "Practical Deep Learning for Coders - Full Course from fast.ai and Jeremy Howard",
+      "vid_id": "0oyCUWLL_fU",
+      "id": 30
     }
   ],
   "follow": [
@@ -929,11 +970,13 @@
       "userId": [
         2,
         2,
+        2,
         3,
         3
       ],
       "follower": [
         3,
+        5,
         8,
         2,
         8

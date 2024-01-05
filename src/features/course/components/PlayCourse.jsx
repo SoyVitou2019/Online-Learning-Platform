@@ -8,6 +8,7 @@ import END_POINTS from "../../../constants/endpoints";
 import { youtubeKey } from "../../auth/api/client";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/api/Auth";
+import BackButton from "@/src/components/BackButton";
 
 const PlayCourse = () => {
   const { course_id } = useParams();
@@ -220,9 +221,13 @@ const PlayCourse = () => {
 
         <div className="flex h-[90vh]">
           {/* left side */}
-          <div onClick={()=>{setDependency(5)}} className=" bg-white h-full w-[45%] overflow-y-scroll ms-3">
+          <div onClick={() => { setDependency(5) }} className=" bg-white h-full w-[45%] overflow-y-scroll ms-3">
             <div className="mx-2 py-2 flex flex-col gap-2  ">
-              <p className=" font-bold text-xl line-clamp-1">{course.course_name}</p>
+              <div className="flex gap-3">
+                <BackButton />
+                <p className="line-clamp-1 font-bold text-xl">{course.course_name}
+                </p>
+              </div>
               <p>Content Here</p>
               {/* Item1 */}
               {postDetails.map((post, index) => (
