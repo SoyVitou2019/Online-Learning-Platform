@@ -83,7 +83,7 @@ const PlayCourse = () => {
     if (course.posts && course.posts.length > 0) {
       fetchDesc();
     }
-  }, [postDetails]);
+  }, [postDetails, dependency]);
 
   return (
     <section>
@@ -93,7 +93,7 @@ const PlayCourse = () => {
         </h1>
         <div className="flex h-[85vh]">
           {/* left side */}
-          <div className=" bg-white h-full w-[45%] overflow-y-scroll ms-3">
+          <div onClick={()=>{setDependency(5)}} className=" bg-white h-full w-[45%] overflow-y-scroll ms-3">
             <div className="mx-2 py-2 flex flex-col gap-2  ">
               <p className=" font-bold text-xl">Course Content</p>
               {/* Item1 */}
