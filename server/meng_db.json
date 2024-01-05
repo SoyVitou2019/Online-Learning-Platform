@@ -16,7 +16,7 @@
       "firstName": "Soy",
       "lastName": "Vitou",
       "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
-      "role": "student",
+      "role": "admin",
       "about": "Relax, enjoy and have fun",
       "uid": "613f3765-fa75-45ee-955b-e3eb33eed648",
       "created_at": "2024-01-01T10:24:06.188823Z",
@@ -38,7 +38,7 @@
       "firstName": "Soy",
       "lastName": "Vitou",
       "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
-      "role": "student",
+      "role": "admin",
       "about": "",
       "uid": "9339d5ab-bc4e-4a1b-970a-5f961033a2c0",
       "created_at": "2024-01-05T06:14:36.726671Z",
@@ -767,6 +767,29 @@
         "123"
       ],
       "id": 32
+    },
+    {
+      "course_name": "Data Mining part2",
+      "vid_id": "81bm2OsEzbg",
+      "couse_description": "Data mining is most commonly defined as the process of using computers and automation to search large sets of data for patterns and trends, turning those findings into business insights and predictions.",
+      "created_by_user_id": 5,
+      "created_at": "2024/01/06 01:36:48",
+      "category": "Programming",
+      "rank": 10,
+      "posts": [
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        26,
+        25
+      ],
+      "course_expectation": [
+        "Data mining is most commonly defined as the process of using computers and automation to search large sets of data for patterns and trends, turning those findings into business insights and predictions."
+      ],
+      "id": 33
     }
   ],
   "post": [
@@ -829,12 +852,81 @@
       "title": "My sir David Attenborough book",
       "vid_id": "BAU2Jpz93M4",
       "id": 12
+    },
+    {
+      "title": "What is Data Mining?",
+      "vid_id": "7rs0i-9nOjo",
+      "id": 13
+    },
+    {
+      "title": "IBM Data Analyst Complete Course | Data Analyst Tutorial For Beginners,",
+      "vid_id": "1PAy6d16ADQ",
+      "id": 14
+    },
+    {
+      "title": "Complete IT Security Crash Course for Certification for Free",
+      "vid_id": "Lw_d5rvh8hY",
+      "id": 15
+    },
+    {
+      "title": "Data Mining Explained | What is Data Mining?",
+      "vid_id": "9JJIGOiGbAs",
+      "id": 16
+    },
+    {
+      "title": "How Deep Neural Networks Work - Full Course for Beginners",
+      "vid_id": "dPWYUELwIdM",
+      "id": 17
+    },
+    {
+      "title": "Learn Core Machine Learning for FREE | Ultimate Course for Beginners",
+      "vid_id": "0g-XL0WV2xo",
+      "id": 18
+    },
+    {
+      "title": "What is Data Mining",
+      "vid_id": "81bm2OsEzbg",
+      "id": 19
+    },
+    {
+      "title": "All Major Data Mining Techniques Explained With Examples",
+      "vid_id": "dUm3ptTQr0Q",
+      "id": 20
+    },
+    {
+      "title": "Data Mining using R | Data Mining Tutorial for Beginners | R Tutorial for Beginners | Edureka",
+      "vid_id": "BB2O4VCu5j8",
+      "id": 21
+    },
+    {
+      "title": "Data Mining Fundamentals",
+      "vid_id": "GLAK3dF7dfg",
+      "id": 22
+    },
+    {
+      "title": "Data Mining Explained | What is Data Mining?",
+      "vid_id": "9JJIGOiGbAs",
+      "id": 23
+    },
+    {
+      "title": "Data Mining With Excel - Top 4 Skills for ANY Professional",
+      "vid_id": "6_aFa977sfI",
+      "id": 24
+    },
+    {
+      "title": "Introduction to Data Warehouse🏺 with Examples",
+      "vid_id": "NphMcnU8ymU",
+      "id": 25
+    },
+    {
+      "title": "How data mining works",
+      "vid_id": "W44q6qszdqY",
+      "id": 26
     }
   ],
   "follow": [
     {
       "userId": [
-        2,
         2,
         2,
         3,
@@ -843,7 +935,6 @@
       "follower": [
         3,
         8,
-        5,
         2,
         8
       ],
@@ -900,13 +991,7 @@
       "id": 4
     }
   ],
-  "user_request": [
-    {
-      "user_id": 3,
-      "request_msg": "Learning is the process of acquiring new understanding, knowledge, behaviors, skills, values, attitudes, and preferences. The ability to learn is possessed by humans, animals, and some machines; there is also evidence for some kind of learning in certain plants.",
-      "id": 2
-    }
-  ],
+  "user_request": [],
   "service_role": [
     {
       "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRudHJhZmhzZmpwa3ZuenR2cGFvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMzg1OTU5MSwiZXhwIjoyMDE5NDM1NTkxfQ.MMUnMykMX2ppUxQbdmDkTWrbGrLFoOxB4GKGWtTcUfo"
