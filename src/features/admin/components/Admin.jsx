@@ -4,6 +4,7 @@ import END_POINTS from "../../../constants/endpoints";
 
 import axios from "axios";
 import { supabaseAuth } from "../../auth/api/client";
+import AdminCourseDashboard from "./AdminCourseDashboard";
 
 const Admin = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,8 @@ const Admin = () => {
   const [isOpenPromoteUser, setIsOpenPromoteUser] = useState(false);
   const [currentPromoteID, setCurrentPromoteID] = useState();
 
+  const [searchValue, setSearchValue] = useState("");
+
   const fetchAllUser = async () => {
     try {
       const response1 = await axios.get(END_POINTS.USER_SORT);
@@ -25,7 +28,13 @@ const Admin = () => {
       // Sort userMsgs by user_id
       // userMsgs.sort((a, b) => a.id - b.id);
       // Fetch user information for each user request
-      const userPromises = userMsgs.map(async (item) => {
+
+      const filteredUsers = userMsgs.filter((item) => {
+        const fullName = (item.firstName + " " + item.lastName).toLowerCase();
+        return fullName.includes(searchValue.toLowerCase());
+      });
+
+      const userPromises = filteredUsers.map(async (item) => {
         return {
           userId: item.id,
           userProfile: item.profileUrl,
@@ -69,8 +78,12 @@ const Admin = () => {
       // Wait for all user information requests to complete
       const userInfoResults = await Promise.all(userPromises);
 
+      const filteredUsers = userInfoResults.filter((item) => {
+        const fullName = item.fullName.toLowerCase();
+        return fullName.includes(searchValue.toLowerCase());
+      });
       // Update state with the combined user information
-      setStateOfUser(userInfoResults);
+      setStateOfUser(filteredUsers);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -78,11 +91,11 @@ const Admin = () => {
 
   useEffect(() => {
     fetchAllUser();
-  }, [roleDisplay]);
+  }, [roleDisplay, searchValue]);
 
   useEffect(() => {
     fetchUser();
-  }, [roleDisplay]);
+  }, [roleDisplay, searchValue]);
 
   function openRequestModal() {
     setIsOpen(true);
@@ -281,6 +294,7 @@ const Admin = () => {
             <div className=" flex gap-14 pl-16 ">
               <button
                 onClick={() => {
+                  setSearchValue("");
                   setRoleDisplay("users");
                 }}
                 className={
@@ -293,6 +307,7 @@ const Admin = () => {
               </button>
               <button
                 onClick={() => {
+                  setSearchValue("");
                   setRoleDisplay("courses");
                 }}
                 className={
@@ -305,6 +320,7 @@ const Admin = () => {
               </button>
               <button
                 onClick={() => {
+                  setSearchValue("");
                   setRoleDisplay("inboxs");
                 }}
                 className={
@@ -317,7 +333,7 @@ const Admin = () => {
               </button>
             </div>
             <div className=" flex gap-24 justify-end items-center flex-grow">
-              <form className=" w-96">
+              <div className=" w-96">
                 <label
                   htmlFor="default-search"
                   className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -347,16 +363,22 @@ const Admin = () => {
                     id="default-search"
                     className="block w-full rounded-2xl p-2 ps-10 text-sm text-gray-900 border border-gray-300"
                     placeholder="Search"
-                    required
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
                   />
                 </div>
-              </form>
+              </div>
               <button onClick={() => setIsOpen(true)}>Upload</button>
             </div>
           </div>
         </div>
 
-        <div className="relative overflow-x-auto">
+        <div
+          className={
+            "relative overflow-x-auto " +
+            (roleDisplay === "courses" ? "hidden" : "")
+          }
+        >
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -455,8 +477,45 @@ const Admin = () => {
                 </tr>
               ))}
             </tbody>
+
+            {/* admin course dashboard */}
+            <tbody className={roleDisplay === "courses" ? "" : "hidden"}>
+              {users.map((item, index) => (
+                <tr className="bg-white border-b " key={index}>
+                  <th scope="row" className="px-6 py-4 font-medium text-black">
+                    {item.userId}
+                  </th>
+                  <td className="px-3 py-4 w-16">
+                    <img
+                      src={item.userProfile}
+                      alt="Description of the image"
+                    />
+                  </td>
+                  <td className="px-6 py-4">{item.fullName}</td>
+                  <td className="px-6 py-4">{item.created_at}</td>
+                  <td className="px-6 py-4">{item.role}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-7">
+                      <button
+                        id={item.userId}
+                        onClick={() => openRequestMessageModal(item.userId)}
+                        className=" bg-lime-500 hover:bg-lime-400 text-white px-4 py-2 rounded-lg"
+                      >
+                        View
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
+
+        {roleDisplay === "courses" ? (
+          <AdminCourseDashboard key={1} searchValue={searchValue} />
+        ) : (
+          ""
+        )}
       </div>
 
       {/* dialog inbox */}

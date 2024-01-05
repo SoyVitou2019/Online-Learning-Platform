@@ -12,6 +12,7 @@ const CategoryFilter = ({ categories, selectedCategory, onSelectCategory }) => {
     setIsOpen(false);
   };
 
+  console.log(selectedCategory);
   return (
     <div className="relative inline-block">
       <button

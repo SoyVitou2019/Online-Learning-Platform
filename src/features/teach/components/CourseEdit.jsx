@@ -16,7 +16,7 @@ const CourseEdit = () => {
   const { courseID } = useParams();
   const navigate = useNavigate();
 
-  const { user } = useAuth();
+  const { user, role } = useAuth();
   const [userID, setUserID] = useState("");
   const [currCourse, setCurrCourse] = useState({});
   const [loading, setLoading] = useState(true);
@@ -104,7 +104,10 @@ const CourseEdit = () => {
 
   useEffect(() => {
     fetchCourse().then(() => {
-      if (!loading && currCourse.created_by_user_id !== userID) {
+      if (
+        !loading &&
+        (currCourse.created_by_user_id !== userID || role !== "admin")
+      ) {
         navigate("/");
       }
     });
@@ -370,7 +373,7 @@ const CourseEdit = () => {
     postCourseData.course_name = courseData.courseName;
     postCourseData.vid_id = courseVidID;
     postCourseData.couse_description = courseData.courseDescription;
-    postCourseData.created_by_user_id = userID;
+    postCourseData.created_by_user_id = currCourse.created_by_user_id;
     postCourseData.created_at = getCurrentDateTimeFormatted();
     postCourseData.category = selected.title;
     postCourseData.rank = 10;

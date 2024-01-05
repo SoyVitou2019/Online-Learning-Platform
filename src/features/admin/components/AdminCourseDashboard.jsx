@@ -1,82 +1,66 @@
 import { useState, useEffect, Fragment } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/api/Auth";
+
 import END_POINTS from "@/src/constants/endpoints";
 import axios from "axios";
 import { Spinner } from "@/src/components/Spinner";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { Dialog } from "@headlessui/react";
-import Swal from "sweetalert2";
-import CategoryFilter from "../../search/components/CategoryFilter";
-import SortBy from "../../search/components/SortBy";
 
-const TeacherDashboard = () => {
-  const [userID, setUserID] = useState(0);
+const AdminCourseDashboard = ({ searchValue }) => {
   const navigate = useNavigate();
-
   const { user } = useAuth();
-
   const [isLoading, setIsLoading] = useState(true);
-  const [searchValue, setSearchValue] = useState("");
 
   const [courses, setCourses] = useState([]);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deletingCourse, setDeletingCourse] = useState({});
-  const [allCategories, setAllCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [displayCourses, setDisplayCourses] = useState([]);
-
-  const [selectedSortBy, setSelectedSortBy] = useState("");
-  const sortByList = ["Latest", "Oldest"];
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get(
-        `${END_POINTS.COURSE}?_sort=created_at&created_by_user_id=${userID}`
-      );
+      const response = await axios.get(`${END_POINTS.COURSE}?_sort=id`);
       const coursesData = response.data;
 
-      console.log(coursesData);
-      sortAndFilter(coursesData);
-      setCourses(coursesData);
+      let newCoursesData = [];
+      await Promise.all(
+        coursesData.map(async (course) => {
+          const res = await axios.get(
+            END_POINTS.USER + "/" + course.created_by_user_id
+          );
+
+          course.created_by = res.data.firstName + " " + res.data.lastName;
+
+          newCoursesData.push(course);
+        })
+      );
+
+      console.log(newCoursesData);
+      setCourses(newCoursesData);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(END_POINTS.CATEGORY);
-        setAllCategories(response.data.map((cat) => cat.title)); // Assuming the endpoint returns an array of category names
-        console.log(response);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  console.log(allCategories);
+  console.log(courses);
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(END_POINTS.USER + "?uid=" + user.id);
-        const userData = response.data;
-        setUserID(userData[0].id);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     if (user.id !== null) {
-      fetchUser().then(fetchCourses());
+      fetchUser().then(() => {
+        fetchCourses();
+      });
     }
-  }, [userID]);
+  }, []);
 
   // delete modal
   const openDeleteModal = (course) => {
@@ -109,123 +93,8 @@ const TeacherDashboard = () => {
     course.course_name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const sortAndFilter = (coursesToFilter) => {
-    console.log("filter");
-    // Search filter
-    let searchFilteredCourses = coursesToFilter.filter((course) =>
-      course.course_name.toLowerCase().includes(searchValue.toLowerCase())
-    );
-
-    console.log(courses);
-    // Categorized filter, possible values of selectedcategory ["", "Math", "Physics"]
-    if (selectedCategory !== "") {
-      searchFilteredCourses = searchFilteredCourses.filter(
-        (course) => course.category === selectedCategory
-      );
-    }
-
-    console.log(selectedSortBy);
-    if (selectedSortBy !== "") {
-      if (selectedSortBy === "Oldest")
-        searchFilteredCourses.sort((a, b) => {
-          if (a.created_at < b.created_at) {
-            return -1;
-          } else if (a.created_at > b.created_at) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-      else if (selectedSortBy === "Latest")
-        searchFilteredCourses.sort((a, b) => {
-          // Assuming course.created_at is in a date format
-          if (a.created_at > b.created_at) {
-            return -1;
-          }
-          if (a.created_at < b.created_at) {
-            return 1;
-          }
-          return 0;
-        });
-    }
-
-    console.log(searchFilteredCourses);
-    setDisplayCourses(searchFilteredCourses);
-    // Sort by category.created by ascending vs descending
-  };
-
-  useEffect(() => {
-    sortAndFilter(courses);
-  }, [selectedCategory, selectedSortBy, searchValue]);
-
   return (
-    <div className="mb-32">
-      <div className="px-5 flex justify-start border-t border-b border-gray-300">
-        <Link
-          to="/teach/upload"
-          className=" p-4 py-2 text-md font-medium text-center"
-        >
-          Course
-        </Link>
-        <Link to="/teach/dashboard" className=" p-4  py-2 text-md font-medium ">
-          Dashboard
-        </Link>
-      </div>
-      <div className="flex justify-between my-5 mb-8">
-        <p className="font-bold pl-9 text-xl  my-auto">Course Dashboard</p>
-        <div className="flex items-center bg-slate-200 rounded-lg z-30">
-          <p className="text-lg mx-5">Category: </p>
-          <CategoryFilter
-            categories={allCategories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
-        </div>
-        <div className="flex items-center bg-slate-200 rounded-lg z-30">
-          <p className="text-lg mx-5">Sort by: </p>
-
-          <SortBy
-            sortBy={selectedSortBy}
-            sortByList={sortByList}
-            onSortBy={setSelectedSortBy}
-          />
-        </div>
-        <div className=" w-96 my-auto mr-8">
-          <label
-            htmlFor="default-search"
-            className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-          >
-            Search
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-            </div>
-            <input
-              type="search"
-              id="default-search"
-              className="block w-full rounded-2xl p-2 ps-10 text-sm text-gray-900 border border-gray-300"
-              placeholder="Search"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-          </div>
-        </div>
-      </div>
+    <div className="mb-32 bg-white">
       {isLoading && (
         <div className="flex justify-center h-[80vh] flex-col items-center">
           <Spinner size="lg" />
@@ -244,6 +113,11 @@ const TeacherDashboard = () => {
               <th scope="col" className="px-6 py-3 text-center">
                 Course Category
               </th>
+
+              <th scope="col" className="px-6 py-3 text-center">
+                Created By
+              </th>
+
               <th scope="col" className="px-6 py-3 text-center">
                 Created At
               </th>
@@ -254,11 +128,11 @@ const TeacherDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {displayCourses &&
-              displayCourses.map((course, index) => (
-                <tr key={index + 1}>
+            {filteredCourses &&
+              filteredCourses.map((course, index) => (
+                <tr key={index}>
                   <td className="py-2 px-4 border-b text-center">
-                    <p className=" text-ellipsis line-clamp-1">{index + 1}</p>
+                    <p className=" text-ellipsis line-clamp-1">{course.id}</p>
                   </td>
                   <td className="py-2 px-4 border-b text-center">
                     <p className=" text-ellipsis line-clamp-1">
@@ -268,6 +142,11 @@ const TeacherDashboard = () => {
                   <td className="py-2 px-4 border-b text-center">
                     <p className=" text-ellipsis line-clamp-1 ">
                       {course.category}
+                    </p>
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    <p className=" text-ellipsis line-clamp-1 ">
+                      {course.created_by}
                     </p>
                   </td>
                   <td className="py-2 px-4 border-b text-center">
@@ -354,4 +233,4 @@ const TeacherDashboard = () => {
     </div>
   );
 };
-export default TeacherDashboard;
+export default AdminCourseDashboard;
