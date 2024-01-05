@@ -1,3 +1,6 @@
+import END_POINTS from "@/src/constants/endpoints";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 export const CardPortrait = ({
@@ -14,6 +17,22 @@ export const CardPortrait = ({
   course_expectation,
   course_id,
 }) => {
+  const [categoryID, setCategoryID] = useState("");
+  useEffect(() => {
+    const fetchCat = async () => {
+      try {
+        const response = await axios.get(
+          END_POINTS.CATEGORY + "?title=" + category
+        );
+
+        setCategoryID(response.data[0].id);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchCat();
+  }, [category]);
+
   return (
     <div className="w-full bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700">
       <Link to={"/course/" + course_id}>
@@ -36,13 +55,13 @@ export const CardPortrait = ({
           <div className="flex justify-between">
             <Link
               to={"/profile/" + creator_id}
-              className=" px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className=" px-3 py-2 text-sm font-medium text-center text-white bg-blue-300 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               {created_by}
             </Link>
             <Link
-              to="#"
-              className="ml-auto px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              to={"/category/" + categoryID}
+              className="ml-auto px-3 py-2 text-sm font-medium text-center text-white bg-blue-300 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               {category}
             </Link>

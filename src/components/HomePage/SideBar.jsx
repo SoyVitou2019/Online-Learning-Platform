@@ -29,35 +29,33 @@ export default function SideBar() {
   };
 
   return (
-    <div className="">
+    <div className="bg-gray-50">
       <div className="hidden sm:block">
         <aside
           id="logo-sidebar"
           className={`w-72  ${isSidebarOpen ? "hidden" : "block"}`}
           aria-label="Sidebar"
         >
-          <div className="h-full  px-3 py-4 bg-gray-50 dark:bg-gray-700">
+          <div className="h-full  px-3 py-4 bg-gray-50">
             <div className="flex justify-start items-center ps-2.5 mb-5">
               <Link to="/profile">
-                <i
-                  className="bi bi-person-square w-14 text-5xl "
-                  style={{ color: "white" }}
-                ></i>
+                <img
+                  className="w-14 h-14 object-cover rounded-full"
+                  src={currUser.profileUrl}
+                  alt="Description of the image"
+                />
               </Link>
               <Link to="/profile" className="flex-col ps-5 mr-auto">
-                <div className="text-white text-xs">{currUser.role}</div>
+                <div className="text-xs">{currUser.role}</div>
                 <span className="text-xl text-overflow: ellipsis whitespace-nowrap dark:text-white">
                   {currUser.firstName && currUser.firstName.length > 0
                     ? currUser.firstName[0] + ". " + (currUser.lastName || "")
                     : ""}
                 </span>
-                <div className="text-white text-xs">Followers: 15</div>
+                <div className=" text-xs">Followers: 15</div>
               </Link>
               <button type="button" onClick={toggleSidebar}>
-                <i
-                  className="bi bi-list mr-3 text-2xl align-middle"
-                  style={{ color: "white" }}
-                ></i>
+                <i className="bi bi-list mr-3 text-2xl align-middle"></i>
               </button>
             </div>
             <hr></hr>
@@ -136,17 +134,14 @@ export default function SideBar() {
           <div className="h-screen w-16 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-700">
             <div className="flex items-center ps-2.5 mb-5">
               <button type="button" onClick={toggleSidebar}>
-                <i
-                  className="bi bi-list text-2xl align-middle"
-                  style={{ color: "white" }}
-                ></i>
+                <i className="bi bi-list text-2xl align-middle"></i>
               </button>
               <div className="flex-col px-10">
-                <div className="text-white text-xs">Student</div>
+                <div className="text-xs">Student</div>
                 <span className="text-xl whitespace-nowrap dark:text-white">
                   Eong Koungmeng
                 </span>
-                <div className="text-white text-xs">Followers: 15</div>
+                <div className="text-xs">Followers: 15</div>
               </div>
               <button type="button" onClick={toggleSidebar}>
                 <i

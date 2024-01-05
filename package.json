@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "start vite --port 3333 && start json-server --watch server/meng_db.json --port 3334",
-    "startdev": "start vite --port 3333 && start json-server --watch server/db.json --port 3334",
+    "dev": "vite --port 3333 && start json-server --watch server/meng_db.json --port 3334",
+    "startdev": "vite --port 3333 && start json-server --watch server/db.json --port 3334",
+    "startServer": "json-server --watch server/meng_db.json --port 3334 --host 127.0.0.1",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -18,6 +19,7 @@
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@supabase/supabase-js": "^2.39.1",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
@@ -43,6 +45,7 @@
     "react-loading-skeleton": "^3.3.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.17.0",
+    "rollup": "^4.9.3",
     "sweetalert2": "^11.10.2",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
@@ -61,6 +64,7 @@
     "nodemon": "^3.0.2",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-static-copy": "^1.0.0"
   }
 }

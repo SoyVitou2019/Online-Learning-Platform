@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import END_POINTS from "../../../constants/endpoints";
 import { useAuth } from "../../auth/api/Auth";
+import { Link } from "react-router-dom";
 
 // import ProfileLandscape from "../components/ProfileLandscape";
 
@@ -9,7 +10,7 @@ export const FollowPage = () => {
   const { user } = useAuth();
   const [userFollowData, setUserFollowData] = useState({});
   const [userID, setUserID] = useState(null);
-  const [userAllData, setUserAllData] = useState({})
+  const [userAllData, setUserAllData] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
@@ -24,19 +25,19 @@ export const FollowPage = () => {
     if (user.id !== null) {
       fetchData();
       fetchUser();
-      fetchAllUser()
+      fetchAllUser();
       getFollower(userID);
       getFollowing(userID);
     }
   }, [userID, user, isFollowing]);
 
+  console.log(userAllData);
   const [follower, setFollower] = useState({
     followerId: [],
   });
   const [following, setFollowing] = useState({
     followingId: [],
   });
-  
 
   const getFollower = (user_id) => {
     let userFollower = [];
@@ -49,13 +50,13 @@ export const FollowPage = () => {
   };
   const fetchAllUser = async () => {
     try {
-        const response = await axios.get(END_POINTS.USER);
-        const responseData = response.data;
-        setUserAllData(responseData);
+      const response = await axios.get(END_POINTS.USER);
+      const responseData = response.data;
+      setUserAllData(responseData);
     } catch (error) {
-        console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error);
     }
-};
+  };
 
   const getFollowing = (user_id) => {
     let userFollowing = [];
@@ -132,6 +133,10 @@ export const FollowPage = () => {
     } catch (e) {
       console.error("Error remove following:", e);
     }
+    fetchData();
+    fetchAllUser();
+    getFollower(userID);
+    getFollowing(userID);
   }
 
   async function unfollow(removeId, userId) {
@@ -152,13 +157,14 @@ export const FollowPage = () => {
         follower: updatedFollower,
       });
 
-      await axios.put(
-        END_POINTS.FOLLOW + "/1",
-        userFollowData
-      );
+      await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
     } catch (e) {
       console.error("Error remove following:", e);
     }
+    fetchData();
+    fetchAllUser();
+    getFollower(userID);
+    getFollowing(userID);
   }
 
   return (
@@ -189,67 +195,71 @@ export const FollowPage = () => {
       {isFollowing ? (
         <div className="grid grid-cols-2 mx-8 mt-10 md:grid-cols-6 md:gap-4">
           {following.followingId.map((item, idx) => (
-            <div
-              key={idx}
-              className="max-w-sm rounded overflow-hidden shadow-lg bg-white"
-            >
-              <img
-                className="w-full h-48 object-cover"
-                src={userAllData.find((item2) => item2.id === item)?.profileUrl}
-                alt="Profile Image"
-              />
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2 line-clamp-1">
-                {userAllData.find((item2) => item2.id === item)?.firstName} {userAllData.find((item2) => item2.id === item)?.lastName}
+            <Link key={idx} to={"/profile/" + item}>
+              <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+                <img
+                  className="w-full h-48 object-cover"
+                  src={
+                    userAllData.find((item2) => item2.id === item)?.profileUrl
+                  }
+                  alt="Profile Image"
+                />
+                <div className="px-6 py-4">
+                  <div className="font-bold text-xl mb-2 line-clamp-1">
+                    {userAllData.find((item2) => item2.id === item)?.firstName}{" "}
+                    {userAllData.find((item2) => item2.id === item)?.lastName}
+                  </div>
+                  <p className="text-gray-700 text-base">
+                    {userAllData.find((item2) => item2.id === item)?.about}
+                  </p>
                 </div>
-                <p className="text-gray-700 text-base">
-                {userAllData.find((item2) => item2.id === item)?.about}
-                </p>
+                <div className="px-6 py-4">
+                  <button
+                    onClick={() => {
+                      unfollow(item, userID);
+                    }}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                  >
+                    Unfollow
+                  </button>
+                </div>
               </div>
-              <div className="px-6 py-4">
-                <button
-                  onClick={() => {
-                    unfollow(item, userID);
-                  }}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                >
-                  Unfollow
-                </button>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-2 mx-8 mt-10 md:grid-cols-6 md:gap-4">
           {follower.followerId.map((item, idx) => (
-            <div
-              key={idx}
-              className="max-w-sm rounded overflow-hidden shadow-lg bg-white"
-            >
-              <img
-                className="w-full h-48 object-cover"
-                src={userAllData.find((item2) => item2.id === item)?.profileUrl}
-                alt="Profile Image"
-              />
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2 line-clamp-1">
-                {userAllData.find((item2) => item2.id === item)?.firstName} {userAllData.find((item2) => item2.id === item)?.lastName}
+            <Link key={idx} to={"/profile/" + item}>
+              <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+                <img
+                  className="w-full h-48 object-cover"
+                  src={
+                    userAllData.find((item2) => item2.id === item)?.profileUrl
+                  }
+                  alt="Profile Image"
+                />
+                <div className="px-6 py-4">
+                  <div className="font-bold text-xl mb-2 line-clamp-1">
+                    {userAllData.find((item2) => item2.id === item)?.firstName}{" "}
+                    {userAllData.find((item2) => item2.id === item)?.lastName}
+                  </div>
+                  <p className="text-gray-700 text-base">
+                    {userAllData.find((item2) => item2.id === item)?.about}
+                  </p>
                 </div>
-                <p className="text-gray-700 text-base">
-                {userAllData.find((item2) => item2.id === item)?.about}
-                </p>
+                <div className="px-6 py-4">
+                  <button
+                    onClick={() => {
+                      removeFollower(item, userID);
+                    }}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
-              <div className="px-6 py-4">
-                <button
-                  onClick={() => {
-                    removeFollower(item, userID);
-                  }}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

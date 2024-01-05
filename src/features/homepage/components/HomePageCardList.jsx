@@ -4,14 +4,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import END_POINTS from "../../../constants/endpoints";
 import { Spinner } from "../../../components/Spinner";
+import fetchUser from "../../admin/api/getUser";
+import { useAuth } from "../../auth/api/Auth";
 
 function HomePageCardList() {
+  const { user } = useAuth();
   const [courses, setCourses] = useState([]);
   const [page, setPage] = useState(1);
   const itemsPerPage = 20;
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [userFollowData, setUserFollowData] = useState({});
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -58,6 +63,29 @@ function HomePageCardList() {
     fetchCourses();
   }, [page, itemsPerPage]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(END_POINTS.FOLLOW);
+        setUserFollowData(response.data[0]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(END_POINTS.USER + "/" + creator_id);
+        const responseData = response.data;
+        setUserData(responseData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+    fetchUser();
+  }, [user]);
+
   const handleShowMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
@@ -86,7 +114,7 @@ function HomePageCardList() {
           <Spinner size="lg" />
         </div>
       )}
-      <div className="grid grid-cols-4 p-5 gap-4">
+      <div className="grid grid-cols-4 p-5 gap-4 bg-blue-50">
         {courses.map((course) => (
           <CardPortrait
             key={course.id}
