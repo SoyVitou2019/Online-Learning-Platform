@@ -9,7 +9,7 @@ export const FollowPage = () => {
   const { user } = useAuth();
   const [userFollowData, setUserFollowData] = useState({});
   const [userID, setUserID] = useState(null);
-  const [userAllData, setUserAllData] = useState({})
+  const [userAllData, setUserAllData] = useState({});
   const [isFollowing, setIsFollowing] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
@@ -24,7 +24,7 @@ export const FollowPage = () => {
     if (user.id !== null) {
       fetchData();
       fetchUser();
-      fetchAllUser()
+      fetchAllUser();
       getFollower(userID);
       getFollowing(userID);
     }
@@ -36,7 +36,6 @@ export const FollowPage = () => {
   const [following, setFollowing] = useState({
     followingId: [],
   });
-  
 
   const getFollower = (user_id) => {
     let userFollower = [];
@@ -49,13 +48,13 @@ export const FollowPage = () => {
   };
   const fetchAllUser = async () => {
     try {
-        const response = await axios.get(END_POINTS.USER);
-        const responseData = response.data;
-        setUserAllData(responseData);
+      const response = await axios.get(END_POINTS.USER);
+      const responseData = response.data;
+      setUserAllData(responseData);
     } catch (error) {
-        console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error);
     }
-};
+  };
 
   const getFollowing = (user_id) => {
     let userFollowing = [];
@@ -152,10 +151,7 @@ export const FollowPage = () => {
         follower: updatedFollower,
       });
 
-      await axios.put(
-        END_POINTS.FOLLOW + "/1",
-        userFollowData
-      );
+      await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
     } catch (e) {
       console.error("Error remove following:", e);
     }
@@ -200,10 +196,11 @@ export const FollowPage = () => {
               />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 line-clamp-1">
-                {userAllData.find((item2) => item2.id === item)?.firstName} {userAllData.find((item2) => item2.id === item)?.lastName}
+                  {userAllData.find((item2) => item2.id === item)?.firstName}{" "}
+                  {userAllData.find((item2) => item2.id === item)?.lastName}
                 </div>
                 <p className="text-gray-700 text-base">
-                {userAllData.find((item2) => item2.id === item)?.about}
+                  {userAllData.find((item2) => item2.id === item)?.about}
                 </p>
               </div>
               <div className="px-6 py-4">
@@ -233,10 +230,11 @@ export const FollowPage = () => {
               />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 line-clamp-1">
-                {userAllData.find((item2) => item2.id === item)?.firstName} {userAllData.find((item2) => item2.id === item)?.lastName}
+                  {userAllData.find((item2) => item2.id === item)?.firstName}{" "}
+                  {userAllData.find((item2) => item2.id === item)?.lastName}
                 </div>
                 <p className="text-gray-700 text-base">
-                {userAllData.find((item2) => item2.id === item)?.about}
+                  {userAllData.find((item2) => item2.id === item)?.about}
                 </p>
               </div>
               <div className="px-6 py-4">

@@ -5,26 +5,25 @@ import { adminRoutes, contentCreatorRoutes, protectedRoutes } from "./private";
 import { useAuth } from "../features/auth/api/Auth";
 
 export const AppRoutes = () => {
-  // const auth = useAuth();
 
-  const { user, role } = useAuth();
+    const { user, role } = useAuth();
 
-  let routes;
+    let routes;
 
-  if (user) {
-    if (role === "admin") {
-      routes = adminRoutes;
-    } else if (role === "content_creator") {
-      routes = contentCreatorRoutes;
+    if (user) {
+        if (role === "admin") {
+            routes = adminRoutes;
+        } else if (role === "content_creator") {
+            routes = contentCreatorRoutes;
+        } else {
+            routes = protectedRoutes;
+        }
     } else {
-      routes = protectedRoutes;
+        routes = publicRoutes;
     }
-  } else {
-    routes = publicRoutes;
-  }
 
-  const element = useRoutes([...routes, ...commonRoutes]);
-  return <>{element}</>;
+    const element = useRoutes([...routes, ...commonRoutes]);
+    return <>{element}</>;
 };
 
 // export const AppRoutes = () => {
