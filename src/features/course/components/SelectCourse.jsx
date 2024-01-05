@@ -5,14 +5,143 @@ import axios from "axios";
 import { VideoList } from "./VideoList";
 import END_POINTS from "../../../constants/endpoints";
 import BackButton from "../../../components/BackButton";
+import { useAuth } from "../../auth/api/Auth";
 import { Link } from "react-router-dom";
 
 export const SelectCourse = ({ course_id }) => {
+  const { user } = useAuth();
   const [course, setCourse] = useState({});
   const [courseByTeacher, setCourseByTeacher] = useState([]);
   const [postDetails, setPostDetails] = useState([]);
   const [teacher, setTeacher] = useState({});
+  const [userID, setUserID] = useState(null);
+  const [userFollowData, setUserFollowData] = useState({});
+  const [dependency, setDependency] = useState(false);
+  const [isCheckUserFollow, setIsCheckUserFollow] = useState(false);
+  const [follower, setFollower] = useState({
 
+    followerId: [],
+  });
+
+  const checkExitEncounter = () => {
+    let localchange = false;
+    if (Object.keys(userFollowData).length === 0) {
+      return false;
+    }
+    userFollowData.userId.forEach((item, idx) => {
+      if (
+        item === parseInt(teacher.id) &&
+        userID === userFollowData.follower[idx]
+      ) {
+        setIsCheckUserFollow(true);
+        localchange = true;
+        return false;
+      }
+    });
+    if (localchange) {
+      return false;
+    }
+    setIsCheckUserFollow(false);
+
+    return true;
+  };
+  async function follow(IDUWant, selfID) {
+    selfID = parseInt(selfID);
+    IDUWant = parseInt(IDUWant);
+    // fetch user every update server
+    const checkExitEncounter = () => {
+      for (let idx = 0; idx < userFollowData.userId.length; idx++) {
+        const item = userFollowData.userId[idx];
+        if (item === IDUWant && selfID === userFollowData.follower[idx]) {
+          return true;
+        }
+      }
+      return false;
+    };
+    let isntExit = checkExitEncounter();
+    try {
+      let updateUserId = userFollowData.userId;
+      let updatedFollower = userFollowData.follower;
+      for (let idx = 0; idx < userFollowData.userId.length; idx++) {
+        const item = userFollowData.userId[idx];
+
+        if ((item === IDUWant) & !isntExit) {
+          updateUserId.splice(idx + 1, 0, IDUWant);
+          updatedFollower.splice(idx + 1, 0, selfID);
+          break;
+        }
+      }
+      setUserFollowData({
+        userId: updateUserId,
+        follower: updatedFollower,
+      });
+
+      setDependency(true);
+      await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
+    } catch (e) {
+      console.error("Error remove following:", e);
+    }
+  }
+  async function unfollow(removeId, userId) {
+    userId = parseInt(userId);
+    try {
+      let updateUserId = userFollowData.userId;
+      let updatedFollower = userFollowData.follower;
+      userFollowData.follower.map((item, idx) => {
+        if (item === removeId && userFollowData.userId[idx] === userId) {
+          updateUserId.splice(idx, 1);
+          updatedFollower.splice(idx, 1);
+        }
+      });
+
+      setUserFollowData({
+        userId: updateUserId,
+        follower: updatedFollower,
+      });
+      setDependency(3);
+      await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
+    } catch (error) {
+      console.error("Error remove follower:", error);
+    }
+  }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(END_POINTS.USER + "?uid=" + user.id);
+        const userData = response.data;
+        setUserID(userData[0].id);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    if (user.id !== null) {
+      fetchData()
+      fetchUser();
+      getFollower(teacher.id);
+      checkExitEncounter()
+    }
+  }, [userID, user, dependency]);
+
+  const getFollower = (user_id) => {
+    user_id = parseInt(user_id);
+    let userFollower = [];
+    userFollowData?.userId?.map((item, idx) => {
+      if (item === user_id) {
+        userFollower.push(userFollowData.follower[idx]);
+      }
+    });
+    setDependency(2)
+    setFollower({ followerId: userFollower });
+  };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(END_POINTS.FOLLOW);
+      setUserFollowData(response.data[0]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
     // Function to fetch data from the API
     const fetchCourses = async () => {
@@ -108,9 +237,9 @@ export const SelectCourse = ({ course_id }) => {
   }, [course.created_by_user_id]);
 
   return (
-    <section className=" bg-blue-50">
-      <div className="flex mt-5 pt-5 pb-10">
-        <div className="ml-10 w-2/3">
+    <section className="bg-blue-50">
+      <div className="flex pb-10">
+        <div className="ml-10 w-2/3 overflow-y-scroll">
           <BackButton />
           <h1 className="font-semibold underline text-3xl my-3">
             {course.course_name}
@@ -121,7 +250,7 @@ export const SelectCourse = ({ course_id }) => {
           <div className=" mt-9 pt-3 pb-3 bg-blue-100">
             <div className="px-3">
               <p className=" text-xl">What you will learn</p>
-              <div className="grid grid-flow-col h-auto gap-8 mt-4 bg-white p-5">
+              <div className="grid grid-flow-col h-auto gap-8 mt-4 bg-white p-5 ">
                 <div className="flex flex-col justify-around gap-8">
                   {course.course_expectation?.map((expectation, index) => (
                     <p key={index}> {"✅ " + expectation}</p>
@@ -131,7 +260,7 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
 
-          <div className="mt-9 pt-3 pb-3 bg-blue-100 h-[55vh] overflow-y-scroll">
+          <div className="mt-9 pt-3 pb-3 bg-blue-100 h-[20vh]">
             <div className="px-3">
               <p className="text-xl">Course Content</p>
               <div className="grid grid-flow-row h-auto gap-4 mt-4">
@@ -156,10 +285,12 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
         </div>
+        
+        {/* right side */}
         <div className="mx-10 px-3 py-2 bg-gray-50 w-1/3">
           <p className=" text-2xl font-bold my-3 px-2">About Creator</p>
 
-          <div className="mt-2">
+          <div className="mt-10 ml-4 flex">
             <Link
               to={"/profile/" + teacher.id}
               className="flex items-center ps-2.5 mb-5"
@@ -173,9 +304,36 @@ export const SelectCourse = ({ course_id }) => {
                 <span className="text-xl whitespace-nowrap dark:text-black font-bold">
                   {teacher.firstName + " " + teacher.lastName}
                 </span>
-                <div className="text-black text-xs">Followers: 15</div>
+                <div className="text-black text-xs">Followers: {follower.followerId.length}</div>
               </div>
             </Link>
+            <div className="flex flex-col ml-10 justify-center">
+              {userID !== parseInt(teacher.id) ? (
+                isCheckUserFollow ? (
+                  <button
+                    onClick={() => {
+                      unfollow(userID, teacher.id);
+                    }}
+                    className="bg-blue-500 hover:bg-blue-700 py-4 flex gap-5 text-white font-bold px-4 rounded"
+                  >
+                    <p>Unfollow</p>
+                    <i className="bi bi-balloon-heart-fill"></i>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      follow(teacher.id, userID);
+                    }}
+                    className="bg-blue-500 hover:bg-blue-700 py-4 flex gap-5 text-white font-bold px-4 rounded"
+                  >
+                    <p>Follow</p>
+                    <i className="bi bi-balloon-heart"></i>
+                  </button>
+                )
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <div className="ml-3">
             <ul className="mt-2">{teacher.about}</ul>

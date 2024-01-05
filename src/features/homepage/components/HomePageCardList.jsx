@@ -7,6 +7,7 @@ import { Spinner } from "../../../components/Spinner";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../../auth/api/Auth";
+import { useParams } from "react-router-dom";
 
 function HomePageCardList() {
   const { user } = useAuth();
