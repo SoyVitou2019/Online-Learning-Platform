@@ -65,6 +65,17 @@
       "uid": "75c7d35e-b6a2-4b7e-81ca-f4ba418e8be6",
       "created_at": "2024-01-05T06:21:16.947902Z",
       "id": 7
+    },
+    {
+      "email": "randopmdude@gmail.com",
+      "firstName": "John",
+      "lastName": "Random",
+      "profileUrl": "https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg",
+      "role": "student",
+      "about": "",
+      "uid": "dadaac36-6071-4992-8cfb-04d1278a5f42",
+      "created_at": "2024-01-05T07:00:27.940654Z",
+      "id": 8
     }
   ],
   "course": [
@@ -825,10 +836,12 @@
       "userId": [
         2,
         2,
+        2,
         3
       ],
       "follower": [
         3,
+        8,
         5,
         2
       ],

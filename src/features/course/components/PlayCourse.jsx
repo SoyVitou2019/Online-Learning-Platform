@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { VideoList } from "./VideoList";
 import END_POINTS from "../../../constants/endpoints";
 import { youtubeKey } from "../../auth/api/client";
+import { Link } from "react-router-dom";
 
 const PlayCourse = () => {
   const { course_id } = useParams();
@@ -14,6 +15,7 @@ const PlayCourse = () => {
   const [course, setCourse] = useState({});
   const [postDetails, setPostDetails] = useState([]);
   const [videoDetails, setVideoDetails] = useState(null);
+  const [teacher, setTeacher] = useState({});
 
   useEffect(() => {
     // Function to fetch data from the API
@@ -21,6 +23,10 @@ const PlayCourse = () => {
       try {
         const response = await axios.get(END_POINTS.COURSE + "/" + course_id); // Replace with your actual API endpoint
         setCourse(response.data); // Assuming the API response is an array of courses
+        const res = await axios.get(
+          `${END_POINTS.USER}/${response.data.created_by_user_id}`
+        );
+        setTeacher(res.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -30,6 +36,7 @@ const PlayCourse = () => {
     fetchCourses();
   }, [course_id]); // Empty dependency array ensures that the effect runs only once (on mount)
 
+  console.log(teacher);
   useEffect(() => {
     // Function to fetch post details for each post_id in the course
     const fetchPostDetails = async () => {
@@ -79,13 +86,13 @@ const PlayCourse = () => {
 
   return (
     <section>
-      <section className="mx-3">
-        <h1 className=" py-5 font-semibold text-2xl ml-3 underline">
+      <section className="mx-3 bg-blue-50">
+        <h1 className=" py-5 font-semibold text-2xl ml-5 underline">
           {course.course_name}
         </h1>
         <div className="flex h-[85vh]">
           {/* left side */}
-          <div className=" bg-slate-200 h-full w-[45%] overflow-y-scroll">
+          <div className=" bg-white h-full w-[45%] overflow-y-scroll ms-3">
             <div className="mx-2 py-2 flex flex-col gap-2  ">
               <p className=" font-bold text-xl">Course Content</p>
               {/* Item1 */}
@@ -118,6 +125,24 @@ const PlayCourse = () => {
                 </p>
               </div>
               <p className="mt-2">{videoDetails?.description}</p>
+            </div>
+            <div className="mt-2 ">
+              <Link
+                to={"/profile/" + teacher.id}
+                className="flex items-center justify-end mr-8"
+              >
+                <img
+                  className="w-14 h-14 object-cover rounded-full"
+                  src={teacher.profileUrl}
+                  alt="Description of the image"
+                />
+                <div className="flex-col px-3 ">
+                  <span className="text-xl whitespace-nowrap dark:text-black font-bold">
+                    {teacher.firstName + " " + teacher.lastName}
+                  </span>
+                  <div className="text-black text-xs">Followers: 15</div>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

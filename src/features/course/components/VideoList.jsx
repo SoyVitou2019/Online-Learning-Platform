@@ -43,7 +43,7 @@ export const VideoList = ({ post_id, course_id, title, index, vid_id }) => {
   return (
     <Link
       to={"/course/" + course_id + "/index/" + index}
-      className="flex items-center bg-green-300"
+      className="flex items-center bg-green-50 shadow-lg"
     >
       <img
         className="w-40 aspect-video"

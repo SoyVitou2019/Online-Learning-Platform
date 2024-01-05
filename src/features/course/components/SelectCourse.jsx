@@ -5,6 +5,7 @@ import axios from "axios";
 import { VideoList } from "./VideoList";
 import END_POINTS from "../../../constants/endpoints";
 import BackButton from "../../../components/BackButton";
+import { Link } from "react-router-dom";
 
 export const SelectCourse = ({ course_id }) => {
   const [course, setCourse] = useState({});
@@ -107,7 +108,7 @@ export const SelectCourse = ({ course_id }) => {
   }, [course.created_by_user_id]);
 
   return (
-    <section className=" bg-slate-300">
+    <section className=" bg-blue-50">
       <div className="flex mt-5 pt-5 pb-10">
         <div className="ml-10 w-2/3">
           <BackButton />
@@ -117,7 +118,7 @@ export const SelectCourse = ({ course_id }) => {
           <div>
             <p>{course.couse_description}</p>
           </div>
-          <div className=" mt-9 pt-3 pb-3 bg-slate-200">
+          <div className=" mt-9 pt-3 pb-3 bg-blue-100">
             <div className="px-3">
               <p className=" text-xl">What you will learn</p>
               <div className="grid grid-flow-col h-auto gap-8 mt-4 bg-white p-5">
@@ -130,7 +131,7 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
 
-          <div className="mt-9 pt-3 pb-3 bg-slate-200 h-[55vh] overflow-y-scroll">
+          <div className="mt-9 pt-3 pb-3 bg-blue-100 h-[55vh] overflow-y-scroll">
             <div className="px-3">
               <p className="text-xl">Course Content</p>
               <div className="grid grid-flow-row h-auto gap-4 mt-4">
@@ -155,29 +156,28 @@ export const SelectCourse = ({ course_id }) => {
             </div>
           </div>
         </div>
-        <div className="mx-10 px-3 py-2 bg-white w-1/3">
-          <p className=" text-2xl font-bold mb-3">About Teacher</p>
-          <img
-            className="mx-auto"
-            src="https://fakeimg.pl/500x200"
-            alt="mockup"
-          />
+        <div className="mx-10 px-3 py-2 bg-gray-50 w-1/3">
+          <p className=" text-2xl font-bold my-3 px-2">About Creator</p>
+
           <div className="mt-2">
-            <a href="#" className="flex items-center ps-2.5 mb-5">
-              <i
-                className="bi bi-person-circle w-20 text-6xl "
-                style={{ color: "black" }}
-              ></i>
+            <Link
+              to={"/profile/" + teacher.id}
+              className="flex items-center ps-2.5 mb-5"
+            >
+              <img
+                className="w-14 h-14 object-cover rounded-full"
+                src={teacher.profileUrl}
+                alt="Description of the image"
+              />
               <div className="flex-col px-3 ">
                 <span className="text-xl whitespace-nowrap dark:text-black font-bold">
                   {teacher.firstName + " " + teacher.lastName}
                 </span>
                 <div className="text-black text-xs">Followers: 15</div>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="ml-3">
-            <p className=" font-bold mt-3">About :</p>
             <ul className="mt-2">{teacher.about}</ul>
           </div>
           <div className=" font-bold mt-5 ml-3">
