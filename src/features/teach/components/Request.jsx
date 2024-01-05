@@ -24,8 +24,6 @@ export const Request = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(END_POINTS.USER + `?uid=${user.id}`);
-        console.log(END_POINTS.USER + `?uid=${user.id}`);
-        console.log(response);
         setCurrUser(response.data[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,8 +43,6 @@ export const Request = () => {
       phoneNumber: "",
       request_msg: "",
     });
-    console.log(formData);
-
     setIsOpen(true);
   }
 
@@ -69,7 +65,6 @@ export const Request = () => {
       });
       return;
     }
-    console.log(formData);
 
     await axios.post(END_POINTS.USER_REQUEST, formData);
     setSubmitted(true);

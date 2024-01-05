@@ -1,10 +1,10 @@
-import { useRoutes } from "react-router-dom";
+import { useParams, useRoutes } from "react-router-dom";
 import { UpdateProfile, ViewProfile } from "../components"
 import { HomeLayout } from "../../../layouts";
 
 export const userRoute = [
     {
-        path: "", element: <ViewProfile />
+        path: "/:creator_id", element: <ViewProfile />
     },
     {
         path: "update",

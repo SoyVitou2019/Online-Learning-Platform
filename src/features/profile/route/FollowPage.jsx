@@ -6,12 +6,11 @@ import { useAuth } from "../../auth/api/Auth";
 // import ProfileLandscape from "../components/ProfileLandscape";
 
 export const FollowPage = () => {
-  // let { id } = useParams();
-
   const { user } = useAuth();
   const [userFollowData, setUserFollowData] = useState({});
   const [userID, setUserID] = useState(null);
-
+  const [userAllData, setUserAllData] = useState({})
+  const [isFollowing, setIsFollowing] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -22,14 +21,14 @@ export const FollowPage = () => {
         console.error("Error fetching data:", error);
       }
     };
-    console.log(user.id);
     if (user.id !== null) {
       fetchData();
       fetchUser();
+      fetchAllUser()
       getFollower(userID);
       getFollowing(userID);
     }
-  }, [userID, user]);
+  }, [userID, user, isFollowing]);
 
   const [follower, setFollower] = useState({
     followerId: [],
@@ -37,7 +36,7 @@ export const FollowPage = () => {
   const [following, setFollowing] = useState({
     followingId: [],
   });
-  const [isFollowing, setIsFollowing] = useState(false);
+  
 
   const getFollower = (user_id) => {
     let userFollower = [];
@@ -48,6 +47,15 @@ export const FollowPage = () => {
     });
     setFollower({ followerId: userFollower });
   };
+  const fetchAllUser = async () => {
+    try {
+        const response = await axios.get(END_POINTS.USER);
+        const responseData = response.data;
+        setUserAllData(responseData);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+};
 
   const getFollowing = (user_id) => {
     let userFollowing = [];
@@ -63,11 +71,7 @@ export const FollowPage = () => {
       axios.get(END_POINTS.FOLLOW).then((response) => {
         const arr = response.data[0];
         setUserFollowData(arr);
-        console.log(response.data[0]);
       });
-      console.log("in fetch data");
-
-      console.log(userFollowData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -88,7 +92,6 @@ export const FollowPage = () => {
         userId: updateUserId,
         follower: updatedFollower,
       });
-      console.log(userFollowData);
       await axios.put(END_POINTS.FOLLOW + "/1", userFollowData);
     } catch (error) {
       console.error("Error remove follower:", error);
@@ -149,7 +152,7 @@ export const FollowPage = () => {
         follower: updatedFollower,
       });
 
-      const response = await axios.put(
+      await axios.put(
         END_POINTS.FOLLOW + "/1",
         userFollowData
       );
@@ -192,15 +195,15 @@ export const FollowPage = () => {
             >
               <img
                 className="w-full h-48 object-cover"
-                src="https://fakeimg.pl/60x60"
+                src={userAllData.find((item2) => item2.id === item)?.profileUrl}
                 alt="Profile Image"
               />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 line-clamp-1">
-                  Username {item}
+                {userAllData.find((item2) => item2.id === item)?.firstName} {userAllData.find((item2) => item2.id === item)?.lastName}
                 </div>
                 <p className="text-gray-700 text-base">
-                  Description or bio goes here...
+                {userAllData.find((item2) => item2.id === item)?.about}
                 </p>
               </div>
               <div className="px-6 py-4">
@@ -225,15 +228,15 @@ export const FollowPage = () => {
             >
               <img
                 className="w-full h-48 object-cover"
-                src="https://fakeimg.pl/60x60"
+                src={userAllData.find((item2) => item2.id === item)?.profileUrl}
                 alt="Profile Image"
               />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 line-clamp-1">
-                  Username {item}
+                {userAllData.find((item2) => item2.id === item)?.firstName} {userAllData.find((item2) => item2.id === item)?.lastName}
                 </div>
                 <p className="text-gray-700 text-base">
-                  Description or bio goes here...
+                {userAllData.find((item2) => item2.id === item)?.about}
                 </p>
               </div>
               <div className="px-6 py-4">
