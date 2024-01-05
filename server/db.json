@@ -1,0 +1,169 @@
+{
+  "user": [
+    {
+      "firstName": "Vitou",
+      "lastName": "Pro",
+      "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
+      "email": "soyvitou234@gmail.com",
+      "role": "student",
+      "uid": "1",
+      "id": 1
+    },
+    {
+      "email": "j3058175@gmail.com",
+      "firstName": "Koung",
+      "lastName": "Meng",
+      "profileUrl": "https://media.licdn.com/dms/image/D4E03AQHY9xlXN16B0w/profile-displayphoto-shrink_800_800/0/1691300047851?e=2147483647&v=beta&t=X7qiEGjW3qOkJI0Sq_yHASQqzEhYeWHfJGP27uFxj6s",
+      "role": "admin",
+      "uid": "d0cce29f-0b06-4bd8-beb8-bbf3ce8866f7",
+      "created_at": "2024-01-01T10:18:53.872668Z",
+      "id": 2
+    },
+    {
+      "email": "soyvitou999@gmail.com",
+      "firstName": "Soy",
+      "lastName": "Vitou",
+      "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
+      "role": "admin",
+      "uid": "613f3765-fa75-45ee-955b-e3eb33eed648",
+      "created_at": "2024-01-01T10:24:06.188823Z",
+      "id": 3
+    }
+  ],
+  "course": [
+    {
+      "course_name": "សមីការលីនេអ៊ែរ",
+      "couse_description": "សូមអរគុណសម្រាប់ការតាមដានទស្សនា។ បើមានសំណូមពរ ឬមតិផ្សេងៗ សូមcommentខាងក្រោម។ សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+      "created_by": "Koungmeng",
+      "created_at": "10/4/2023",
+      "category_id": "1",
+      "posts": [
+        1,
+        2,
+        3
+      ],
+      "course_result": [
+        "You will master linear algebra",
+        "You will pass grade 12",
+        "You can understand Einstein's equations",
+        "You will get A++",
+        "Understand the universe"
+      ],
+      "id": 1
+    },
+    {
+      "course_name": "ដេរីវេ",
+      "couse_description": "សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+      "created_by": "Koungmeng",
+      "created_at": "28/3/2023",
+      "category_id": "1",
+      "posts": [
+        4,
+        5,
+        6
+      ],
+      "course_result": [
+        "You will master derivative",
+        "You will pass grade 12",
+        "You will pass ICT entrace",
+        "You will get A++",
+        "Understand the universe"
+      ],
+      "id": 2
+    }
+  ],
+  "post": [
+    {
+      "title": "High order derivative",
+      "id": 5
+    },
+    {
+      "title": "Derivative simple",
+      "id": 4
+    },
+    {
+      "title": "Final Linear Algebra",
+      "id": 3
+    },
+    {
+      "title": "Linear Algebra Verson 2",
+      "id": 2
+    },
+    {
+      "title": "Introduction to Linear Algebra",
+      "id": 1
+    },
+    {
+      "title": "Taylor Series",
+      "id": 6
+    }
+  ],
+  "follow": [
+    {
+      "user_id": 1,
+      "following": [
+        2
+      ],
+      "follower": [
+        2,
+        3
+      ],
+      "id": 1
+    },
+    {
+      "user_id": 2,
+      "following": [
+        3,
+        1
+      ],
+      "follower": [
+        3
+      ],
+      "id": 2
+    }
+  ],
+  "popular_courses": [
+    {
+      "course_name": "សមីការលីនេអ៊ែរ",
+      "course_description": "សូមអរគុណសម្រាប់ការតាមដានទស្សនា។ បើមានសំណូមពរ ឬមតិផ្សេងៗ សូមcommentខាងក្រោម។ សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+      "created_by": "Koungmeng",
+      "created_at": "10/4/2023",
+      "category_id": "1",
+      "course_result": [
+        "You will master linear algebra",
+        "You will pass grade 12",
+        "You can understand Einstein's equations",
+        "You will get A++",
+        "Understand the universe"
+      ],
+      "id": 1
+    },
+    {
+      "course_name": "ដេរីវេ",
+      "course_description": "សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
+      "created_by": "Koungmeng",
+      "created_at": "28/3/2023",
+      "category_id": "1",
+      "course_result": [
+        "You will master derivative",
+        "You will pass grade 12",
+        "You will pass ICT entrace",
+        "You will get A++",
+        "Understand the universe"
+      ],
+      "id": 2
+    }
+  ],
+  "user_request": [
+    {
+      "user_id": 3,
+      "request_msg": "Learning is the process of acquiring new understanding, knowledge, behaviors, skills, values, attitudes, and preferences. The ability to learn is possessed by humans, animals, and some machines; there is also evidence for some kind of learning in certain plants.",
+      "id": 2
+    }
+  ],
+  "service_role": [
+    {
+      "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRudHJhZmhzZmpwa3ZuenR2cGFvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMzg1OTU5MSwiZXhwIjoyMDE5NDM1NTkxfQ.MMUnMykMX2ppUxQbdmDkTWrbGrLFoOxB4GKGWtTcUfo"
+    }
+  ]
+}

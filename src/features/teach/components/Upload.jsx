@@ -1,73 +1,164 @@
+import { Fragment, useEffect, useState } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+
 export const Upload = () => {
+  const people = [
+    { name: "Software Engineer" },
+    { name: "Mathematic" },
+    { name: "Machine learning" },
+    { name: "Game Development" },
+    { name: "Physic & Simulation" },
+    { name: "Basic Programming" },
+  ];
+  const [youtubeLink, setYoutubeLink] = useState([]);
+  useEffect(() => {
+    setYoutubeLink([
+      {
+        title: "python beginner 1",
+      },
+      {
+        title: "python part 2",
+      },
+    ]);
+  }, []);
+  const [selected, setSelected] = useState(people[0]);
+
   return (
-    <div className="h-screen">
-      <div className="px-5 flex justify-start border-t border-b border-gray-300">
-        <a href="#" className=" p-4 py-2 text-md font-medium text-center">
-          Course
-        </a>
-        <a href="#" className=" p-4  py-2 text-md font-medium ">
-          Analytics
-        </a>
-        <a href="#" className=" p-4  py-2 text-md font-medium ml-auto ">
-          Publish
-        </a>
-      </div>
-      <p className="font-bold pl-9 pt-4 ">Upload Videos</p>
-      <div className="flex flex-col items-center mt-10">
-        <div className="flex bg-gray-300 w-80 items-center m-3">
-          <p className="px-5 py-3">Select Category</p>
-          <span className="ml-auto pr-5 ">&rarr;</span>
+    <div className="">
+      <div className="">
+        <div className="px-5 flex justify-start border-t border-b border-gray-300">
+          <a href="#" className=" p-4 py-2 text-md font-medium text-center">
+            Course
+          </a>
+          <a href="#" className=" p-4  py-2 text-md font-medium ">
+            Analytics
+          </a>
+          <a href="#" className=" p-4  py-2 text-md font-medium ml-auto ">
+            Publish
+          </a>
         </div>
-        <div className="flex bg-gray-300 w-80 items-center m-3">
-          <input
-            className="px-5 py-3 bg-gray-300"
-            type="text"
-            id="courseName"
-            placeholder="Course name"
-          />
-        </div>
-        <div className="flex bg-gray-300 w-80 items-center m-3">
-          <input
-            className="px-5 py-3 bg-gray-300"
-            type="desc"
-            id="courseName"
-            placeholder="Course description"
-          />
-        </div>
-        <div className="flex   items-center m-3">
-          <img src="https://fakeimg.pl/50x50" alt="" className="mr-3" />
-          <input
-            className="px-5 py-3 bg-gray-300 w-80"
-            type="desc"
-            id="courseName"
-            placeholder="Link from YouTube"
-          />
-          <img src="https://fakeimg.pl/25x25" alt="" className="ml-3" />
-          <img src="https://fakeimg.pl/25x25" alt="" />
-        </div>
+        <p className="font-bold pl-9 pt-4 ">Upload Videos</p>
+        <div className="flex justify-center gap-9">
+          {/* left side */}
+          <div className="flex flex-col mt-5 ml-10 items-start">
+            {/* category list down */}
+            <div className="w-80 my-4 m-3">
+              <Listbox value={selected} onChange={setSelected}>
+                <div className="relative mt-1">
+                  <Listbox.Button className="relative w-full cursor-default bg-pink-200 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                    <span className="block truncate cursor-pointer">
+                      {selected.name}
+                    </span>
+                    <span className="pointer-events-none  absolute inset-y-0 right-0 flex items-center pr-2">
+                      <ChevronUpDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute  mt-1 max-h-60 w-full overflow-auto rounded-md bg-pink-100 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                      {people.map((person, personIdx) => (
+                        <Listbox.Option
+                          key={personIdx}
+                          className={({ active }) =>
+                            `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                              active
+                                ? "bg-red-200 text-amber-900"
+                                : "text-gray-900"
+                            }`
+                          }
+                          value={person}
+                        >
+                          {({ selected }) => (
+                            <>
+                              <span
+                                className={`block truncate ${
+                                  selected ? "font-medium" : "font-normal"
+                                }`}
+                              >
+                                {person.name}
+                              </span>
+                              {selected ? (
+                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                  <CheckIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+            </div>
+            <div className="flex my-9 w-80 items-center m-3 border border-black bg-pink-100">
+              <input
+                className="py-3 pr-16 pl-3 bg-pink-100"
+                type="text"
+                id="courseName"
+                placeholder="Course name"
+              />
+              <i className="bi bi-braces ml-4 text-3xl"></i>
+            </div>
 
-        <div className="flex   items-center m-3">
-          <img src="https://fakeimg.pl/50x50" alt="" className="mr-3" />
-          <input
-            className="px-5 py-3 bg-gray-300 w-80"
-            type="desc"
-            id="courseName"
-            placeholder="Link from YouTube"
-          />
-          <img src="https://fakeimg.pl/25x25" alt="" className="ml-3" />
-          <img src="https://fakeimg.pl/25x25" alt="" />
-        </div>
+            <div className="w-80 m3 ml-4">
+              <label
+                htmlFor="description"
+                className="block mb-2 text-sm font-medium text-black"
+              >
+                Description of course
+              </label>
+              <textarea
+                id="description"
+                rows="4"
+                className="block p-2.5 w-full text-sm border border-black focus:border-2"
+                placeholder="Write your thoughts here..."
+              ></textarea>
+            </div>
+          </div>
+          <div></div>
 
-        <div className="flex   items-center m-3">
-          <img src="https://fakeimg.pl/50x50" alt="" className="mr-3" />
-          <input
-            className="px-5 py-3 bg-gray-300 w-80"
-            type="desc"
-            id="courseName"
-            placeholder="Link from YouTube"
-          />
-          <img src="https://fakeimg.pl/25x25" alt="" className="ml-3" />
-          <img src="https://fakeimg.pl/25x25" alt="" />
+          {/* right side */}
+          <div className="">
+            <div className="flex bg-gray-300 my-9 w-80 items-center m-3">
+              <input
+                className="py-3 pr-16 pl-3 border border-black bg-gray-300"
+                type="text"
+                id="upload video"
+                placeholder="Youtube Link"
+              />
+              <i className="bi bi-journal-arrow-down ml-4 text-3xl"></i>
+            </div>
+            {/* video */}
+            {youtubeLink.map((item, idx) => (
+              <div className="w-80 pl-3 flex select-none" key={idx}>
+                <p className="flex flex-col px-4 text-white items-center bg-white border border-gray-200 shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                  {idx + 1}
+                </p>
+                <a
+                  href="#"
+                  className="flex flex-col w-full items-center bg-white border border-gray-200 shadow md:flex-row md:max-w-xl dark:border-gray-700 dark:bg-gray-800"
+                >
+                  <div className="flex flex-col w-full justify-between p-4 leading-normal">
+                    <h5 className="text-sm line-clamp-1 w-full font-bold tracking-tight text-gray-900 dark:text-white">
+                      {item.title}
+                    </h5>
+                  </div>
+                </a>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
