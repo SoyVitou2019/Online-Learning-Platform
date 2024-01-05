@@ -23,6 +23,7 @@ import { ProfilePage, UserProfileRoute, userRoute } from "../features/users";
 import NewUpload from "../features/teach/components/NewUpload";
 import { TeachRoutes } from "../features/teach/route";
 import TeacherDashboard from "../features/teach/components/TeacherDashboard";
+import CourseEdit from "../features/teach/components/CourseEdit";
 
 // import { lazyImport } from '@/utils/lazyImport';
 
@@ -146,6 +147,10 @@ export const contentCreatorRoutes = [
         element: <TeacherDashboard />,
       },
       {
+        path: "teach/course/:courseID",
+        element: <CourseEdit />,
+      },
+      {
         path: "",
         element: <Navigate to="/home" />,
       },
@@ -201,6 +206,10 @@ export const adminRoutes = [
       {
         path: "teach/dashboard",
         element: <TeacherDashboard />,
+      },
+      {
+        path: "teach/course/:courseID",
+        element: <CourseEdit />,
       },
       {
         path: "",

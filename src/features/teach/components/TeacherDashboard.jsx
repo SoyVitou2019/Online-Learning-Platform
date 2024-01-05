@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/api/Auth";
 import END_POINTS from "@/src/constants/endpoints";
 import axios from "axios";
@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 
 const TeacherDashboard = () => {
   const [userID, setUserID] = useState(0);
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const { user } = useAuth();
   const itemsPerPage = 20;
@@ -149,7 +150,12 @@ const TeacherDashboard = () => {
                     </p>
                   </td>
                   <td className="py-2 px-4 border-b text-center">
-                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2">
+                    <button
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded mr-2"
+                      onClick={() => {
+                        navigate("/teach/course/" + course.id);
+                      }}
+                    >
                       Edit
                     </button>
                     <button

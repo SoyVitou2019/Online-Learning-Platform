@@ -62,22 +62,6 @@ const VideoTable = () => {
     fetchCourses();
   }, []);
 
-  const handleAddEditVideo = (data) => {
-    if (editingVideo) {
-      // Update existing video
-      setVideos((prevVideos) =>
-        prevVideos.map((video) =>
-          video.id === editingVideo.id ? { ...video, ...data } : video
-        )
-      );
-    } else {
-      // Add new video
-      setVideos((prevVideos) => [...prevVideos, { id: Date.now(), ...data }]);
-    }
-
-    // closeModal();
-  };
-
   //   const handleDelete = (id) => {
   //
   //   };
@@ -331,26 +315,6 @@ const VideoTable = () => {
     postCourseData.course_expectation =
       courseData.courseExpectations.split("\n");
 
-    // "course_name": "ដេរីវេ second",
-    //   "vid_id": "LZ7SFpCiekU",
-    //   "couse_description": "សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
-    //   "created_by_user_id": "2",
-    //   "created_at": "2022-02-01 21:05:02",
-    //   "category": "Mathematic",
-    //   "rank": 2,
-    //   "posts": [
-    //     4,
-    //     5,
-    //     6
-    //   ],
-    //   "course_expectation": [
-    //     "You will master derivative",
-    //     "You will pass grade 12",
-    //     "You will pass ICT entrace",
-    //     "You will get A++",
-    //     "Understand the universe"
-    //   ],
-    //   "id": 28
     try {
       await axios.post(END_POINTS.COURSE, postCourseData);
       Swal.fire({
