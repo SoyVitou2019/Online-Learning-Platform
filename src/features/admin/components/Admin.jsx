@@ -15,6 +15,9 @@ const Admin = () => {
   const [users, setStateOfUser] = useState([]);
   const [allusers, setStateOfAllUser] = useState([]);
 
+  const [isOpenPromoteUser, setIsOpenPromoteUser] = useState(false);
+  const [currentPromoteID, setCurrentPromoteID] = useState();
+
   const fetchAllUser = async () => {
     try {
       const response1 = await axios.get(END_POINTS.USER_SORT);
@@ -75,11 +78,11 @@ const Admin = () => {
 
   useEffect(() => {
     fetchAllUser();
-  }, []);
+  }, [roleDisplay]);
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [roleDisplay]);
 
   function openRequestModal() {
     setIsOpen(true);
@@ -94,6 +97,10 @@ const Admin = () => {
     setIsOpenDeleteUser(true);
   }
 
+  function openPromoteUserModal(id) {
+    setCurrentPromoteID(id);
+    setIsOpenPromoteUser(true);
+  }
   const closeDeleteUserModal = async (idDelete) => {
     const response = await axios.get(END_POINTS.USER + "/" + idDelete);
 
@@ -116,6 +123,41 @@ const Admin = () => {
 
     setIsOpenDeleteUser(false);
   };
+
+  const closePromoteUserModal = async (idDelete) => {
+    setIsOpenPromoteUser(false);
+    console.log(idDelete);
+    console.log(users);
+    allusers.map(async (item) => {
+      console.log("map1");
+      if (item.userId === idDelete) {
+        try {
+          console.log(item);
+
+          let response = await axios.get(END_POINTS.USER + "/" + item.userId);
+          response.data.role = "admin";
+
+          users.map(async (item) => {
+            if (item.userId === idDelete) {
+              try {
+                await axios.delete(END_POINTS.USER_REQUEST + item.id);
+              } catch (e) {
+                console.log("This user doesn't have request message");
+              }
+            }
+          });
+
+          await axios.put(END_POINTS.USER + "/" + item.userId, response.data);
+          fetchAllUser();
+          fetchUser();
+        } catch (e) {
+          console.error("Something went wrong!");
+          console.log(e);
+        }
+      }
+    });
+  };
+
   const closeDeleteUserModalWithoutDelete = () => {
     setIsOpenDeleteUser(false);
   };
@@ -356,13 +398,28 @@ const Admin = () => {
                   <td className="px-6 py-4">{item.created_at}</td>
                   <td className="px-6 py-4">{item.role}</td>
                   <td className="px-6 py-4">
-                    <div
-                      className="flex gap-7"
-                      onClick={() => {
-                        openDeleteUserModal(item.userId);
-                      }}
-                    >
-                      <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
+                    <div className="flex gap-2 items-center">
+                      {item.role !== "admin" && (
+                        <>
+                          <button
+                            className="flex gap-7"
+                            onClick={() => {
+                              openPromoteUserModal(item.userId);
+                            }}
+                          >
+                            <i className="bi bi-person-fill-gear bg-blue-300 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
+                          </button>
+
+                          <button
+                            className="flex gap-7"
+                            onClick={() => {
+                              openDeleteUserModal(item.userId);
+                            }}
+                          >
+                            <i className="bi bi-trash bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg"></i>
+                          </button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -535,6 +592,78 @@ const Admin = () => {
                       onClick={() => closeDeleteUserModal(clickDelete)}
                     >
                       Delete
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+
+      {/* dialog promote */}
+      <Transition appear show={isOpenPromoteUser} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => {
+            setIsOpenPromoteUser(false);
+          }}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Do you want to promote user{" "}
+                    {allusers.map((item, index) => {
+                      return item.userId === currentPromoteID
+                        ? item.fullName
+                        : null;
+                    })}
+                    {" to ADMIN?"}
+                  </Dialog.Title>
+                  <div className="mt-4 flex justify-end gap-3">
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={() => {
+                        closePromoteUserModal(currentPromoteID);
+                      }}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      type="button"
+                      className="flex justify-end rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={() => {
+                        setIsOpenPromoteUser(false);
+                      }}
+                    >
+                      No
                     </button>
                   </div>
                 </Dialog.Panel>

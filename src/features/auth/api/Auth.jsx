@@ -11,6 +11,10 @@ export const useAuth = () => useContext(AuthContext);
 const login = async (email, password) =>
   await supabase.auth.signInWithPassword({ email, password });
 
+const signOut = async () => {
+  await supabase.auth.signOut();
+};
+
 const updatePassword = async (new_password) =>
   await supabase.auth.updateUser({
     password: new_password,
@@ -119,7 +123,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ role, user, setUser, login, updatePassword }}
+      value={{ role, user, setUser, login, updatePassword, signOut }}
     >
       {loading ? (
         <div className="flex justify-center h-screen flex-col items-center">

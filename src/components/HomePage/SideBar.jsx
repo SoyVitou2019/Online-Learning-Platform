@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../features/auth/api/Auth";
 import axios from "axios";
 import END_POINTS from "../../constants/endpoints";
+import SignOut from "../SignOut";
 
 export default function SideBar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -117,11 +118,7 @@ export default function SideBar() {
 
             <hr></hr>
             <li>
-              <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Continue learning
-                </span>
-              </div>
+              <SignOut />
             </li>
           </ul>
         </div>
@@ -203,7 +200,9 @@ export default function SideBar() {
               <a
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              ></a>
+              >
+                <i className="bi bi-box-arrow-left text-2xl"></i>
+              </a>
             </li>
           </ul>
         </div>

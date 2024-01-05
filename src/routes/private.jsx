@@ -135,7 +135,7 @@ export const contentCreatorRoutes = [
       },
       {
         path: "teach/upload",
-        element: <UploadPage />,
+        element: <NewUpload />,
       },
 
       {

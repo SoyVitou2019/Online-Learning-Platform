@@ -26,9 +26,12 @@ const TeacherDashboard = () => {
   const fetchCourses = async () => {
     try {
       const response = await axios.get(
-        `${END_POINTS.COURSE}?_sort=created_at&created_by_user_id${userID}&_page=${page}&_limit=${itemsPerPage}`
+        `${END_POINTS.COURSE}?_sort=created_at&created_by_user_id=${userID}&_page=${page}&_limit=${itemsPerPage}`
       );
       const coursesData = response.data;
+      console.log(
+        `${END_POINTS.COURSE}?_sort=created_at&created_by_user_id=${userID}&_page=${page}&_limit=${itemsPerPage}`
+      );
 
       const linkHeader = response.headers.link;
       if (linkHeader) {
@@ -57,10 +60,9 @@ const TeacherDashboard = () => {
     };
 
     if (user.id !== null) {
-      fetchUser();
-      fetchCourses();
+      fetchUser().then(fetchCourses());
     }
-  }, [page, itemsPerPage]);
+  }, [page, itemsPerPage, userID]);
 
   const handleShowMore = () => {
     setPage((prevPage) => prevPage + 1);
