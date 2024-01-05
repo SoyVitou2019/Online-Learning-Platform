@@ -6,6 +6,7 @@ import END_POINTS from "../../../constants/endpoints";
 import { Spinner } from "../../../components/Spinner";
 import fetchUser from "../../admin/api/getUser";
 import { useAuth } from "../../auth/api/Auth";
+import { useParams } from "react-router-dom";
 
 function HomePageCardList() {
   const { user } = useAuth();
