@@ -5,7 +5,7 @@ import { Spinner } from "@/src/components/Spinner";
 import END_POINTS from "@/src/constants/endpoints";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../auth/api/Auth";
 import { CardPortrait } from "@/src/components/HomePage/CardPortrait";
 
@@ -133,7 +133,7 @@ export const ViewProfile = () => {
         selfID = parseInt(selfID);
         IDUWant = parseInt(IDUWant);
         // fetch user every update server
-        const checkExitEncounter = () => {
+        const checkExitEncounters = () => {
             for (let idx = 0; idx < userFollowData.userId.length; idx++) {
                 const item = userFollowData.userId[idx];
                 if (item === IDUWant && selfID === userFollowData.follower[idx]) {
@@ -142,7 +142,7 @@ export const ViewProfile = () => {
             }
             return false;
         };
-        let isntExit = checkExitEncounter();
+        let isntExit = checkExitEncounters();
         try {
             let updateUserId = userFollowData.userId;
             let updatedFollower = userFollowData.follower;
@@ -228,12 +228,13 @@ export const ViewProfile = () => {
                     </div>
                 </div>
                 <a href="#" className="flex items-center ps-2.5 -mt-10 mx-4">
-                    <Avatar className="w-32 h-32">
-                        <AvatarImage src={userData.profileUrl} />
-                        <AvatarFallback>
-                            <Spinner />
-                        </AvatarFallback>
-                    </Avatar>
+                    <div className="w-32 h-32">
+                        <img
+                            className="w-32 h-32 object-cover rounded-full"
+                            src={userData.profileUrl}
+                            alt="Description of the image"
+                        />
+                    </div>
                 </a>
 
                 <div className="flex justify-end px-4 ">
@@ -287,7 +288,12 @@ export const ViewProfile = () => {
                     </div>
 
                     <div className="flex gap-8 justify-between pt-2 w-64">
-                        <Button className="py-1 bg-blue-500 hover:bg-blue-600">
+                        <Button
+                            className={
+                                "py-1 bg-blue-300 hover:bg-blue-400 " +
+                                (show_info === "view_courses" ? "bg-blue-700" : "")
+                            }
+                        >
                             <h1
                                 onClick={() => {
                                     setShow_info("view_courses");
@@ -297,7 +303,12 @@ export const ViewProfile = () => {
                                 View Courses
                             </h1>
                         </Button>
-                        <Button className="py-1 bg-blue-500 hover:bg-blue-600">
+                        <Button
+                            className={
+                                "py-1 bg-blue-300 hover:bg-blue-400 " +
+                                (show_info === "follower" ? "bg-blue-700" : "")
+                            }
+                        >
                             <h1
                                 onClick={() => {
                                     setShow_info("follower");
@@ -307,7 +318,12 @@ export const ViewProfile = () => {
                                 Follower
                             </h1>
                         </Button>
-                        <Button className="py-1 bg-blue-500 hover:bg-blue-600">
+                        <Button
+                            className={
+                                "py-1 bg-blue-300 hover:bg-blue-400 " +
+                                (show_info === "following" ? "bg-blue-700" : "")
+                            }
+                        >
                             <h1
                                 onClick={() => {
                                     setShow_info("following");
@@ -321,8 +337,7 @@ export const ViewProfile = () => {
                 </div>
             </div>
             <div className="bg-white border rounded-lg m-4 ">
-                <div className="flex-col px-6 py-4  ">
-
+                <div className="flex-col px-6 py-4 ">
                     {show_info === "view_courses" ? (
                         <h1 className="font-bold text-xl mb-4">Courses created</h1>
                     ) : show_info === "follower" ? (
@@ -331,8 +346,8 @@ export const ViewProfile = () => {
                         <h1 className="font-bold text-xl">Following</h1>
                     )}
                     <div className="">
-                        {show_info === "view_courses " ? (
-                            <div className="grid gap-4 bg-blue-50 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+                        {show_info === "view_courses" ? (
+                            <div className="grid grid-cols-4 p-5 gap-4 bg-blue-50">
                                 {userCourse.map((course) => (
                                     <CardPortrait
                                         key={course.id}
@@ -354,67 +369,74 @@ export const ViewProfile = () => {
                         ) : show_info === "follower" ? (
                             <div className="grid grid-cols-2 mx-8 mt-10 md:grid-cols-6 md:gap-4">
                                 {follower.followerId.map((item, idx) => (
-                                    <div
-                                        key={idx}
-                                        className="max-w-sm rounded overflow-hidden shadow-lg bg-white"
-                                    >
-                                        <img
-                                            className="w-full h-48 object-cover"
-                                            src={
-                                                userAllData.find((item2) => item2.id === item)
-                                                    ?.profileUrl
-                                            }
-                                            alt="Profile Image"
-                                        />
-                                        <div className="px-6 py-4">
-                                            <div className="font-bold text-xl mb-2 line-clamp-1">
-                                                {
+                                    <Link key={idx} to={"/profile/" + item}>
+                                        <div
+                                            key={idx}
+                                            className="max-w-sm rounded overflow-hidden shadow-lg bg-white"
+                                        >
+                                            <img
+                                                className="w-full h-48 object-cover"
+                                                src={
                                                     userAllData.find((item2) => item2.id === item)
-                                                        ?.firstName
-                                                }{" "}
-                                                {
-                                                    userAllData.find((item2) => item2.id === item)
-                                                        ?.lastName
+                                                        ?.profileUrl
                                                 }
+                                                alt="Profile Image"
+                                            />
+                                            <div className="px-6 py-4">
+                                                <div className="font-bold text-xl mb-2 line-clamp-1">
+                                                    {
+                                                        userAllData.find((item2) => item2.id === item)
+                                                            ?.firstName
+                                                    }{" "}
+                                                    {
+                                                        userAllData.find((item2) => item2.id === item)
+                                                            ?.lastName
+                                                    }
+                                                </div>
+                                                <p className="text-gray-700 text-base">
+                                                    {
+                                                        userAllData.find((item2) => item2.id === item)
+                                                            ?.about
+                                                    }
+                                                </p>
                                             </div>
-                                            <p className="text-gray-700 text-base">
-                                                {userAllData.find((item2) => item2.id === item)?.about}
-                                            </p>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))}
                             </div>
                         ) : (
                             <div className="grid grid-cols-2 mx-8 mt-10 md:grid-cols-6 md:gap-4">
                                 {following.followingId.map((item, idx) => (
-                                    <div
-                                        key={idx}
-                                        className="max-w-sm rounded overflow-hidden shadow-lg bg-white"
-                                    >
-                                        <img
-                                            className="w-full h-48 object-cover"
-                                            src={
-                                                userAllData.find((item2) => item2.id === item)
-                                                    ?.profileUrl
-                                            }
-                                            alt="Profile Image"
-                                        />
-                                        <div className="px-6 py-4">
-                                            <div className="font-bold text-xl mb-2 line-clamp-1">
-                                                {
+                                    <Link key={idx} to={"/profile/" + item}>
+                                        <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white ">
+                                            <img
+                                                className="w-full h-48 object-cover"
+                                                src={
                                                     userAllData.find((item2) => item2.id === item)
-                                                        ?.firstName
-                                                }{" "}
-                                                {
-                                                    userAllData.find((item2) => item2.id === item)
-                                                        ?.lastName
+                                                        ?.profileUrl
                                                 }
+                                                alt="Profile Image"
+                                            />
+                                            <div className="px-6 py-4">
+                                                <div className="font-bold text-xl mb-2 line-clamp-1">
+                                                    {
+                                                        userAllData.find((item2) => item2.id === item)
+                                                            ?.firstName
+                                                    }{" "}
+                                                    {
+                                                        userAllData.find((item2) => item2.id === item)
+                                                            ?.lastName
+                                                    }
+                                                </div>
+                                                <p className="text-gray-700 text-base">
+                                                    {
+                                                        userAllData.find((item2) => item2.id === item)
+                                                            ?.about
+                                                    }
+                                                </p>
                                             </div>
-                                            <p className="text-gray-700 text-base">
-                                                {userAllData.find((item2) => item2.id === item)?.about}
-                                            </p>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))}
                             </div>
                         )}

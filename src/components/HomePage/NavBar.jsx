@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 
 export const NavBar = () => {
     const [showMenu, setShowMenu] = useState(false);
-    const [showSearch, setShowSearch] = useState(false);
     let menuRef = useRef();
 
     useEffect(() => {
@@ -14,60 +13,33 @@ export const NavBar = () => {
                 setShowMenu(false);
             }
         });
-    }, []);
+    });
 
     return (
-        <nav className="flex justify-between px-10 py-5 items-center bg-gray-50 overflow-hidden">
+        <nav className="flex justify-between px-10 py-5 items-center bg-gray-50">
             <ul className="flex items-center space-x-6">
                 <Link to="/" className="text-xl text-gray-800 font-bold">
                     VM
                 </Link>
-                <Link to="/" className={`text-xl text-gray-800 ${showSearch ? "hidden" : ""}`}>
+                <Link to="/" className="hidden text-xl text-gray-800 sm:block">
                     <DropDownCategory />
                 </Link>
             </ul>
             <ul className="flex items-center space-x-6">
                 <div>
-                    <div className={showSearch ? "w-32 flex items-center" : "hidden md:block "}>
-                        <SearchBar onBlur={() => setShowSearch(false)} shouldFocus={showSearch} isSmall={true} />
-                    </div>
-                    <p
-                        onClick={() => {
-                            setShowSearch(true);
-                        }}
-                        className={
-                            showSearch
-                                ? "hidden"
-                                : "bg-red-50 px-10 py-1 rounded-xl font-serif md:hidden"
-                        }
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 pt-0.5 text-gray-600"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
-                    </p>
+                    <SearchBar />
                 </div>
                 <i
                     ref={menuRef}
                     onClick={() => {
                         setShowMenu(!showMenu);
                     }}
-                    className="bi bi-list absolute right-8 md:hidden"
+                    className="bi bi-list absolute right-8 sm:hidden"
                 ></i>
                 {/* dropdown */}
                 <div
                     ref={menuRef}
-                    className={showMenu ? "absolute right-0 top-10 md:hidden" : "hidden"}
+                    className={showMenu ? "absolute right-0 top-10 sm:hidden" : "hidden"}
                 >
                     <div className="origin-top-right absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                         <div className="py-1">
@@ -87,22 +59,6 @@ export const NavBar = () => {
                     </div>
                 </div>
             </ul>
-            <div className="flex items-center">
-                <ul className="flex items-center space-x-6">
-                    <Link
-                        to="/contact-us"
-                        className="hidden md:block font-semibold text-gray-700"
-                    >
-                        Contact us
-                    </Link>
-                    <Link
-                        to="/donate"
-                        className="hidden md:block font-semibold text-gray-700"
-                    >
-                        Donate
-                    </Link>
-                </ul>
-            </div>
         </nav>
     );
 };

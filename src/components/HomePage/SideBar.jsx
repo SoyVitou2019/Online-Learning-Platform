@@ -10,6 +10,51 @@ export default function SideBar() {
     const [currUser, setCurrUser] = useState({});
     const { user } = useAuth();
 
+    const [userID, setUserID] = useState(null);
+    const [userFollowData, setUserFollowData] = useState({});
+    const [dependency, setDependency] = useState(false);
+    const [isCheckUserFollow, setIsCheckUserFollow] = useState(false);
+    const [follower, setFollower] = useState({
+        followerId: [],
+    });
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get(END_POINTS.USER + "?uid=" + user.id);
+                const userData = response.data;
+                setUserID(userData[0].id);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        if (user.id !== null) {
+            fetchUser();
+            fetchData();
+            getFollower(currUser.id);
+        }
+    }, [userID, user, dependency]);
+
+    const getFollower = (user_id) => {
+        user_id = parseInt(user_id);
+        let userFollower = [];
+        userFollowData?.userId?.map((item, idx) => {
+            if (item === user_id) {
+                userFollower.push(userFollowData.follower[idx]);
+            }
+        });
+        setDependency(2);
+        setFollower({ followerId: userFollower });
+    };
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(END_POINTS.FOLLOW);
+            setUserFollowData(response.data[0]);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
     useEffect(() => {
         // Function to fetch data from the API
         const fetchProfile = async () => {
@@ -30,7 +75,7 @@ export default function SideBar() {
 
     return (
         <div className="bg-gray-50">
-            <div className="hidden lg:block">
+            <div className="hidden sm:block">
                 <aside
                     id="logo-sidebar"
                     className={`w-72  ${isSidebarOpen ? "hidden" : "block"}`}
@@ -38,72 +83,44 @@ export default function SideBar() {
                 >
                     <div className="h-full  px-3 py-4 bg-gray-50">
                         <div className="flex justify-start items-center ps-2.5 mb-5">
-                            <Link to="/profile">
+                            <Link to={"profile/" + userID}>
                                 <img
                                     className="w-14 h-14 object-cover rounded-full"
                                     src={currUser.profileUrl}
                                     alt="Description of the image"
                                 />
                             </Link>
-                            <Link to="/profile" className="flex-col ps-5 mr-auto">
+                            <Link to={"profile/" + userID} className="flex-col ps-5 mr-auto">
                                 <div className="text-xs">{currUser.role}</div>
                                 <span className="text-xl text-overflow: ellipsis whitespace-nowrap dark:text-white">
                                     {currUser.firstName && currUser.firstName.length > 0
                                         ? currUser.firstName[0] + ". " + (currUser.lastName || "")
                                         : ""}
                                 </span>
-                                <div className=" text-xs">Followers: 15</div>
+                                <div className=" text-xs">
+                                    Followers: {follower.followerId.length}{" "}
+                                </div>
                             </Link>
                             <button type="button" onClick={toggleSidebar}>
                                 <i className="bi bi-list mr-3 text-2xl align-middle"></i>
                             </button>
                         </div>
-                        <hr></hr>
-                        <ul className="space-y-2 font-medium">
-                            <li>
-                                <Link
-                                    to="/"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                                >
-                                    <i className="bi bi-house-gear-fill text-2xl"></i>
-                                    <span className="ms-3">Home</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    to="/following"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                                >
-                                    <i className="bi bi-box2-heart text-2xl"></i>
-                                    <span className="flex-1 ms-3 whitespace-nowrap">
-                                        Following
-                                    </span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    to={"profile/" + currUser.id}
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                                >
-                                    <i className="bi bi-person-lines-fill text-2xl"></i>
-                                    <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
-                                </Link>
-                            </li>
 
-                            <>
-                                <Link
-                                    to={
-                                        currUser.role === "admin" ||
-                                            currUser.role === "content_creator"
-                                            ? "/teach/upload"
-                                            : "teach/request"
-                                    }
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                                >
-                                    <i className="bi bi-play-fill text-2xl"></i>
-                                    <span className="flex-1 ms-3 whitespace-nowrap">Teach</span>
-                                </Link>
-                            </>
+                        <>
+                            <Link
+                                to={
+                                    currUser.role === "admin" ||
+                                        currUser.role === "content_creator"
+                                        ? "/teach/upload"
+                                        : "teach/request"
+                                }
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                            >
+                                <i className="bi bi-play-fill text-2xl"></i>
+                                <span className="flex-1 ms-3 whitespace-nowrap">Teach</span>
+                            </Link>
+                        </>
+                        <ul>
                             {currUser.role === "admin" && (
                                 <li>
                                     <Link
@@ -152,58 +169,60 @@ export default function SideBar() {
                         <hr></hr>
                         <ul className="space-y-2 font-medium">
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    to="/home"
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                                 >
                                     <i className="bi bi-house-gear-fill text-2xl"></i>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    to="/following"
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                                 >
                                     <i className="bi bi-box2-heart text-2xl"></i>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    to={"profile/" + currUser.id}
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                                 >
                                     <i className="bi bi-person-lines-fill text-2xl"></i>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                    to={
+                                        currUser.role === "admin" ||
+                                            currUser.role === "content_creator"
+                                            ? "/teach/upload"
+                                            : "teach/request"
+                                    }
                                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                                 >
                                     <i className="bi bi-play-fill text-2xl"></i>
-                                </a>
+                                </Link>
                             </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                                >
-                                    <i className="bi bi-bar-chart text-2xl"></i>
-                                </a>
-                            </li>
+                            {currUser.role === "admin" && (
+                                <li>
+                                    <Link
+                                        to="/admin"
+                                        className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                                    >
+                                        <i className="bi bi-bar-chart text-2xl"></i>
+                                    </Link>
+                                </li>
+                            )}
                             <hr></hr>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                                ></a>
-                            </li>
                         </ul>
                     </div>
                 </aside>
             </div>
 
             {/* <div className="sm:hidden">
+>>>>>>> 5ba59f11e5b220e47c9f45d1239270e19f6a8880
         <div className="container mx-auto my-8">
           <div className="flex space-x-4">
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
