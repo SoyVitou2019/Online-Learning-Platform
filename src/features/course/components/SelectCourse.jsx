@@ -48,6 +48,7 @@ export const SelectCourse = ({ course_id }) => {
   async function follow(IDUWant, selfID) {
     selfID = parseInt(selfID);
     IDUWant = parseInt(IDUWant);
+    console.log(selfID, IDUWant)
     // fetch user every update server
     const checkExitEncounters = () => {
       for (let idx = 0; idx < userFollowData.userId.length; idx++) {

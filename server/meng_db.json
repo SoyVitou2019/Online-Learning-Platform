@@ -1,39 +1,6 @@
 {
   "user": [
     {
-      "email": "j3058175@gmail.com",
-      "firstName": "Koung",
-      "lastName": "Meng",
-      "profileUrl": "https://media.licdn.com/dms/image/D4E03AQHY9xlXN16B0w/profile-displayphoto-shrink_800_800/0/1691300047851?e=2147483647&v=beta&t=X7qiEGjW3qOkJI0Sq_yHASQqzEhYeWHfJGP27uFxj6s",
-      "role": "admin",
-      "about": "I am a user",
-      "uid": "d0cce29f-0b06-4bd8-beb8-bbf3ce8866f7",
-      "created_at": "2024-01-01T10:18:53.872668Z",
-      "id": 2
-    },
-    {
-      "email": "randopmdude@gmail.com",
-      "firstName": "John",
-      "lastName": "dom",
-      "profileUrl": "https://media.licdn.com/dms/image/D4E03AQHY9xlXN16B0w/profile-displayphoto-shrink_800_800/0/1691300047851?e=2147483647&v=beta&t=X7qiEGjW3qOkJI0Sq_yHASQqzEhYeWHfJGP27uFxj6s",
-      "role": "student",
-      "about": "Work hard, Play harder",
-      "uid": "42be5e9c-2a37-4f17-9a30-20d883634b10",
-      "created_at": "2024-01-04T07:04:58.026972Z",
-      "id": 4
-    },
-    {
-      "email": "randopmdude@gmail.com",
-      "firstName": "John",
-      "lastName": "Random",
-      "profileUrl": "https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg",
-      "role": "student",
-      "about": "",
-      "uid": "dadaac36-6071-4992-8cfb-04d1278a5f42",
-      "created_at": "2024-01-05T07:00:27.940654Z",
-      "id": 8
-    },
-    {
       "email": "soyvitou999@gmail.com",
       "firstName": "Soy",
       "lastName": "Vitou",
@@ -415,20 +382,12 @@
   "follow": [
     {
       "userId": [
-        2,
-        2,
-        2,
-        2,
-        3,
-        3
+        10,
+        9
       ],
       "follower": [
-        3,
-        7,
-        5,
-        8,
-        2,
-        8
+        9,
+        10
       ],
       "id": 1
     }
