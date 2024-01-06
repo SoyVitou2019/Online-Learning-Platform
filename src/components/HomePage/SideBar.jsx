@@ -84,14 +84,14 @@ export default function SideBar() {
         >
           <div className="h-full  px-3 py-4 bg-gray-50">
             <div className="flex justify-start items-center ps-2.5 mb-5">
-              <Link to="/profile">
+              <Link to = {"profile/" + userID}>
                 <img
                   className="w-14 h-14 object-cover rounded-full"
                   src={currUser.profileUrl}
                   alt="Description of the image"
                 />
               </Link>
-              <Link to="/profile" className="flex-col ps-5 mr-auto">
+              <Link to={"profile/" + userID} className="flex-col ps-5 mr-auto">
                 <div className="text-xs">{currUser.role}</div>
                 <span className="text-xl text-overflow: ellipsis whitespace-nowrap dark:text-white">
                   {currUser.firstName && currUser.firstName.length > 0
