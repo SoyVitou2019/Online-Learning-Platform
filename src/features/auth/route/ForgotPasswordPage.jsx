@@ -16,7 +16,7 @@ const ForgotPasswordPage = () => {
 
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "http://localhost:3333/auth/reset-password",
+        redirectTo: "https://ite-proj.polymersuite.asia/auth/reset-password",
       });
 
       if (error) throw error;
