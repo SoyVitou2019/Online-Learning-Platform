@@ -136,27 +136,27 @@ const AdminPage = () => {
                         </div>
                         <div class="mt-2 mb-4 text-sm">
                             We extend a warm invitation to join our community, VM (Vitou Koungmeng),
-                             dedicated to the creation of free educational videos that empower learners around the globe.
-                              By becoming a VM teacher, you have the opportunity to play a pivotal role in making high-quality
-                               education accessible to everyone. As a member of VM, you'll be part of a collaborative and passionate
-                                community of like-minded educators, sharing your expertise to positively impact individuals who may
-                                 lack traditional learning resources. Imagine the global reach and influence your teachings can have,
-                                  transcending geographical boundaries and contributing to a more knowledgeable and interconnected world.
-                                   At VM, we value your unique contributions, offering the flexibility to create content aligned with your
-                                    expertise while providing recognition and appreciation for your commitment to education. 
-                                    Join us in this transformative journey, where your passion for teaching becomes a beacon of 
-                                    light for those seeking knowledge. Respond to this invitation,
-                             and let's together make education a universally accessible force for positive change.
-                            Sincerely.<br/><br/>
-                            [Guido van Rossum] <br/>
+                            dedicated to the creation of free educational videos that empower learners around the globe.
+                            By becoming a VM teacher, you have the opportunity to play a pivotal role in making high-quality
+                            education accessible to everyone. As a member of VM, you'll be part of a collaborative and passionate
+                            community of like-minded educators, sharing your expertise to positively impact individuals who may
+                            lack traditional learning resources. Imagine the global reach and influence your teachings can have,
+                            transcending geographical boundaries and contributing to a more knowledgeable and interconnected world.
+                            At VM, we value your unique contributions, offering the flexibility to create content aligned with your
+                            expertise while providing recognition and appreciation for your commitment to education.
+                            Join us in this transformative journey, where your passion for teaching becomes a beacon of
+                            light for those seeking knowledge. Respond to this invitation,
+                            and let's together make education a universally accessible force for positive change.
+                            Sincerely.<br /><br />
+                            [Guido van Rossum] <br />
                             [VM Community]
                         </div>
                         <div class="flex">
-                            <button  onClick={handleCloseModal} type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <button onClick={handleCloseModal} type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 <i class="bi bi-check-all px-2" style={{ color: 'white' }}></i>
                                 Accept
                             </button>
-                            <button  onClick={handleCloseModal} type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <button onClick={handleCloseModal} type="button" class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 <i class="bi bi-ban px-2" style={{ color: 'red' }}></i>
                                 Decline
                             </button>
