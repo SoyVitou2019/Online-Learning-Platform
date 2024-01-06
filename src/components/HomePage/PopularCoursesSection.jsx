@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export const PopularCoursesSection = () => {
   return (
-    <div className="h-[65vh] flex justify-center items-center">
+    <div className="h-[85vh] flex justify-center items-center">
       <div>
-        <h1 className="text-center mb-16 text-4xl font-bold tracking-tight leading-none dark:text-dark">
+        <h1 className="text-center mb-16 text-4xl font-bold text-black tracking-tight leading-none ">
           Popular Courses
         </h1>
         <div className="flex gap-5 justify-center space-x-12 px-12 py-3">
