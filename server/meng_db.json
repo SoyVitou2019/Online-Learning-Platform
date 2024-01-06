@@ -60,7 +60,7 @@
       "firstName": "Nak",
       "lastName": "KabDav",
       "profileUrl": "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
-      "role": "student",
+      "role": "content_creator",
       "about": "",
       "uid": "75c7d35e-b6a2-4b7e-81ca-f4ba418e8be6",
       "created_at": "2024-01-05T06:21:16.947902Z",
@@ -811,6 +811,26 @@
         "Predictive Analysis: ML enables you to build models that can predict future trends and outcomes based on historical data."
       ],
       "id": 34
+    },
+    {
+      "course_name": "AWS Deployment",
+      "vid_id": "a9__D53WsUs",
+      "couse_description": "Amazon Web Services offers reliable, scalable, and inexpensive cloud computing services. Free to join, pay only for what you use.",
+      "created_by_user_id": 7,
+      "created_at": "2024/01/06 08:17:03",
+      "category": "Mathematic",
+      "rank": 10,
+      "posts": [
+        31,
+        33,
+        34,
+        32
+      ],
+      "course_expectation": [
+        "Amazon Web Services, Inc. is a subsidiary of Amazon that provides on-demand",
+        "cloud computing platforms and APIs to individuals, companies, and governments, on a metered, pay-as-you-go basis."
+      ],
+      "id": 35
     }
   ],
   "post": [
@@ -963,6 +983,26 @@
       "title": "Practical Deep Learning for Coders - Full Course from fast.ai and Jeremy Howard",
       "vid_id": "0oyCUWLL_fU",
       "id": 30
+    },
+    {
+      "title": "What is AWS? | Amazon Web Services",
+      "vid_id": "a9__D53WsUs",
+      "id": 31
+    },
+    {
+      "title": "Empower contact center agents with Amazon Connect | Amazon Web Services",
+      "vid_id": "n89OuArvV_s",
+      "id": 32
+    },
+    {
+      "title": "Deliver unified omnichannel customer experiences with Amazon Connect | Amazon Web Services",
+      "vid_id": "rg0puxwQ0Dg",
+      "id": 33
+    },
+    {
+      "title": "AWS In 10 Minutes | AWS Tutorial For Beginners | AWS Training Video | AWS Tutorial | Simplilearn",
+      "vid_id": "r4YIdn2eTm4",
+      "id": 34
     }
   ],
   "follow": [

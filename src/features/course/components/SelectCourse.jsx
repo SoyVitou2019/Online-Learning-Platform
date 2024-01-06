@@ -49,7 +49,7 @@ export const SelectCourse = ({ course_id }) => {
     selfID = parseInt(selfID);
     IDUWant = parseInt(IDUWant);
     // fetch user every update server
-    const checkExitEncounter = () => {
+    const checkExitEncounters = () => {
       for (let idx = 0; idx < userFollowData.userId.length; idx++) {
         const item = userFollowData.userId[idx];
         if (item === IDUWant && selfID === userFollowData.follower[idx]) {
@@ -58,7 +58,7 @@ export const SelectCourse = ({ course_id }) => {
       }
       return false;
     };
-    let isntExit = checkExitEncounter();
+    let isntExit = checkExitEncounters();
     try {
       let updateUserId = userFollowData.userId;
       let updatedFollower = userFollowData.follower;
