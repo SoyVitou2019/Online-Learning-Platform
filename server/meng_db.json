@@ -1,26 +1,15 @@
 {
   "user": [
     {
-      "email": "soyvitou999@gmail.com",
-      "firstName": "Soy",
-      "lastName": "Vitou",
-      "profileUrl": "https://avatars.githubusercontent.com/u/118577815?v=4",
-      "role": "admin",
-      "about": "",
-      "uid": "a4fb2224-ee4e-42fd-bae9-c7a92f39b7fb",
-      "created_at": "2024-01-06T02:06:58.251693Z",
-      "id": 9
-    },
-    {
       "email": "soyvitoupro@gmail.com",
       "firstName": "Mrs",
       "lastName": "Taobao",
       "profileUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC0OTc6Kpjx3PtbeDFOT5c53c5qRawDRBBttmOt8JXw9FIu_dlLLGBN7bGAslz9YsXNTM&usqp=CAU",
-      "role": "content_creator",
+      "role": "admin",
       "about": "",
       "uid": "2b3ad142-af77-4c79-9bc3-fe34ea92100c",
       "created_at": "2024-01-06T02:58:37.467785Z",
-      "id": 10
+      "id": 1
     }
   ],
   "course": [
@@ -28,7 +17,7 @@
       "course_name": "សម្រាយរឿងខ្មោច​ ( ពិភពលោកនាពេលអនាគត )",
       "vid_id": "9zZ7xwN2jXQ",
       "couse_description": "នៅពេលដែលយើងមិនមានការរៀបចំកាលវិភាគទុកជាមុន តើនឹងមានរឿងអ្វីកើតឡើង?",
-      "created_by_user_id": 9,
+      "created_by_user_id": 1,
       "created_at": "2024/01/06 09:26:45",
       "category": "Literature",
       "rank": 10,
@@ -56,7 +45,7 @@
       "course_name": "រង្វង់និងបន្ទាត់",
       "vid_id": "GKSLX6kD6dc",
       "couse_description": "នៅពេលដែលបន្ទាត់មួយ និងរង្វង់មិនកាត់ មិនប៉ះគ្នានោះរង្វង់និងបន្ទាត់គ្មានចំណុចរួម។\nកុំភ្លេចជួយ Follow យើងម្នាក់មួយផង",
-      "created_by_user_id": 9,
+      "created_by_user_id": 1,
       "created_at": "2024/01/06 09:32:09",
       "category": "Mathematic",
       "rank": 10,
@@ -77,7 +66,7 @@
       "course_name": "សមីការ លីនេអ៊ែ",
       "vid_id": "ccSYGAeERII",
       "couse_description": "ថ្នាក់រៀនមួយនេះគឺយើងចង់អ្នកទាំងអស់គ្នាបានរៀនសូត្រអំពី វុិចទ័​រ ប្រមាណវិធីបូកវុិចទ័រ ប្រមាណវិធីដកវុិចទ័រ",
-      "created_by_user_id": 9,
+      "created_by_user_id": 1,
       "created_at": "2024/01/06 09:38:16",
       "category": "Mathematics",
       "rank": 10,
@@ -100,7 +89,7 @@
       "course_name": "ថ្នាក់ដំបូងៗ សម្រាប់ ML Engineer",
       "vid_id": "ukzFI9rgwfU",
       "couse_description": "ថ្នាក់មួយនេះពួកយើង ព្យាយាមលើកយក បញ្ហា និងរបៀបដោះស្រាយ ដែលគេហៅថា ម៉ាស៊ីនវៃឆ្លាត ឬក៏ AI/ML",
-      "created_by_user_id": 9,
+      "created_by_user_id": 1,
       "created_at": "2024/01/06 09:45:40",
       "category": "Programming",
       "rank": 10,
@@ -125,7 +114,7 @@
       "course_name": "Data Mining Introduction",
       "vid_id": "mOfPG5ZIY-k",
       "couse_description": "All of the video in this course you will learn a lot of topic related to Data Mining",
-      "created_by_user_id": 9,
+      "created_by_user_id": 1,
       "created_at": "2024/01/06 09:53:23",
       "category": "Mathematic",
       "rank": 10,
@@ -144,27 +133,6 @@
         "What's data mining?"
       ],
       "id": 5
-    },
-    {
-      "course_name": "តោះគ្នាយើង រៀនដើរលេងហី?",
-      "vid_id": "4dWT95JQjZc",
-      "couse_description": "របៀបដើរលេងដែលមានប្រសិទ្ធភាព",
-      "created_by_user_id": 10,
-      "created_at": "2024/01/06 10:06:51",
-      "category": "Others",
-      "rank": 10,
-      "posts": [
-        38,
-        39,
-        40,
-        41,
-        42
-      ],
-      "course_expectation": [
-        "ដើរលេងម្នាក់ឯងក្នងព្រៃជ្រៅ",
-        "ការពារគ្រោះថ្នាក់ពីបញ្ហាផ្សេងៗដែលកើតមាននៅក្នុងព្រៃជ្រៅ"
-      ],
-      "id": 6
     }
   ],
   "post": [
@@ -382,46 +350,10 @@
   "follow": [
     {
       "userId": [
-        10,
-        9
       ],
       "follower": [
-        9,
-        10
       ],
       "id": 1
-    }
-  ],
-  "popular_courses": [
-    {
-      "course_name": "សមីការលីនេអ៊ែរ",
-      "course_description": "សូមអរគុណសម្រាប់ការតាមដានទស្សនា។ បើមានសំណូមពរ ឬមតិផ្សេងៗ សូមcommentខាងក្រោម។ សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
-      "created_by": "Koungmeng",
-      "created_at": "10/4/2023",
-      "category_id": "1",
-      "course_result": [
-        "You will master linear algebra",
-        "You will pass grade 12",
-        "You can understand Einstein's equations",
-        "You will get A++",
-        "Understand the universe"
-      ],
-      "id": 1
-    },
-    {
-      "course_name": "ដេរីវេ",
-      "course_description": "សូមអភ័យទោសរាល់កំហុសខុសឆ្គងទាំងឡាយណាក្នុងវីដេអូ​ សូមអរគុណ។",
-      "created_by": "Koungmeng",
-      "created_at": "28/3/2023",
-      "category_id": "1",
-      "course_result": [
-        "You will master derivative",
-        "You will pass grade 12",
-        "You will pass ICT entrace",
-        "You will get A++",
-        "Understand the universe"
-      ],
-      "id": 2
     }
   ],
   "category": [
